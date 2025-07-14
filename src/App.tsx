@@ -1,10 +1,22 @@
 import './App.css'
+import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from '@clerk/clerk-react';
 
-export default function App() {
-
+function App() {
   return (
-    <>
-     <h1>InternMingle</h1>
-    </>
+    <header>
+      <h1>InternMingle</h1>
+      <SignedOut>
+        <SignInButton />
+        <SignUpButton />
+      </SignedOut>
+
+      
+      <SignedIn>
+        <UserButton />
+      </SignedIn>
+    </header>
   )
 }
+
+export default App
+
