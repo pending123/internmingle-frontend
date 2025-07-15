@@ -1,7 +1,7 @@
 import './App.css'
 import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from '@clerk/clerk-react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-
+import NeighborhoodsPage from './pages/NeighborhoodsPage/NeighborhoodsPage';
 
 function App() {
   return (
@@ -71,6 +71,14 @@ function App() {
             element={
               <SignedIn>
                 <h1>Public Profile</h1>
+              </SignedIn>
+            }
+          />
+          <Route 
+            path="/neighborhoods"
+            element={
+              <SignedIn>
+                <NeighborhoodsPage />
               </SignedIn>
             }
           />
