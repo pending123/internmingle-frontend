@@ -1,0 +1,37 @@
+.searchBar 
+{
+    border: 1px solid black;
+    border-top-right-radius: 0.3rem;
+    border-bottom-right-radius: 0.3rem;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    width: 100%;
+    max-width: 1000px;
+    min-width: 20vw;
+}
+
+.clearBtn 
+{
+    all: unset;
+    cursor: pointer;
+    padding-left: 0.5rem;
+}
+
+.searchInput 
+{
+    flex-grow: 1;
+    padding: 0.4rem;
+    border: 0;
+    min-width: 0;
+}
+
+.searchInput:focus 
+{
+    outline: none;
+}
+
+.searchBar Button 
+{
+    cursor: pointer;
+}
