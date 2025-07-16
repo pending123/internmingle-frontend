@@ -4,14 +4,17 @@ import './NeighborhoodsPage.css'
 import axios from "axios";
 import { APIProvider, Map} from "@vis.gl/react-google-maps";
 
+import { CircularProgressbar } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
+
+
 export default function NeighborhoodsPage() 
 {
-    const [info, setInfo] = useState<any>([]);
+    const [info, setInfo] = useState<any>(null);
     const mapsKey: string = import.meta.env.VITE_MAPS_API_KEY;
 
     async function search(formData: FormData): Promise<void>{
         const query = formData.get("query");
-        alert(`You searched for '${query}'`);
         try {
             const {data: neighborhoodData} = await axios.get(`http://localhost:3000/api/neighborhoods?query=${query}`)
             console.log("Neighborhood data:", neighborhoodData); 
@@ -27,30 +30,40 @@ export default function NeighborhoodsPage()
         <div className="neighborhoodContainer">
             <h2>Enter an address, zip code or neighborhood to get started</h2>
             <SearchBar action={search}/>
-            <h3>Showing results for Mission District, SF</h3>
+            {info && <h3>Showing results for {info.neighborhood}</h3>}
 
             <div className="infoDisplay">
                 <div className="mapPanel">
-                    {info.latitude && info.longitude ? (
+                    {info ? (
                         <APIProvider apiKey={mapsKey}>
                         <Map
-                            defaultZoom={16}
+                            defaultZoom={15}
                             center={{ lat: info.latitude, lng: info.longitude }}
                         >
                         </Map>
                         </APIProvider>
                     ) : (
-                        <p>Loading map...</p>
+                        null
                     )}
                 </div>
 
                 <div className="infoPanel">
                     {info && (
                         <>
-                        <h3>{info.neighborhood}</h3>
-                        <h3>Walk Score: {info.walkScore}</h3>
-                        <h3>Bike Score: {info.bikeScore}</h3>
-                        <h3>Transit Score: {info.transitScore}</h3>
+                        <div style={{ width: 110, height: 100 }}>
+                            <CircularProgressbar value={info.walkScore} text={`${info.walkScore}`} />
+                            <h3>{info.walkDescription}</h3>
+                        </div>
+
+                        <div style={{ width: 110, height: 100 }}>
+                            <CircularProgressbar value={info.bikeScore} text={`${info.bikeScore}`} />
+                            <h3>{info.bikeDescription}</h3>
+                        </div>
+
+                        <div style={{ width: 110, height: 100 }}>
+                            <CircularProgressbar value={info.transitScore} text={`${info.transitScore}`} />
+                            <h3>{info.transitDescription}</h3>
+                        </div>
                         </>
                     )}
                 </div>
