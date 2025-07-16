@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+.navbar 
+{
+    background-color: #FD5E53;
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    padding: 0.8rem 4rem;
+    justify-content: space-between;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;
+    font-family: "Inter", sans-serif;
+    margin-bottom: 2rem;
+}
+
+
+.navbar h1 
+{
+    font-family: "Inter", sans-serif;
+    font-weight: 600;
+    font-size: 2rem;
+    letter-spacing: -0.5px;
+    margin: 0;
+}
+
+.navbar a
+{
+    font-weight: 500;
+    text-decoration: none;
+    color: #111;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0.6rem;
+    letter-spacing: -0.2px;
+}
+
+.navbar a:hover 
+{
+    opacity: 60%;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius: 0.5rem;
+}
+
+.nav-links 
+{
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}

@@ -2,12 +2,12 @@ import './App.css'
 import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from '@clerk/clerk-react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import NeighborhoodsPage from './pages/NeighborhoodsPage/NeighborhoodsPage';
+import Navbar from './components/Navbar/Navbar';
 
 function App() {
   return (
     <BrowserRouter>
       <header>
-        <h1>InternMingle</h1>
         <SignedOut>
           <SignInButton />
           <SignUpButton />
@@ -15,7 +15,7 @@ function App() {
 
         
         <SignedIn>
-          <UserButton />
+          <Navbar />
         </SignedIn>
       </header>
 
