@@ -1,13 +1,22 @@
 import './Place.css'
 
-export default function Place() 
+interface PlaceProps {
+    name: string;
+    address: string;
+}
+
+export default function Place({ name, address } : PlaceProps) 
 {
     return (
         <>
         <div className='place'>
-            <p>Bob's Burgers</p>
-            <p>116 College Drive</p>
+            <div>
+                <p>{name}</p>
+                <p>{address}</p>
+            </div>
+            <p className='placeCategory'>Groceries</p>
         </div>
+
         </>
     )
 }

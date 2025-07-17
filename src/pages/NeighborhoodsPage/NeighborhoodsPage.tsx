@@ -103,9 +103,13 @@ export default function NeighborhoodsPage()
                         <h2>Points of Interest </h2>
                         {/*Place Component*/}
                         <div className="placeList">
-                            <Place />
-                            <Place />
-                            <Place />
+                            {info.places.map((place: { name: string; address: string; }) => (
+                                <Place 
+                                    name={place.name} 
+                                    address={place.address}
+                                    key={`${place.name}-${place.address}`}
+                                />
+                            ))}
                         </div>
                     </div>
                     )} 

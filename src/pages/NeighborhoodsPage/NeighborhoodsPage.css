@@ -31,7 +31,9 @@
 .mapPanel
 {
     width: 50%;
+    height: 650px;
     border-radius: 1rem;
+   
 }
 
 .mapPanel div 
@@ -52,7 +54,8 @@
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     border-radius: 1rem;
     padding-top: 1rem;
-    background-color: white
+    background-color: white;
+    justify-content: center;
 }
 
 .metrics div 
