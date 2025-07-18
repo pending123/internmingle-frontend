@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import EventModal from "./eventModal";
+import EventModal from "./EventModal";
 
 const eventsPage = () => {
     const [events, setEvents] = useState([])
@@ -29,7 +29,7 @@ const eventsPage = () => {
 
     const categories =["All", "Recent", "Food", "Music", "Sports", "Art"]
 
-//useEffect to populate event useState
+//useEffect to populate event useState, reloads when search is submitted, category is changed or show more button is clicked (skip changes)
     useEffect(() => {
         const loadEvents = async () => {
             try{
@@ -46,22 +46,7 @@ const eventsPage = () => {
         loadEvents();
     }, [submittedSearch, category, skip])
 
-//Changes Category useState and creates category buttons
-    {categories.map((cat)=>(
-        <li
-        className={category === cat ? "is-active" : ""}
-        key={cat}
-        >
-        
-        <button
-            onClick={() => {
-            console.log("Category clicked:", cat);
-            setCategory(cat);
-            }}>
-            {cat}
-        </button>
-        </li>
-    ))}
+
 
     const handleCreateClick = () => {
         setShowModal(true)
@@ -94,17 +79,51 @@ const eventsPage = () => {
 
     return (
         <>
-            <button onClick={handleCreateClick}>Create New Event</button> {/* This button OPENS the modal */}
+        <div>
+            {/* Changes Category useState and creates category buttons */}
+            {categories.map((cat)=>(
+                <li
+                className={category === cat ? "is-active" : ""}
+                key={cat}
+                >
+                <button
+                    onClick={() => {
+                    console.log("Category clicked:", cat);
+                    setCategory(cat);
+                    }}>
+                    {cat}
+                </button>
+                </li>
+            ))}
+        </div>
+            <button onClick={handleCreateClick}>Create New Event</button> 
 
             {showModal && (
                 <EventModal
-                    handleCloseModalClick={handleCloseModalClick} // <-- Pass this so modal can close itself
-                    // If you want the parent to know when the event is created, pass a callback:
-                    // onEventCreated={handleEventCreated} // Example callback
+                    handleCloseModalClick={handleCloseModalClick} 
                 />
             )}
+
+            <div>
+                <eventGrid
+                    events={events}
+                    
+                />
+            </div>
         </>
+
     );
 
 }
 export default eventsPage
+
+// model UserHasTrait{
+//     userId              Int
+//     traitId             Int
+// }
+
+// model UserHasHobby{
+//     userId              Int
+//     hobbyId             Int
+
+// }
