@@ -1,12 +1,11 @@
 import SearchBar from "../../components/SearchBar/SearchBar"
+import Place from "../../features/neighborhoods/Place/Place";
 import { useEffect, useState } from "react";
 import './NeighborhoodsPage.css'
 import axios from "axios";
 import { APIProvider, Map} from "@vis.gl/react-google-maps";
-
-import { CircularProgressbar } from 'react-circular-progressbar';
+import { CircularProgressbar, buildStyles} from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
-
 
 export default function NeighborhoodsPage() 
 {
@@ -50,22 +49,70 @@ export default function NeighborhoodsPage()
                 <div className="infoPanel">
                     {info && (
                         <>
-                        <div style={{ width: 110, height: 100 }}>
-                            <CircularProgressbar value={info.walkScore} text={`${info.walkScore}`} />
-                            <h3>{info.walkDescription}</h3>
-                        </div>
+                        <div className="metrics">
+                            <div style={{width: 150, height: 'fit-content'}}>
+                                <div style={{ width: 120}}>
+                                    <CircularProgressbar 
+                                    value={info.walkScore} 
+                                    text={`${info.walkScore}`}
+                                    styles={buildStyles({
+                                        pathColor: '#FD7654',
+                                        textColor: 'black',
+                                        strokeLinecap: 'butt'
+                                    })} />
+                                </div>
+                                <h3>{info.walkDescription}</h3>
+                                <h4>WALK SCORE</h4>
+                            </div>
 
-                        <div style={{ width: 110, height: 100 }}>
-                            <CircularProgressbar value={info.bikeScore} text={`${info.bikeScore}`} />
-                            <h3>{info.bikeDescription}</h3>
-                        </div>
+                            <div style={{width: 150, height: 'fit-content'}}>
+                                <div style={{ width: 120}}>
+                                    <CircularProgressbar 
+                                    value={info.bikeScore} 
+                                    text={`${info.bikeScore}`}
+                                    styles={buildStyles({
+                                        pathColor: '#FD7654',
+                                        textColor: 'black',
+                                        strokeLinecap: 'butt'
+                                    })} />
+                                </div>
+                                <h3>{info.bikeDescription}</h3>
+                                <h4>BIKE SCORE</h4>
+                            </div>
 
-                        <div style={{ width: 110, height: 100 }}>
-                            <CircularProgressbar value={info.transitScore} text={`${info.transitScore}`} />
-                            <h3>{info.transitDescription}</h3>
+                            <div style={{width: 150, height: 'fit-content'}}>
+                                <div style={{ width: 120 }}>
+                                    <CircularProgressbar 
+                                    value={info.transitScore} 
+                                    text={`${info.transitScore}`}
+                                    styles={buildStyles({
+                                        pathColor: '#FD7654',
+                                        textColor: 'black',
+                                        strokeLinecap: 'butt'
+                                    })} />
+                                </div>
+                                <h3>{info.transitDescription}</h3>
+                                <h4>TRANSIT SCORE</h4>
+                            </div>
                         </div>
                         </>
                     )}
+                    
+                    {info && 
+                    (<div className="places">
+                        <h2>Points of Interest </h2>
+                        {/*Place Component*/}
+                        <div className="placeList">
+                            {info.places.map((place: { name: string; address: string; }) => (
+                                <Place 
+                                    name={place.name} 
+                                    address={place.address}
+                                    key={`${place.name}-${place.address}`}
+                                />
+                            ))}
+                        </div>
+                    </div>
+                    )} 
                 </div>
             </div>
         </div>

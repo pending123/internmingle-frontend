@@ -3,18 +3,13 @@ import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from '@cl
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import NeighborhoodsPage from './pages/NeighborhoodsPage/NeighborhoodsPage';
 import Navbar from './components/Navbar/Navbar';
+import LandingPage from './pages/LandingPage/LandingPage';
 import Events from './pages/EventsPage/EventsPage'
 
 function App() {
   return (
     <BrowserRouter>
       <header>
-        <SignedOut>
-          <SignInButton />
-          <SignUpButton />
-        </SignedOut>
-
-        
         <SignedIn>
           <Navbar />
         </SignedIn>
@@ -26,12 +21,9 @@ function App() {
             path="/"
             element={
               <>
-                <SignedIn>
-                  <h1>Random</h1>
-                </SignedIn>
-                <SignedOut>
-                    <h1>Welcome</h1>
-                </SignedOut>
+              <SignedOut>
+                <LandingPage />
+              </SignedOut>
               </>
             }
           />
