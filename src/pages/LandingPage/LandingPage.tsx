@@ -37,7 +37,7 @@ export default function LandingPage()
                     <h2>View Detailed Information about Neighborhoods</h2>
                 </section>  
                 <section className='events'>
-                    <h2>Discover Events</h2>
+                    <h2>Discover Local Events</h2>
                 </section>  
             </main>        
         </div>

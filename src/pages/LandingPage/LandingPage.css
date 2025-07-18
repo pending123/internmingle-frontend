@@ -1,7 +1,6 @@
 .landingPage 
 {
     height: 100vh;
-    background-color: rgba(199, 110, 0, 0.9);
     overflow-y: auto;
 }
 
@@ -88,18 +87,18 @@
 .interns 
 {
     margin-top: 10rem;
-    border-top: 1px solid black;
+    background-color: #FFF5F0;
 }
 
 .neighborhoods 
 {
-    background-color: bisque;
+    background-color: #E8F5E9;
 }
 
 .events 
 {
     margin-bottom: 3rem;
-    background-color: salmon;
+    background-color: #F0E4E6;
 }
 
 .interns h2, .neighborhoods h2, .events h2 
