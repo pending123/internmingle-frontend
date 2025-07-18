@@ -1,0 +1,110 @@
+.landingPage 
+{
+    height: 100vh;
+    background-color: rgba(199, 110, 0, 0.9);
+    overflow-y: auto;
+}
+
+.header 
+{
+    background-color: #E4E4EA;
+    padding: 1rem;
+    padding-left: 4rem;
+    display: flex;
+    justify-content: space-between;
+    padding-right: 4rem;
+    align-items: center;
+}
+
+.signIn 
+{
+    background-color: #FAB728;
+    border: 0;
+    padding: 0.4rem 0.9rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+}
+
+.header h1 
+{
+    margin: 0;
+    font-family: "Inter", sans-serif;
+}
+
+.headerBtns 
+{
+    display: flex;
+    gap: 3rem;
+    padding: 1rem;
+    align-items: center;
+    font-family: "Inter", sans-serif;
+}
+
+.headerBtns a 
+{
+    text-decoration: none;
+    color: black;
+    font-size: 1.45rem;
+}
+
+.mainText
+{
+    margin-top: 12vh;
+    text-align: center;
+}
+
+.mainText h1 
+{
+    font-size: clamp(2rem, 10vw, 4.5rem);
+    margin: 0;
+}
+
+.authButtons 
+{
+    display: flex;
+    gap: 5rem;
+    padding: 1rem;
+    justify-content: center;
+    margin-top: 3rem;
+}
+
+.signUp 
+{
+    background-color: #FAB728;
+    border: 0;
+    padding: 0.3rem;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.events, .neighborhoods, .interns
+{
+    padding-bottom: 70vh;
+    padding-top: 1.5rem;
+    text-align: center;
+}
+
+.interns 
+{
+    margin-top: 10rem;
+    border-top: 1px solid black;
+}
+
+.neighborhoods 
+{
+    background-color: bisque;
+}
+
+.events 
+{
+    margin-bottom: 3rem;
+    background-color: salmon;
+}
+
+.interns h2, .neighborhoods h2, .events h2 
+{
+    padding-left: 1rem;
+    font-size: 2rem;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
