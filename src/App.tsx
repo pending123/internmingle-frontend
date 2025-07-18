@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import NeighborhoodsPage from './pages/NeighborhoodsPage/NeighborhoodsPage';
 import Navbar from './components/Navbar/Navbar';
 import LandingPage from './pages/LandingPage/LandingPage';
+import Events from './pages/EventsPage/EventsPage'
 
 function App() {
   return (
@@ -78,7 +79,7 @@ function App() {
             path="/events"
             element={
               <SignedIn>
-                <h1>Event Page</h1>
+                <Events/>
               </SignedIn>
             }
           />

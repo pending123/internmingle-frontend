@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import './EventModal.css'
 
 
 //Gets event creation info from Modal and posts it to db
@@ -42,71 +43,88 @@ const EventModal =  ( {handleCloseModalClick}) => {
         }}
 
     return(
-        <form onSubmit={handleFormSubmit}>
-            {/* Location */}
-            <label>Location:</label>
-            <input 
-            type="text" 
-            id="location"
-            name="location"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-            required
-            />
-            {/* Description */}
-            <label>Description</label>
-            <textarea
-            id="description"
-            name="description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            required
-            >
-            </textarea>
+        <div className="modal-overlay">
+            <div className="modal-content">
+                <h2>Create New Event</h2>
+                <form onSubmit={handleFormSubmit}>
+                    {/* Location */}
 
-            {/* Category button selection */}
-            <div>
-                {categories.map((cat)=>(
-                <li
-                className={category === cat ? "is-active" : ""}
-                key={cat}
-                >
-                
-                <button
-                    onClick={() => {
-                    console.log("Category clicked:", cat);
-                    setCategory(cat);
-                    }}>
-                    {cat}
-                </button>
-                </li>
-        ))}
+                    <div className="form-group">
+                        <label>Location:</label>
+                        <input 
+                            type="text" 
+                            id="location"
+                            name="location"
+                            value={location}
+                            onChange={(e) => setLocation(e.target.value)}
+                            required
+                        />
+                    </div>
+                    {/* Description */}
+                    <div className="form-group">
+                        <label>Description</label>
+                        <textarea
+                            id="description"
+                            name="description"
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                            required
+                        >
+                        </textarea>
+                    </div>
+
+                    {/* Category button selection */}
+                    <div className="form-group">
+                        <label>Categories:</label>
+                        <div className="category-buttons-group">
+                            {categories.map((cat)=>(
+                            <button
+                            type="button"
+                            className={category === cat ? "is-active" : ""}
+                            key={cat}
+                                onClick={() => {
+                                console.log("Category clicked:", cat);
+                                setCategory(cat);
+                                }}>
+                                {cat}
+                            </button>
+                            
+                            ))}
+                        </div>
+                    </div>
+                {/* Date of Event */}
+                <div className="form-group">
+                    <label>Event Date: </label>
+                    <input
+                    type="date" 
+                    id="eventDate"
+                    name="eventDate"
+                    value={date}
+                    onChange={(e) => setDate(e.target.value)}
+                    required
+                    />
+                </div>
+                {/* TIme of Event */}
+                <div className="form-group">
+                    <label> Event Time:</label>
+                    <input
+                        type="time" 
+                        id="eventTime"
+                        name="eventTime"
+                        value={time}
+                        onChange={(e) => setTime(e.target.value)}
+                        required
+                    />
+                </div>
+                {/* Submit/Clear Button */}
+                    <div className="form-actions">
+                        <button type="submit" className="submit-button">Create Event</button>
+                        <button type="button" className="cancel-button" onClick={handleCloseModalClick}>Cancel</button>
+                    </div>
+
+                </form>
             </div>
-        {/* Date of Event */}
-        <label>Event Date(YYYY-DD-MM): </label>
-        <input
-        type="date" 
-        id="eventDate"
-        name="eventDate"
-        value={date}
-        onChange={(e) => setDate(e.target.value)}
-        required
-        />
-
-        {/* TIme of Event */}
-        <label> Event Time(00:00):</label>
-        <input
-            type="time" 
-            id="eventTime"
-            name="eventTime"
-            value={time}
-            onChange={(e) => setTime(e.target.value)}
-            required
-        />
-
-        <button type="submit">Create Event</button>
-
-        </form>
+        </div>
 
     )
 

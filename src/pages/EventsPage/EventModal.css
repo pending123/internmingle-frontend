@@ -1,0 +1,175 @@
+/* 1. Modal Overlay (Background that covers the whole screen) */
+.modal-overlay {
+    position: fixed; /* Stays in place even if the user scrolls */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black background */
+    display: flex; /* Use flexbox to center the modal content */
+    justify-content: center; /* Center horizontally */
+    align-items: center;   /* Center vertically */
+    z-index: 1000; /* Ensures the modal is on top of other content */
+    backdrop-filter: blur(5px); /* Optional: Adds a blur effect to the background */
+}
+
+/* 2. Modal Content Box (The actual box containing the form) */
+.modal-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 12px; /* Rounded corners */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Soft shadow for depth */
+    width: 90%; /* Responsive width */
+    max-width: 500px; /* Maximum width for larger screens */
+    max-height: 90vh; /* Max height to prevent overflow on small screens */
+    overflow-y: auto; /* Adds scroll if content is too long */
+    display: flex; /* Use flexbox for internal layout */
+    flex-direction: column; /* Stack children vertically */
+    gap: 20px; /* Space between sections */
+}
+
+/* Modal Title */
+.modal-content h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+}
+
+/* Form Styling */
+.modal-content form {
+    display: flex;
+    flex-direction: column; /* Stack form elements vertically */
+    gap: 15px; /* Space between form groups */
+}
+
+/* Grouping for Label + Input */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px; /* Space between label and input */
+}
+
+.form-group label {
+    font-weight: bold;
+    color: #555;
+    font-size: 0.95rem;
+    margin-bottom: 5px;
+    display: block
+}
+
+.form-group input[type="text"],
+.form-group input[type="date"],
+.form-group input[type="time"],
+.form-group textarea {
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px; /* Slightly rounded input fields */
+    font-size: 1rem;
+    width: 100%;
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: #007bff; /* Highlight on focus */
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+    outline: none; /* Remove default outline */
+}
+
+.form-group textarea {
+    resize: vertical; /* Allow vertical resizing */
+    min-height: 80px;
+}
+
+/* Container for the category buttons themselves */
+.category-buttons-group {
+    display: flex;       /* Arranges buttons horizontally */
+    flex-wrap: wrap;     /* Allows buttons to wrap to the next line if space runs out */
+    gap: 8px;            /* Adds space between individual buttons */
+    /* No margin-top here if the label's margin-bottom handles spacing */
+    justify-content: flex-start; /* Aligns buttons to the start (left) */
+    align-items: center; /* Vertically aligns buttons in the middle */
+}
+
+/* Base styling for individual category buttons */
+.category-buttons-group button {
+    padding: 10px 15px;      /* Spacing inside the button */
+    border: 1px solid #ccc;  /* Light gray border */
+    border-radius: 20px;     /* Rounded corners (pill shape) */
+    background-color: #f0f0f0; /* Light gray background */
+    color: #333;             /* Dark gray text */
+    font-size: 0.9rem;       /* Slightly smaller font for modal context */
+    cursor: pointer;         /* Indicates it's clickable */
+    transition: all 0.2s ease-in-out; /* Smooth transitions for hover/active states */
+    text-align: center;
+    white-space: nowrap;     /* Prevents text from wrapping inside the button */
+    flex-shrink: 0;          /* Prevents buttons from shrinking */
+}
+
+/* Hover state for category buttons */
+.category-buttons-group button:hover {
+    background-color: #e0e0e0; /* Slightly darker gray background on hover */
+    border-color: #999;       /* Darker border */
+    color: #000;              /* Darker text */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle shadow on hover */
+}
+
+/* Active (selected) state for category buttons */
+.category-buttons-group button.is-active { /* Note: Class is 'is-active' applied directly to button */
+    background-color: #666; /* Dark gray background for active button */
+    color: white;          /* White text for active button */
+    border-color: #666;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* More pronounced shadow for active */
+    transform: translateY(-1px); /* Slight lift for active */
+}
+
+/* Action Buttons (Submit and Cancel) */
+.form-actions {
+    display: flex;
+    justify-content: flex-end; /* Pushes buttons to the right */
+    gap: 10px; /* Space between buttons */
+    margin-top: 20px; /* Space above buttons */
+}
+
+.submit-button,
+.cancel-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.submit-button {
+    background-color: #007bff; /* Primary action color */
+    color: white;
+}
+
+.submit-button:hover {
+    background-color: #0056b3;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.cancel-button {
+    background-color: #f0f0f0; /* Neutral/secondary action color */
+    color: #333;
+    border: 1px solid #ccc;
+}
+
+.cancel-button:hover {
+    background-color: #e0e0e0;
+    border-color: #999;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Optional: Loading/Error messages */
+.loading-message, .error-message {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 0.9rem;
+}
+.loading-message { color: #007bff; }
+.error-message { color: #dc3545; }
