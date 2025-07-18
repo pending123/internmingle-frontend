@@ -6,7 +6,6 @@
 
 .header 
 {
-    background-color: #E4E4EA;
     padding: 1rem;
     padding-left: 4rem;
     display: flex;
@@ -17,7 +16,7 @@
 
 .signIn 
 {
-    background-color: #FAB728;
+    background-color: #FD5E53;
     border: 0;
     padding: 0.4rem 0.9rem;
     border-radius: 0.5rem;
@@ -69,7 +68,7 @@
 
 .signUp 
 {
-    background-color: #FAB728;
+    background-color: #FD5E53;
     border: 0;
     padding: 0.3rem;
     border-radius: 0.3rem;
