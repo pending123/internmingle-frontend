@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+
 import EventModal from "./EventModal";
+
 
 const eventsPage = () => {
     const [events, setEvents] = useState([])
@@ -29,7 +31,9 @@ const eventsPage = () => {
 
     const categories =["All", "Recent", "Food", "Music", "Sports", "Art"]
 
+
 //useEffect to populate event useState, reloads when search is submitted, category is changed or show more button is clicked (skip changes)
+
     useEffect(() => {
         const loadEvents = async () => {
             try{
@@ -45,8 +49,6 @@ const eventsPage = () => {
         }
         loadEvents();
     }, [submittedSearch, category, skip])
-
-
 
     const handleCreateClick = () => {
         setShowModal(true)
@@ -79,6 +81,7 @@ const eventsPage = () => {
 
     return (
         <>
+
         <div>
             {/* Changes Category useState and creates category buttons */}
             {categories.map((cat)=>(

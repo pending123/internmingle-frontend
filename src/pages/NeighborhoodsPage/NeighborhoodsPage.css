@@ -3,7 +3,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    border: 1px solid black;
 }
 
 .neighborhoodContainer h2 
@@ -16,7 +15,6 @@
 {
     margin-top: 2rem;
     width: 70%;
-    border: 1px solid black;
     height: 600px;
     display: flex;
     justify-content: space-between;
@@ -29,7 +27,18 @@
 
 .infoPanel 
 {
-    border: 1px solid black;
     padding: 1rem;
     padding-right: 5rem;
+    display: flex;
+    gap: 0.4rem;
+}
+
+.infoPanel h3 {
+    margin-bottom: 0;
+    font-weight: 600;
+}
+
+.infoPanel h4 {
+    margin-top: 0;
+    font-weight: 500;
 }
