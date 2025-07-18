@@ -16,7 +16,6 @@ export default function NeighborhoodsPage()
         const query = formData.get("query");
         try {
             const {data: neighborhoodData} = await axios.get(`http://localhost:3000/api/neighborhoods?query=${query}`)
-            console.log("Neighborhood data:", neighborhoodData); 
             setInfo(neighborhoodData);
         } catch (err) 
         {
@@ -36,7 +35,7 @@ export default function NeighborhoodsPage()
                     {info ? (
                         <APIProvider apiKey={mapsKey}>
                         <Map
-                            defaultZoom={15}
+                            defaultZoom={16}
                             center={{ lat: info.latitude, lng: info.longitude }}
                         >
                         </Map>
