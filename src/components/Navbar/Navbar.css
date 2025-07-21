@@ -1,6 +1,7 @@
 .navbar 
 {
-    background-color: #FD5E53;
+    background-color: #0073EA;
+    color: white;
     display: flex;
     gap: 2rem;
     align-items: center;
@@ -25,7 +26,7 @@
 {
     font-weight: 500;
     text-decoration: none;
-    color: #111;
+    color: white;
     font-size: 1.2rem;
     cursor: pointer;
     padding: 0.6rem;

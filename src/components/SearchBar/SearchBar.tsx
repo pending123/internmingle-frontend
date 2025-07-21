@@ -1,4 +1,4 @@
-import Button from "../Button/Button";
+import { Button } from '@mui/material';
 import './SearchBar.css'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -14,14 +14,14 @@ export default function SearchBar({
 {
     return (
         <form className="searchBar" action={action}>
-            <button className="clearBtn" type="reset">
+            <Button className="clearBtn" type="reset">
                 <FontAwesomeIcon icon={faX} />
-            </button>
+            </Button>
 
             <input className="searchInput" name="query" placeholder={placeholder}/>
 
-            <Button type="submit" variant="primary" size="medium">
-                <FontAwesomeIcon color="black" icon={faMagnifyingGlass}/>
+            <Button type="submit" variant='contained'>
+                <FontAwesomeIcon icon={faMagnifyingGlass}/>
             </Button>
         </form>
     );

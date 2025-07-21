@@ -5,6 +5,7 @@ import NeighborhoodsPage from './pages/NeighborhoodsPage/NeighborhoodsPage';
 import Navbar from './components/Navbar/Navbar';
 import LandingPage from './pages/LandingPage/LandingPage';
 import Events from './pages/EventsPage/EventsPage'
+import InternFinder from './pages/InternFinderPage/InternFinder';
 
 function App() {
   return (
@@ -55,7 +56,7 @@ function App() {
             path="/intern-finder"
             element={
               <SignedIn>
-                <h1>Intern Finder</h1>
+                <InternFinder />
               </SignedIn>
             }
           />
