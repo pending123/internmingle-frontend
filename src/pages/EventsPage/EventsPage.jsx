@@ -129,10 +129,8 @@ const fakeEvents = [
         setShowModal(false)
     }
     
-
     return (
         <>
-
         <div>
             {/* //Creates Search button and sets Submitted Search Input */}
             <div className="searchBarContainer">
