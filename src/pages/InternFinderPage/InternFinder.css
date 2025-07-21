@@ -1,7 +1,25 @@
+
+.internFinder 
+{
+   display: flex;
+   flex-direction: column;
+}
+
+.internFinder Button 
+{
+    align-self: center;
+    margin: 1rem;
+}
+
 .filters 
 {
-    border: 1px solid black;
     display: flex;
-    gap: 1rem;
-    margin: 1rem;
+    gap: 2rem;
+    margin: 4vh;
+}
+
+.filters 
+{
+    caret-color: transparent;
+
 }
