@@ -11,7 +11,7 @@ export default function ProfileCard()
             <h4>UX Design • Salesforce</h4>
             <p className='profileDesc'>Creative designer who loves sketching, museums and finding the best brunch spots in the city</p>
             <ul className='profileTags'>
-                <li>Brunch</li>
+                <li>AI/ML</li>
                 <li>Design</li>
                 <li>Video Games</li>
             </ul>
