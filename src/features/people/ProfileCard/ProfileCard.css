@@ -1,0 +1,58 @@
+.profileCard 
+{
+    border: 1px solid black;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.profilePhoto 
+{
+    border: 1px solid black;
+    border-radius: 50%;
+    height: 100px;
+    width: 100px;
+}
+
+.profileCard h2, .profileCard h4
+{
+    margin: 0;
+}
+
+.profileCard h2, .profileCard h4
+{
+    margin-top: 1rem;
+}
+
+.profileDesc 
+{
+    text-align: center;
+}
+
+.profileTags 
+{
+    border: 1px solid blue;
+    all: unset;
+    display: flex;
+    gap: 1rem;
+    padding: 0.2rem;
+    width: 100%;
+    justify-content: center;
+}
+
+.profileTags li
+{
+    all: unset;
+    border: 1px solid black;
+    border-radius: 0.8rem;
+    padding: 2px;
+    text-align: center;
+    padding: 0.3rem 0.5rem;
+}
+
+.profileCard Button 
+{
+    margin-top: 1rem;
+}
