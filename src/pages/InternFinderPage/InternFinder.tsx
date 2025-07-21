@@ -1,4 +1,5 @@
 import ProfileGrid from "../../features/people/ProfileGrid/ProfileGrid"
+
 import { Box, Autocomplete, Button, TextField } from '@mui/material';
 import './InternFinder.css'
 import { useState, useEffect } from "react";
@@ -46,6 +47,7 @@ export default function InternFinder()
             <ProfileGrid />
             <Button variant="contained" size="large">View More Profiles</Button>
         </div>
+
         </>
     )
 }
