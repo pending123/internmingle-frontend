@@ -70,3 +70,8 @@
 {
     margin-top: 1rem;
 }
+
+a
+{
+    all: unset;
+}
