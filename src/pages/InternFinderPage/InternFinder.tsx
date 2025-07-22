@@ -23,21 +23,25 @@ export default function InternFinder()
         <div className="internFinder">
             <Box className="filters">
                 <Autocomplete 
-                options={companies} sx={{ minWidth: 200}} 
+                options={companies} sx={{ minWidth: 200, '& fieldset': { borderRadius: 33 }}} 
                 value={selectedCompany} 
                 onChange={(e, newValue) => setSelectedCompany(newValue)}
                 renderInput={
                     (params) => ( <TextField {...params} label="Filter by Company" variant="outlined" />)
                 } />
                 <Autocomplete 
-                options={hobbies} sx={{ minWidth: 200}} multiple disableCloseOnSelect  
+                options={hobbies} 
+                sx={
+                    {minWidth: 200, '& fieldset': { borderRadius: 33 }}
+                } 
+                multiple disableCloseOnSelect  
                 value={selectedHobbies} 
                 onChange={(e, newValue) => setSelectedHobbies(newValue)}
                 renderInput={
                     (params) => ( <TextField {...params} label="Filter by Hobbies" variant="outlined" />)
                 } />
                 <Autocomplete 
-                options={companies} sx={{ minWidth: 200}} multiple disableCloseOnSelect 
+                options={companies} sx={{ minWidth: 200, '& fieldset': { borderRadius: 33 }}} multiple disableCloseOnSelect 
                 value={selectedTraits} 
                 onChange={(e, newValue) => setSelectedTraits(newValue)}
                 renderInput={
