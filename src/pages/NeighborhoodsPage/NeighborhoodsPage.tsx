@@ -55,7 +55,7 @@ export default function NeighborhoodsPage()
                                     value={info.walkScore} 
                                     text={`${info.walkScore}`}
                                     styles={buildStyles({
-                                        pathColor: '#FD7654',
+                                        pathColor: '#CCE5FF',
                                         textColor: 'black',
                                         strokeLinecap: 'butt'
                                     })} />
@@ -70,7 +70,7 @@ export default function NeighborhoodsPage()
                                     value={info.bikeScore} 
                                     text={`${info.bikeScore}`}
                                     styles={buildStyles({
-                                        pathColor: '#FD7654',
+                                        pathColor: '#CCE5FF',
                                         textColor: 'black',
                                         strokeLinecap: 'butt'
                                     })} />
@@ -85,7 +85,7 @@ export default function NeighborhoodsPage()
                                     value={info.transitScore} 
                                     text={`${info.transitScore}`}
                                     styles={buildStyles({
-                                        pathColor: '#FD7654',
+                                        pathColor: '#CCE5FF',
                                         textColor: 'black',
                                         strokeLinecap: 'butt'
                                     })} />
@@ -100,7 +100,6 @@ export default function NeighborhoodsPage()
                     {info && 
                     (<div className="places">
                         <h2>Points of Interest </h2>
-                        {/*Place Component*/}
                         <div className="placeList">
                             {info.places.map((place: { name: string; address: string; }) => (
                                 <Place 
