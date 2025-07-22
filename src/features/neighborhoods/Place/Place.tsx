@@ -3,9 +3,10 @@ import './Place.css'
 interface PlaceProps {
     name: string;
     address: string;
+    category: string;
 }
 
-export default function Place({ name, address } : PlaceProps) 
+export default function Place({ name, address, category } : PlaceProps) 
 {
     return (
         <>
@@ -14,7 +15,7 @@ export default function Place({ name, address } : PlaceProps)
                 <p>{name}</p>
                 <p>{address}</p>
             </div>
-            <p className='placeCategory'>Groceries</p>
+            <p className='placeCategory'>{category}</p>
         </div>
 
         </>
