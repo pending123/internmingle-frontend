@@ -3,6 +3,7 @@ import ProfileGrid from "../../features/people/ProfileGrid/ProfileGrid"
 import { Box, Autocomplete, Button, TextField} from '@mui/material';
 import './InternFinder.css'
 import { useState, useEffect } from "react";
+import axios from 'axios'
 
 export default function InternFinder() 
 {
@@ -13,10 +14,20 @@ export default function InternFinder()
     const [selectedCompany, setSelectedCompany] = useState<string | null>(null);
     const [selectedHobbies, setSelectedHobbies] = useState<string[]>([]);
     const [selectedTraits, setSelectedTraits] = useState<string[]>([]);
-    const [profiles, setProfiles] = useState([]);
+    const [profiles, setProfiles] = useState<any[]>([]);
 
-    //Add  a useEffect dependent on selected company, hobbies and traits here to fetch data
-    //Build fetchData function
+    useEffect(() => {
+        async function fetchProfiles() {
+            try {
+                const { data } = await axios.get(`http://localhost:3000/api/profiles/`);
+                setProfiles(data);
+            } catch (err) 
+            {
+                console.error('Error fetching profiles')
+            }
+        };
+        fetchProfiles();
+    }, [selectedCompany, selectedHobbies, selectedTraits])
 
     return (
         <>
@@ -48,7 +59,7 @@ export default function InternFinder()
                     (params) => ( <TextField {...params} label="Filter by Traits" variant="outlined" />)
                 } />
             </Box>
-            <ProfileGrid />
+            <ProfileGrid profiles={profiles}/>
             <Button variant="contained" size="large">View More Profiles</Button>
         </div>
 
