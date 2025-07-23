@@ -7,6 +7,7 @@
     flex-direction: column;
     padding: 1rem;
     background-color: white;
+    align-items: center;
 }
 
 p 
@@ -21,6 +22,7 @@ h2
 
 .demographics 
 {
+    border: 1px solid black;
     display: flex;
     width: 90%;
     gap: 1.5rem;
@@ -38,6 +40,7 @@ h2
 .about 
 {
     margin: 1.5rem 2.5rem;
+    border: 1px solid black;
 }
 
 .bio 
@@ -55,9 +58,10 @@ h2
     grid-template-columns: repeat(2, 450px);
     grid-template-rows: 320px 150px 250px;
     row-gap: 3rem;
-    column-gap: 10vh;
+    column-gap: 5vh;
     width: max-content;
-    margin-left: 1.5rem;
+    border: 1px solid black;
+    padding-right: 1rem;
 }
 
 .moreInfo p 

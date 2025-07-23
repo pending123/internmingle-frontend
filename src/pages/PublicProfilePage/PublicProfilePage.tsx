@@ -11,7 +11,7 @@ export default function PublicProfilePage()
     const { id: profileId } = useParams();
 
     useScrollToTop();
-
+    //Fetch profile Data
     return (
         <>
             <div className='profile'>
