@@ -8,7 +8,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import axios from 'axios';
 import './OnboardingPage.css';
 
-// Configure axios base URL to point to your backend
+// Configure axios base URL to point to backend
 axios.defaults.baseURL = 'http://localhost:3000';
 
 // hardcoded data for traits and hobbies -  PLACEHOLDERS 
@@ -196,11 +196,14 @@ export default function OnboardingPage() {
     }
   };
 
-  const handleSkip = () => {
-    if (currentStep === 2) {
-      setCurrentStep(3);
-      setError('');
+  const handleBack = () => {
+    if (currentStep === 1) return; //user can't go back from first step
+    if (currentStep === 6 && !formData.isLookingForHousing) {
+      setCurrentStep(4)
+    } else {
+      setCurrentStep(prev => prev - 1)    
     }
+    setError(''); //clears any errors user might have when going back
   };
 
   const handleSubmit = async () => {
@@ -434,6 +437,14 @@ export default function OnboardingPage() {
                   }}
                 />
               </LocalizationProvider>
+              <textarea
+                placeholder="Bio"
+                className="form-textarea"
+                rows={3}
+                value={formData.bio}
+                onChange={(e) => updateFormData({ bio: e.target.value })}
+                required
+              />
 
               {/* Traits Section */}
               <div className="traits-section">
@@ -468,15 +479,6 @@ export default function OnboardingPage() {
                   ))}
                 </div>
               </div>
-
-              <textarea
-                placeholder="Bio"
-                className="form-textarea"
-                rows={3}
-                value={formData.bio}
-                onChange={(e) => updateFormData({ bio: e.target.value })}
-                required
-              />
             </div>
           </div>
         );
@@ -619,13 +621,13 @@ export default function OnboardingPage() {
           {/* Navigation Buttons */}
           <div className="navigation-buttons">
             <div>
-              {currentStep === 2 && (
+              {currentStep > 1 && (
                 <Button
                   variant="outlined"
-                  onClick={handleSkip}
-                  className="skip-button"
+                  onClick={handleBack}
+                  className="back-button"
                 >
-                  Skip
+                  Back
                 </Button>
               )}
             </div>
@@ -638,7 +640,8 @@ export default function OnboardingPage() {
             >
               {currentStep === 6 ? 'Finish' : 'Next'}
             </Button>
-          </div>
+
+            </div>
         </div>
       )}
     </div>
