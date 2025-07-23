@@ -30,21 +30,46 @@ export default function PublicProfilePage()
                 <div className='moreInfo'>
                     <div className='basicInfo'>
                         <h3><FontAwesomeIcon icon={faCircle}color='#0073EA'/>  Basic Info</h3>
-                        <p><strong>School:</strong> Salesforce University</p>
+                        <div>
+                            <p><strong>School:</strong></p>
+                            <p>Salesforce University</p>
+                        </div>
                         <Divider />
-                        <p><strong>Company:</strong> Salesforce</p>
+                        <div>
+                            <p><strong>Company:</strong></p>
+                            <p>Salesforce</p>
+                        </div>
                         <Divider />
-                        <p><strong>Major:</strong> Computer Science</p>
+                        <div>
+                            <p><strong>Major:</strong></p>
+                            <p>Computer Science</p>
+                        </div>
                         <Divider />
-                        <p><strong>Age:</strong> 20</p>
+                        <div>
+                            <p><strong>Age:</strong></p>
+                            <p>20</p>
+                        </div>
                         <Divider />
-                        <p><strong>Location:</strong> San Francisco, CA</p>
+                        <div>
+                            <p><strong>Location:</strong></p>
+                            <p>San Francisco, CA</p>
+                        </div>
                     </div>
                     <div className='intDetails'>
                         <h3><FontAwesomeIcon icon={faCircle}color='#0073EA'/>  Internship Details</h3>
-                        <p><strong>Start Date:</strong> June 1, 2024</p>
-                        <p><strong>End Date:</strong> August 23, 2024</p>
-                        <p><strong>Duration:</strong> 12 weeks</p>
+                        <div>
+                            <p className='intHeading'>Start Date</p>
+                            <p>June 1, 2024</p>
+                        </div>
+                        <div>
+                            <p className='intHeading'>End Date</p>
+                            <p>August 23, 2024</p>
+                        </div>
+                        <div>
+                            <p className='intHeading'>Duration</p>
+                            <p>12 weeks</p>
+
+                        </div>
                     </div>
                     <div className='traits'>
                         <h3><FontAwesomeIcon icon={faCircle}color='#0073EA'/>  Traits</h3>
