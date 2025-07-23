@@ -1,12 +1,97 @@
 import './App.css'
-import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from '@clerk/clerk-react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { SignedIn, SignedOut, useUser, useAuth } from '@clerk/clerk-react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+
 import NeighborhoodsPage from './pages/NeighborhoodsPage/NeighborhoodsPage';
 import Navbar from './components/Navbar/Navbar';
 import LandingPage from './pages/LandingPage/LandingPage';
 import Events from './pages/EventsPage/EventsPage'
 import InternFinder from './pages/InternFinderPage/InternFinder';
 import HomePage from './pages/HomePage/HomePage';
+import OnboardingPage from './pages/OnboardingPage/OnboardingPage';
+
+// Configure axios base URL to point to your backend //look into this
+axios.defaults.baseURL = 'http://localhost:3000';
+
+// Checks if profile is complted
+function ProfileCompletionChecker({ children }: { children: React.ReactNode }) {
+  const { user, isLoaded } = useUser();
+  const { getToken } = useAuth();
+  const [profileCompleted, setProfileCompleted] = useState<boolean | null>(null);
+  const [isCheckingProfile, setIsCheckingProfile] = useState(true);
+
+  //makes sure profile is completed before proceeding
+  useEffect(() => {
+    const checkProfileCompletion = async () => {
+      if (!isLoaded || !user) { //CLAUDE SUGGESTED.. makes sure your user is authenticated
+        return;
+      }
+
+      try {
+        // get token using useAuth hook
+        const token = await getToken();
+        
+        if (!token) {
+          console.error('No authentication token available');
+          setProfileCompleted(false);
+          setIsCheckingProfile(false); //ask about what setischeckingprofile does
+          return;
+        }
+
+        const response = await axios.get('/api/profiles/me', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        
+        // Check if profile exists and is completed
+        const profileData = response.data;
+        const isCompleted = profileData && profileData.profileCompleted === true;
+        
+        console.log('Profile found:', { 
+          profileExists: Boolean(profileData),
+          profileCompleted: profileData?.profileCompleted, //why ?
+          isCompleted 
+        });
+        
+        setProfileCompleted(isCompleted);
+      } catch (error) {
+        // 404 is expected for new users
+          console.log('New user detected - profile needs to be created or profile not found');
+          setProfileCompleted(false);
+        } finally {
+          setIsCheckingProfile(false);
+        }
+    };
+
+    checkProfileCompletion();
+  }, [user, isLoaded, getToken]);
+
+  // Show loading state while checking profile
+  if (isCheckingProfile || !isLoaded) {
+    return <div>Loading...</div>;
+  }
+
+  // if profile is not completed, redirect to onboarding
+  if (profileCompleted === false) {
+    return <Navigate to="/onboarding" replace />;
+  }
+
+  return <>{children}</>;
+}
+
+// Protected route makes sure that user has completed onboarding first
+function ProtectedRoute({ children }: { children: React.ReactNode }) {
+  return (
+    <SignedIn>
+      <ProfileCompletionChecker>
+        {children}
+      </ProfileCompletionChecker>
+    </SignedIn>
+  );
+}
 
 function App() {
   return (
@@ -23,20 +108,26 @@ function App() {
             path="/"
             element={
               <>
-              <SignedOut>
-                <LandingPage />
-              </SignedOut>
+                <SignedOut>
+                  <LandingPage />
+                </SignedOut>
+                <SignedIn>
+                  <Navigate to="/intern-finder" replace /> //what does replace do
+                </SignedIn>
               </>
             }
           />
+          
           <Route 
             path="/onboarding"
             element={
               <SignedIn>
-                <h1>Onboarding Page</h1>
+                <OnboardingPage />
               </SignedIn>
             }
           />
+          
+          {/* Protected routes bc that requires that a user's profile be completed first*/}
           <Route 
             path="/home"
             element={
@@ -48,49 +139,49 @@ function App() {
           <Route 
             path="/edit-profile"
             element={
-              <SignedIn>
+              <ProtectedRoute>
                 <h1>Edit Profile</h1>
-              </SignedIn>
+              </ProtectedRoute>
             }
           />
           <Route 
             path="/intern-finder"
             element={
-              <SignedIn>
+              <ProtectedRoute>
                 <InternFinder />
-              </SignedIn>
+              </ProtectedRoute>
             }
           />
           <Route 
             path="/public-profile/:id"
             element={
-              <SignedIn>
+              <ProtectedRoute>
                 <h1>Public Profile</h1>
-              </SignedIn>
+              </ProtectedRoute>
             }
           />
           <Route 
             path="/neighborhoods"
             element={
-              <SignedIn>
+              <ProtectedRoute>
                 <NeighborhoodsPage />
-              </SignedIn>
+              </ProtectedRoute>
             }
           />
           <Route 
             path="/events"
             element={
-              <SignedIn>
+              <ProtectedRoute>
                 <Events/>
-              </SignedIn>
+              </ProtectedRoute>
             }
           />
           <Route 
             path="/events/:id"
             element={
-              <SignedIn>
+              <ProtectedRoute>
                 <h1>Individual Event</h1>
-              </SignedIn>
+              </ProtectedRoute>
             }
           />
         </Routes>
