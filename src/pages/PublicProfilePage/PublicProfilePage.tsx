@@ -11,7 +11,11 @@ export default function PublicProfilePage()
     const { id: profileId } = useParams();
 
     useScrollToTop();
+<<<<<<< HEAD
     //Fetch profile Data
+=======
+
+>>>>>>> 33e8806 (Base Completed)
     return (
         <>
             <div className='profile'>
@@ -30,6 +34,7 @@ export default function PublicProfilePage()
                 <div className='moreInfo'>
                     <div className='basicInfo'>
                         <h3><FontAwesomeIcon icon={faCircle}color='#0073EA'/>  Basic Info</h3>
+<<<<<<< HEAD
                         <div>
                             <p><strong>School:</strong></p>
                             <p className='basicContent'>Salesforce University</p>
@@ -70,6 +75,23 @@ export default function PublicProfilePage()
                             <p>12 weeks</p>
 
                         </div>
+=======
+                        <p><strong>School:</strong> Salesforce University</p>
+                        <Divider />
+                        <p><strong>Company:</strong> Salesforce</p>
+                        <Divider />
+                        <p><strong>Major:</strong> Computer Science</p>
+                        <Divider />
+                        <p><strong>Age:</strong> 20</p>
+                        <Divider />
+                        <p><strong>Location:</strong> San Francisco, CA</p>
+                    </div>
+                    <div className='intDetails'>
+                        <h3><FontAwesomeIcon icon={faCircle}color='#0073EA'/>  Internship Details</h3>
+                        <p><strong>Start Date:</strong> June 1, 2024</p>
+                        <p><strong>End Date:</strong> August 23, 2024</p>
+                        <p><strong>Duration:</strong> 12 weeks</p>
+>>>>>>> 33e8806 (Base Completed)
                     </div>
                     <div className='traits'>
                         <h3><FontAwesomeIcon icon={faCircle}color='#0073EA'/>  Traits</h3>
