@@ -105,7 +105,7 @@ export default function InternFinder()
             {profiles.length > 0 ? (
                 <>
                     <ProfileGrid profiles={profiles} />
-                    <Button variant="contained" size="large">View More Profiles</Button>
+                    {/* <Button variant="contained" size="large">View More Profiles</Button> */}
                 </>
             ) : (
                 <Box sx={{ textAlign: 'center', padding: '2rem', color: '#0073EA' }}>
