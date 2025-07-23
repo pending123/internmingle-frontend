@@ -47,24 +47,27 @@
 
 .profileTags 
 {
-    border: 1px solid blue;
-    all: unset;
+    /* all: unset; */ /* remove this */
     display: flex;
     gap: 1rem;
     padding: 0.2rem;
     width: 100%;
     justify-content: center;
+    flex-wrap: nowrap;
+    list-style: none; 
+    margin: 0; 
 }
 
 .profileTags li
 {
-    all: unset;
+    white-space: nowrap;
+    flex-shrink: 0;
     border: 1px solid black;
     border-radius: 0.8rem;
-    padding: 2px;
-    text-align: center;
     padding: 0.3rem 0.5rem;
+    text-align: center;
 }
+
 
 .profileCard Button 
 {
