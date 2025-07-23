@@ -6,6 +6,7 @@ import Navbar from './components/Navbar/Navbar';
 import LandingPage from './pages/LandingPage/LandingPage';
 import Events from './pages/EventsPage/EventsPage'
 import InternFinder from './pages/InternFinderPage/InternFinder';
+import HomePage from './pages/HomePage/HomePage';
 
 function App() {
   return (
@@ -40,7 +41,7 @@ function App() {
             path="/home"
             element={
               <SignedIn>
-                <h1>Home Page</h1>
+                <HomePage/>
               </SignedIn>
             }
           />
