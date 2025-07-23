@@ -9,7 +9,89 @@ import Navbar from './components/Navbar/Navbar';
 import LandingPage from './pages/LandingPage/LandingPage';
 import Events from './pages/EventsPage/EventsPage'
 import InternFinder from './pages/InternFinderPage/InternFinder';
-import PublicProfilePage from './pages/PublicProfilePage/PublicProfilePage';
+import HomePage from './pages/HomePage/HomePage';
+import OnboardingPage from './pages/OnboardingPage/OnboardingPage';
+
+// Configure axios base URL to point to your backend //look into this
+axios.defaults.baseURL = 'http://localhost:3000';
+
+// Checks if profile is complted
+function ProfileCompletionChecker({ children }: { children: React.ReactNode }) {
+  const { user, isLoaded } = useUser();
+  const { getToken } = useAuth();
+  const [profileCompleted, setProfileCompleted] = useState<boolean | null>(null);
+  const [isCheckingProfile, setIsCheckingProfile] = useState(true);
+
+  //makes sure profile is completed before proceeding
+  useEffect(() => {
+    const checkProfileCompletion = async () => {
+      if (!isLoaded || !user) { //CLAUDE SUGGESTED.. makes sure your user is authenticated
+        return;
+      }
+
+      try {
+        // get token using useAuth hook
+        const token = await getToken();
+        
+        if (!token) {
+          console.error('No authentication token available');
+          setProfileCompleted(false);
+          setIsCheckingProfile(false); //ask about what setischeckingprofile does
+          return;
+        }
+
+        const response = await axios.get('/api/profiles/me', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        
+        // Check if profile exists and is completed
+        const profileData = response.data;
+        const isCompleted = profileData && profileData.profileCompleted === true;
+        
+        console.log('Profile found:', { 
+          profileExists: Boolean(profileData),
+          profileCompleted: profileData?.profileCompleted, //why ?
+          isCompleted 
+        });
+        
+        setProfileCompleted(isCompleted);
+      } catch (error) {
+        // 404 is expected for new users
+          console.log('New user detected - profile needs to be created or profile not found');
+          setProfileCompleted(false);
+        } finally {
+          setIsCheckingProfile(false);
+        }
+    };
+
+    checkProfileCompletion();
+  }, [user, isLoaded, getToken]);
+
+  // Show loading state while checking profile
+  if (isCheckingProfile || !isLoaded) {
+    return <div>Loading...</div>;
+  }
+
+  // if profile is not completed, redirect to onboarding
+  if (profileCompleted === false) {
+    return <Navigate to="/onboarding" replace />;
+  }
+
+  return <>{children}</>;
+}
+
+// Protected route makes sure that user has completed onboarding first
+function ProtectedRoute({ children }: { children: React.ReactNode }) {
+  return (
+    <SignedIn>
+      <ProfileCompletionChecker>
+        {children}
+      </ProfileCompletionChecker>
+    </SignedIn>
+  );
+}
 import HomePage from './pages/HomePage/HomePage';
 import OnboardingPage from './pages/OnboardingPage/OnboardingPage';
 
