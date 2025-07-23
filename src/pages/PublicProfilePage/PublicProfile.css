@@ -5,7 +5,6 @@
     margin: 4vh auto;
     max-width: 1200px;
     width: 90%;
-    margin: 4vh 25vw;
     display: flex;
     flex-direction: column;
     padding: 1rem;
@@ -64,12 +63,6 @@ h2
     max-width: 100%;
     margin: 0 auto;
     padding: 0 1rem;
-    grid-template-columns: repeat(2, 350px);
-    grid-template-rows: 250px 150px 250px;
-    row-gap: 2.5rem;
-    column-gap: 5rem;
-    width: max-content;
-    margin: 0 auto;
 }
 
 .moreInfo p 
@@ -140,7 +133,6 @@ h2
 
 .traitList > div 
 {
-    border: 1px solid black;
     padding: 0.5rem;
     border-radius: 2rem;
     background-color: #0073EA;
@@ -157,7 +149,6 @@ h2
 
 .hobbyList > div 
 {
-    border: 1px solid black;
     padding: 0.5rem;
     border-radius: 2rem;
     background-color: #0073EA;
@@ -178,8 +169,6 @@ h2
     row-gap: 1.5rem;
     width: max-content;
     margin: 0 auto;
-    grid-template-columns: repeat(2, 330px);
-    gap: 1rem;
 }
 
 .prefList > div
