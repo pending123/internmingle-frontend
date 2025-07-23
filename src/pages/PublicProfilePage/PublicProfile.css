@@ -2,7 +2,7 @@
 {
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     border-radius: 1.5rem;
-    margin: 4vh 25vw;
+    margin: 4vh 15vw;
     display: flex;
     flex-direction: column;
     padding: 1rem;
@@ -52,12 +52,12 @@ h2
 .moreInfo 
 {
     display: grid;
-    grid-template-columns: repeat(2, 350px);
+    grid-template-columns: repeat(2, 400px);
     grid-template-rows: 250px 150px 250px;
     row-gap: 2.5rem;
-    column-gap: 5rem;
+    column-gap: 26vh;
     width: max-content;
-    margin: 0 auto;
+    margin-left: 1.5rem;
 }
 
 .moreInfo p 
@@ -113,7 +113,10 @@ h2
 {
     display: grid;
     grid-template-columns: repeat(2, 330px);
-    gap: 1rem;
+    column-gap: 7rem;
+    row-gap: 1.5rem;
+    width: max-content;
+    margin: 0 auto;
 }
 
 .prefList > div
