@@ -19,7 +19,7 @@ export default function ProfileCard()
                 <li>Video Games</li>
             </ul>
             <Button variant='contained' color='primary'>
-                <Link to="/public-profile/:id">View Profile</Link>
+                <Link to="/public-profile/1">View Profile</Link>
             </Button>
         </div>
         </>

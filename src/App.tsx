@@ -6,6 +6,7 @@ import Navbar from './components/Navbar/Navbar';
 import LandingPage from './pages/LandingPage/LandingPage';
 import Events from './pages/EventsPage/EventsPage'
 import InternFinder from './pages/InternFinderPage/InternFinder';
+import PublicProfilePage from './pages/PublicProfilePage/PublicProfilePage';
 
 function App() {
   return (
@@ -64,7 +65,7 @@ function App() {
             path="/public-profile/:id"
             element={
               <SignedIn>
-                <h1>Public Profile</h1>
+                <PublicProfilePage />
               </SignedIn>
             }
           />

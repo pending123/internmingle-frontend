@@ -1,0 +1,130 @@
+.profile 
+{
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    border-radius: 1.5rem;
+    margin: 4vh 25vw;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    background-color: white;
+}
+
+p 
+{
+    font-size: large;
+}
+
+h2 
+{
+    font-size: larger;
+}
+
+.demographics 
+{
+    display: flex;
+    width: 90%;
+    gap: 1.5rem;
+    padding: 1rem;
+}
+
+.profilePhoto 
+{
+    border: 1px solid #0073EA;
+    border-radius: 50%;
+    height: 150px;
+    width: 150px;
+}
+
+.about 
+{
+    margin: 1.5rem 2.5rem;
+}
+
+.bio 
+{
+    margin-top: 1rem;
+    margin-left: 1rem;
+    border-left: 3px solid #0073EA;
+    padding: 1rem;
+    border-radius: 1rem;
+}
+
+.moreInfo 
+{
+    display: grid;
+    grid-template-columns: repeat(2, 350px);
+    grid-template-rows: 250px 150px 250px;
+    row-gap: 2.5rem;
+    column-gap: 5rem;
+    width: max-content;
+    margin: 0 auto;
+}
+
+.moreInfo p 
+{
+   margin: 0.75rem;
+}
+
+.moreInfo > div
+{
+    padding-left: 1rem;
+}
+
+.traitList 
+{
+    display: flex;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+    text-wrap: nowrap;
+}
+
+.traitList > div 
+{
+    border: 1px solid black;
+    padding: 0.5rem;
+    border-radius: 2rem;
+    background-color: #0073EA;
+    color: white;
+}
+
+.hobbyList 
+{
+    display: flex;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+    text-wrap: nowrap;
+}
+
+.hobbyList > div 
+{
+    border: 1px solid black;
+    padding: 0.5rem;
+    border-radius: 2rem;
+    background-color: #0073EA;
+    color: white;
+}
+
+.housingPrefs 
+{
+    grid-column: 1 / span 2;
+}
+
+.prefList 
+{
+    display: grid;
+    grid-template-columns: repeat(2, 330px);
+    gap: 1rem;
+}
+
+.prefList > div
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #e0e5ea;
+}
+
+.prefList p 
+{
+    margin: 0.5rem;
+}
