@@ -55,7 +55,8 @@ export default function NeighborhoodsPage()
                                     value={info.walkScore} 
                                     text={`${info.walkScore}`}
                                     styles={buildStyles({
-                                        pathColor: '#0073EA',
+
+                                        pathColor: '#CCE5FF',
                                         textColor: 'black',
                                         strokeLinecap: 'butt'
                                     })} />
@@ -70,7 +71,8 @@ export default function NeighborhoodsPage()
                                     value={info.bikeScore} 
                                     text={`${info.bikeScore}`}
                                     styles={buildStyles({
-                                        pathColor: '#0073EA',
+
+                                        pathColor: '#CCE5FF',
                                         textColor: 'black',
                                         strokeLinecap: 'butt'
                                     })} />
@@ -85,7 +87,8 @@ export default function NeighborhoodsPage()
                                     value={info.transitScore} 
                                     text={`${info.transitScore}`}
                                     styles={buildStyles({
-                                        pathColor: '#0073EA',
+
+                                        pathColor: '#CCE5FF',
                                         textColor: 'black',
                                         strokeLinecap: 'butt'
                                     })} />

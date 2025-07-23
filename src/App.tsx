@@ -13,6 +13,7 @@ import HomePage from './pages/HomePage/HomePage';
 import OnboardingPage from './pages/OnboardingPage/OnboardingPage';
 import PublicProfilePage from './pages/PublicProfilePage/PublicProfilePage';
 
+
 // Configure axios base URL to point to your backend //look into this
 axios.defaults.baseURL = 'http://localhost:3000';
 
@@ -156,9 +157,10 @@ function App() {
           <Route 
             path="/public-profile/:id"
             element={
-              <SignedIn>
+              <ProtectedRoute>
                 <PublicProfilePage />
-              </SignedIn>
+              </ProtectedRoute>
+
             }
           />
           <Route 
