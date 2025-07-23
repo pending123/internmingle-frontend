@@ -37,7 +37,7 @@ function ProfileCompletionChecker({ children }: { children: React.ReactNode }) {
       try {
         // get token using useAuth hook
         const token = await getToken();
-
+        console.log("token", token);
         if (!token) {
           console.error("No authentication token available");
           setProfileCompleted(false);
