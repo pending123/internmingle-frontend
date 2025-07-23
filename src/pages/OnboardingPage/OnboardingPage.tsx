@@ -7,11 +7,10 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import axios from 'axios';
 import './OnboardingPage.css';
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
 
-// Configure axios base URL to point to backend
-axios.defaults.baseURL = 'http://localhost:3000';
+axios.defaults.baseURL = BACKEND_URL;
 
-// hardcoded data for traits and hobbies -  PLACEHOLDERS 
 const AVAILABLE_TRAITS = [
   'Organized', 'Creative', 'Outgoing', 'Analytical', 'Empathetic', 
   'Adventurous', 'Detail-oriented', 'Team player', 'Independent', 'Optimistic'
@@ -71,9 +70,9 @@ export default function OnboardingPage() {
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
-  const [isCheckingProfile, setIsCheckingProfile] = useState(true);
+  const [isCheckingProfile, setIsCheckingProfile] = useState(true); //LOOK INTO THIS
 
-  const [formData, setFormData] = useState<OnboardingData>({
+  const [formData, setFormData] = useState<OnboardingData>({ //LOOK INTO THIS.. how does this work? why do you intially have to make everything an empty string
     workCity: '',
     workZipcode: '',
     university: '',
@@ -94,14 +93,14 @@ export default function OnboardingPage() {
     noiseLevel: ''
   });
 
-  const updateFormData = (updates: Partial<OnboardingData>) => {
+  const updateFormData = (updates: Partial<OnboardingData>) => { //what does this do?
     setFormData(prev => ({ ...prev, ...updates }));
   };
 
   // check if profile is already completed
   useEffect(() => {
     const checkIfAlreadyCompleted = async () => {
-      if (!user) return;
+      if (!user) return; //what does this line do?
 
       try {
         const token = await getToken();
@@ -116,7 +115,7 @@ export default function OnboardingPage() {
           navigate('/intern-finder', { replace: true });
         }
       } catch (error: any) {
-        // 404 error message expected for new users since completing profile for the first time
+        // 404 error message expected for new users since completing profile for the first time --- CLAUDE SUGGESTED
         if (error.response?.status === 404) {
           console.log('New user confirmed - starting onboarding');
         } else {
@@ -128,7 +127,7 @@ export default function OnboardingPage() {
     };
 
     checkIfAlreadyCompleted();
-  }, [user, getToken, navigate]);
+  }, [user, getToken, navigate]); //how does this work??
 
   const validateStep = () => {
     switch (currentStep) {
@@ -138,7 +137,7 @@ export default function OnboardingPage() {
         return true; // This step is optional, a user may choose to skip it.
       case 3:
         return (
-          formData.university.trim() !== '' &&
+          formData.university.trim() !== '' && // why do you have to trim?
           formData.schoolMajor.trim() !== '' &&
           formData.company.trim() !== '' &&
           formData.workPosition.trim() !== '' &&
@@ -211,7 +210,7 @@ export default function OnboardingPage() {
     setError('');
 
     try {
-      // Get authentication token from Clerk useAuth hook
+      // Get authentication token from Clerk
       const token = await getToken();
       
       if (!token) {
@@ -219,7 +218,7 @@ export default function OnboardingPage() {
         return;
       }
       
-      // Prepare data for API - converting types as needed
+      // Prepare data for API - converts types as needed
       const submitData = {
         firstName: user?.firstName || '',
         lastName: user?.lastName || '',
@@ -618,7 +617,7 @@ export default function OnboardingPage() {
           {/* Current Step Content */}
           {renderStep()}
 
-          {/* Navigation Buttons */}
+          {/* nav Buttons */}
           <div className="navigation-buttons">
             <div>
               {currentStep > 1 && (

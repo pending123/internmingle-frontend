@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import './EventModal.css'
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
 
 
 //Gets event creation info from Modal and posts it to db
@@ -36,7 +37,7 @@ const EventModal =  ( {handleCloseModalClick}) => {
 
         try{
             console.log("Hello")
-            await axios.post("http://localhost:3000/events", eventData)
+            await axios.post(`${BACKEND_URL}/events`, eventData)
             handleCloseModalClick()
             resetModal()
         }catch(error){
