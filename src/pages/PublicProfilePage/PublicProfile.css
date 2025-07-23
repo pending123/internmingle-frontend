@@ -2,12 +2,13 @@
 {
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     border-radius: 1.5rem;
-    margin: 4vh 17vw;
+    margin: 4vh auto;
+    max-width: 1200px;
+    width: 90%;
     display: flex;
     flex-direction: column;
     padding: 1rem;
     background-color: white;
-    align-items: center;
 }
 
 p 
@@ -22,7 +23,6 @@ h2
 
 .demographics 
 {
-    border: 1px solid black;
     display: flex;
     width: 90%;
     gap: 1.5rem;
@@ -40,7 +40,6 @@ h2
 .about 
 {
     margin: 1.5rem 2.5rem;
-    border: 1px solid black;
 }
 
 .bio 
@@ -55,13 +54,15 @@ h2
 .moreInfo 
 {
     display: grid;
-    grid-template-columns: repeat(2, 450px);
+    box-sizing: border-box;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-template-rows: 320px 150px 250px;
-    row-gap: 3rem;
-    column-gap: 5vh;
-    width: max-content;
-    border: 1px solid black;
-    padding-right: 1rem;
+    row-gap: 2rem;
+    column-gap: 8vh;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0 1rem;
 }
 
 .moreInfo p 
@@ -157,12 +158,13 @@ h2
 .housingPrefs 
 {
     grid-column: 1 / span 2;
+    text-align: center;
 }
 
 .prefList 
 {
     display: grid;
-    grid-template-columns: repeat(2, 330px);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     column-gap: 7rem;
     row-gap: 1.5rem;
     width: max-content;
