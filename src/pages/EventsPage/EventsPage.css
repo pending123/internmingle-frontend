@@ -1,26 +1,18 @@
-/* Style the container div to enable positioning for its children */
 .searchBarContainer {
-  /* If this div is inside a header, make the header relative. */
-  /* If this div IS the "box section" and needs to be positioned within ITS parent: */
-  position: relative; /* This makes it the positioning context for its children */
-  width: 100%; /* Example: it takes full width of its parent */
-  height: 60px; /* Example: give it some height if it's just a container */
-  /* Add background or border here if you want to visualize its "box section" */
-  /* background-color: #f9f9f9; */
-  /* border: 1px dashed #ccc; */
+  position: relative;
+  width: 100%;
+  height: 60px;
 }
 
-/* Position the form (containing input and buttons) to the top-right of its parent div */
 .searchBarContainer form {
-  position: absolute; /* Takes the form out of normal document flow */
-  top: 0; /* Aligns it to the top edge of its parent (.search-bar-and-buttons-container) */
-  right: 0; /* Aligns it to the right edge of its parent */
+  position: absolute;
+  top: 0;
+  right: 0;
   padding: 10px; /* Add some padding around the search bar and buttons */
-
-  /* Make the input and buttons go side-by-side */
-  display: flex; /* Uses Flexbox for horizontal arrangement */
-  align-items: center; /* Vertically aligns items (input and buttons) in the middle */
-  gap: 8px; /* Adds space between the input, search button, and clear button */
+  margin-right: 170px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 /* Basic styling for the input and buttons */
@@ -50,6 +42,7 @@
 
 .searchButton:hover {
   background-color: #0056b3;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 .clearButton {
@@ -59,6 +52,7 @@
 
 .clearButton:hover {
   background-color: #5a6268;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 /* Styling for the container of category buttons */
@@ -69,22 +63,24 @@
   padding: 0; /* Removes default padding from <ul>/<li> if they were there */
   margin: 20px 0; /* Adds some vertical space around the button group */
   gap: 10px; /* Adds space between individual buttons */
-  justify-content: center; /* Centers the buttons within the container */
+  justify-content: left; /* Centers the buttons within the container */
   align-items: center; /* Vertically aligns them */
+  margin-left: 170px;
 }
 
 /* Styling for the category buttons themselves */
 .categoryButtonsContainer button {
-  padding: 10px 15px; /* Spacing inside the button */
+   /* Spacing inside the button */
   border: 1px solid #ccc; /* Light gray border */
   border-radius: 20px; /* Rounded corners (pill shape) */
-  background-color: #f0f0f0; /* Light gray background */
+  background-color: #f5f7f9; /* Light gray background */
   color: #333; /* Dark gray text */
   font-size: 1rem; /* Standard font size */
   cursor: pointer; /* Indicates it's clickable */
   transition: all 0.2s ease-in-out; /* Smooth transitions for hover/active states */
   text-align: center;
   white-space: nowrap; /* Prevent text from wrapping inside the button */
+  padding: 12px 20px;
 }
 
 /* Hover state for category buttons */
@@ -105,25 +101,35 @@
 }
 
 .createEvent {
-    display: block;      /* Makes it a block element to take its own line */
-    width: fit-content;  /* Adjusts width to content */
-    margin: 20px auto;   /* Centers the button horizontally with top/bottom margin */
-    padding: 12px 25px;  /* Spacing inside the button */
-    border: 1px solid #ccc; /* Match category button border */
-    border-radius: 20px; /* Match category button border-radius */
-    background-color: #f0f0f0; /* Match category button background */
-    color: #333;         /* Match category button text color */
-    font-size: 1.1rem;   /* Slightly larger font */
-    cursor: pointer;     /* Indicates it's clickable */
-    transition: all 0.2s ease-in-out; /* Smooth transitions */
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15); /* Slightly less pronounced shadow than active category */
+  width: fit-content; /* Adjusts width to content */
+  margin: 20px auto; /* Centers the button horizontally with top/bottom margin */
+  padding: 12px 25px; /* Spacing inside the button */
+  border: 1px solid #ccc; /* Match category button border */
+  border-radius: 20px; /* Match category button border-radius */
+  background-color: #007bff; /* Match category button background */
+  color: white; /* Match category button text color */
+  font-size: 1.1rem; /* Slightly larger font */
+  cursor: pointer; /* Indicates it's clickable */
+  transition: all 0.2s ease-in-out; /* Smooth transitions */
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15); /* Slightly less pronounced shadow than active category */
+  display: inline-block; /* Or just remove display: block */
+  margin-right: 185px;
+  flex-shrink: 0;
 }
 
 /* Hover state for 'Create New Event' button - matches category button hover */
 .createEvent:hover {
-    background-color: #e0e0e0; /* Match category button hover background */
-    border-color: #999;       /* Match category button hover border */
-    color: #000;              /* Match category button hover text color */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25); /* Match category button hover shadow */
+  background-color: #0056b3; /* Match category button hover background */
+  /* Match category button hover border */
+  color: white; /* Match category button hover text color */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25); /* Match category button hover shadow */
 }
 
+.categoriesAndCreateContainer {
+  display: flex; /* Makes its direct children (the category div and the create button) flex items */
+  align-items: center; /* Vertically centers items in the row */
+  justify-content: space-between; /* Pushes content to the ends: categories left, create button right */
+  width: 100%; /* Ensure it takes full width if needed */
+  margin-top: 20px; /* Example: Adds space above this whole section */
+  padding: 0 10px; /* Optional: some horizontal padding */
+}

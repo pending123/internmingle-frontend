@@ -9,6 +9,7 @@ import Navbar from './components/Navbar/Navbar';
 import LandingPage from './pages/LandingPage/LandingPage';
 import Events from './pages/EventsPage/EventsPage'
 import InternFinder from './pages/InternFinderPage/InternFinder';
+import HomePage from './pages/HomePage/HomePage';
 import OnboardingPage from './pages/OnboardingPage/OnboardingPage';
 
 // Configure axios base URL to point to your backend //look into this
@@ -130,9 +131,9 @@ function App() {
           <Route 
             path="/home"
             element={
-              <ProtectedRoute>
-                <h1>Home Page</h1>
-              </ProtectedRoute>
+              <SignedIn>
+                <HomePage/>
+              </SignedIn>
             }
           />
           <Route 
