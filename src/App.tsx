@@ -4,18 +4,17 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-import NeighborhoodsPage from './pages/NeighborhoodsPage/NeighborhoodsPage';
-import Navbar from './components/Navbar/Navbar';
-import LandingPage from './pages/LandingPage/LandingPage';
-import Events from './pages/EventsPage/EventsPage'
-import InternFinder from './pages/InternFinderPage/InternFinder';
-import HomePage from './pages/HomePage/HomePage';
-import OnboardingPage from './pages/OnboardingPage/OnboardingPage';
-import PublicProfilePage from './pages/PublicProfilePage/PublicProfilePage';
-
+import NeighborhoodsPage from "./pages/NeighborhoodsPage/NeighborhoodsPage";
+import Navbar from "./components/Navbar/Navbar";
+import LandingPage from "./pages/LandingPage/LandingPage";
+import Events from "./pages/EventsPage/EventsPage";
+import InternFinder from "./pages/InternFinderPage/InternFinder";
+import HomePage from "./pages/HomePage/HomePage";
+import OnboardingPage from "./pages/OnboardingPage/OnboardingPage";
+import PublicProfilePage from "./pages/PublicProfilePage/PublicProfilePage";
 
 // Configure axios base URL to point to your backend //look into this
-axios.defaults.baseURL = "http://localhost:3000";
+axios.defaults.baseURL = "http://localhost:3001";
 
 // Checks if profile is complted
 function ProfileCompletionChecker({ children }: { children: React.ReactNode }) {
@@ -39,7 +38,7 @@ function ProfileCompletionChecker({ children }: { children: React.ReactNode }) {
       try {
         // get token using useAuth hook
         const token = await getToken();
-
+        console.log("token", token);
         if (!token) {
           console.error("No authentication token available");
           setProfileCompleted(false);
@@ -172,7 +171,6 @@ function App() {
               <ProtectedRoute>
                 <PublicProfilePage />
               </ProtectedRoute>
-
             }
           />
           <Route

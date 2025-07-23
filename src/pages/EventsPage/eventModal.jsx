@@ -18,7 +18,7 @@ const EventModal = ({ handleCloseModalClick }) => {
     setCategory("");
     setLocation("");
     setDate("");
-    setTimeInput("");
+    setTime("");
     setDescription("");
     setTitle("");
   };
@@ -41,10 +41,12 @@ const EventModal = ({ handleCloseModalClick }) => {
     console.log(combinedDateTime);
     console.log(clerkId);
 
+
     try {
       const token = await getToken();
       console.log("Hello");
-      await axios.post("http://localhost:3000/events", eventData, {
+      console.log(eventData)
+      await axios.post("http://localhost:3001/events", eventData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
