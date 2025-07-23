@@ -25,7 +25,7 @@ const EventModal =  ( {handleCloseModalClick}) => {
     const handleFormSubmit = async (event)=>{    
         event.preventDefault()
         
-        const combinedDateTime = `${dateInput}T${timeInput}`;
+        const combinedDateTime = `${date}T${time}`;
 
         const eventData = {
             category: category,
@@ -35,6 +35,7 @@ const EventModal =  ( {handleCloseModalClick}) => {
         }
 
         try{
+            console.log("Hello")
             await axios.post("http://localhost:3000/events", eventData)
             handleCloseModalClick()
             resetModal()
