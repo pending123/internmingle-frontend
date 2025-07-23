@@ -1,6 +1,9 @@
 import './App.css'
-import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from '@clerk/clerk-react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { SignedIn, SignedOut, useUser, useAuth } from '@clerk/clerk-react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+
 import NeighborhoodsPage from './pages/NeighborhoodsPage/NeighborhoodsPage';
 import Navbar from './components/Navbar/Navbar';
 import LandingPage from './pages/LandingPage/LandingPage';
@@ -23,42 +26,48 @@ function App() {
             path="/"
             element={
               <>
-              <SignedOut>
-                <LandingPage />
-              </SignedOut>
+                <SignedOut>
+                  <LandingPage />
+                </SignedOut>
+                <SignedIn>
+                  <Navigate to="/intern-finder" replace /> //what does replace do
+                </SignedIn>
               </>
             }
           />
+          
           <Route 
             path="/onboarding"
             element={
               <SignedIn>
-                <h1>Onboarding Page</h1>
+                <OnboardingPage />
               </SignedIn>
             }
           />
+          
+          {/* Protected routes bc that requires that a user's profile be completed first*/}
           <Route 
             path="/home"
             element={
-              <SignedIn>
+              <ProtectedRoute>
                 <h1>Home Page</h1>
-              </SignedIn>
+              </ProtectedRoute>
             }
           />
           <Route 
             path="/edit-profile"
             element={
-              <SignedIn>
+              <ProtectedRoute>
                 <h1>Edit Profile</h1>
-              </SignedIn>
+              </ProtectedRoute>
             }
           />
           <Route 
             path="/intern-finder"
             element={
-              <SignedIn>
+              <ProtectedRoute>
                 <InternFinder />
-              </SignedIn>
+              </ProtectedRoute>
             }
           />
           <Route 
@@ -72,25 +81,25 @@ function App() {
           <Route 
             path="/neighborhoods"
             element={
-              <SignedIn>
+              <ProtectedRoute>
                 <NeighborhoodsPage />
-              </SignedIn>
+              </ProtectedRoute>
             }
           />
           <Route 
             path="/events"
             element={
-              <SignedIn>
+              <ProtectedRoute>
                 <Events/>
-              </SignedIn>
+              </ProtectedRoute>
             }
           />
           <Route 
             path="/events/:id"
             element={
-              <SignedIn>
+              <ProtectedRoute>
                 <h1>Individual Event</h1>
-              </SignedIn>
+              </ProtectedRoute>
             }
           />
         </Routes>
