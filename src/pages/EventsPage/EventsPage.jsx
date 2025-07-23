@@ -5,6 +5,8 @@ import "./EventsPage.css";
 import EventModal from "./eventModal";
 import EventGrid from "./EventGrid";
 import SearchBar from "../../components/SearchBar/SearchBar";
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
+
 
 const eventsPage = () => {
   const fakeEvents = [
@@ -116,7 +118,7 @@ const eventsPage = () => {
         setLoading(true);
 
         const { data: eventData } = await axios.get(
-          `http://localhost:3000/events?category=${category}&searchTerm=${submittedSearch}&limit=20&skip=${skip}`
+          `${BACKEND_URL}/events?category=${category}&searchTerm=${submittedSearch}&limit=20&skip=${skip}`
         );
         setEvents((prevEvents) => [...prevEvents, ...eventData]);
       } catch (error) {
