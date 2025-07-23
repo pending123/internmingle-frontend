@@ -9,11 +9,8 @@ import axios from 'axios';
 import './OnboardingPage.css';
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
 
-
-// Configure axios base URL to point to backend
 axios.defaults.baseURL = BACKEND_URL;
 
-// hardcoded data for traits and hobbies -  PLACEHOLDERS 
 const AVAILABLE_TRAITS = [
   'Organized', 'Creative', 'Outgoing', 'Analytical', 'Empathetic', 
   'Adventurous', 'Detail-oriented', 'Team player', 'Independent', 'Optimistic'
