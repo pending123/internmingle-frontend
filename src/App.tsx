@@ -1,69 +1,79 @@
-import './App.css'
-import { SignedIn, SignedOut, useUser, useAuth } from '@clerk/clerk-react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import "./App.css";
+import { SignedIn, SignedOut, useUser, useAuth } from "@clerk/clerk-react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
-import NeighborhoodsPage from './pages/NeighborhoodsPage/NeighborhoodsPage';
-import Navbar from './components/Navbar/Navbar';
-import LandingPage from './pages/LandingPage/LandingPage';
-import Events from './pages/EventsPage/EventsPage'
-import InternFinder from './pages/InternFinderPage/InternFinder';
-import HomePage from './pages/HomePage/HomePage';
-import OnboardingPage from './pages/OnboardingPage/OnboardingPage';
+import NeighborhoodsPage from "./pages/NeighborhoodsPage/NeighborhoodsPage";
+import Navbar from "./components/Navbar/Navbar";
+import LandingPage from "./pages/LandingPage/LandingPage";
+import Events from "./pages/EventsPage/EventsPage";
+import InternFinder from "./pages/InternFinderPage/InternFinder";
+import HomePage from "./pages/HomePage/HomePage";
+import OnboardingPage from "./pages/OnboardingPage/OnboardingPage";
 
 // Configure axios base URL to point to your backend //look into this
-axios.defaults.baseURL = 'http://localhost:3000';
+axios.defaults.baseURL = "http://localhost:3000";
 
 // Checks if profile is complted
 function ProfileCompletionChecker({ children }: { children: React.ReactNode }) {
   const { user, isLoaded } = useUser();
   const { getToken } = useAuth();
-  const [profileCompleted, setProfileCompleted] = useState<boolean | null>(null);
+  const [profileCompleted, setProfileCompleted] = useState<boolean | null>(
+    null
+  );
   const [isCheckingProfile, setIsCheckingProfile] = useState(true);
 
   //makes sure profile is completed before proceeding
   useEffect(() => {
     const checkProfileCompletion = async () => {
-      if (!isLoaded || !user) { //CLAUDE SUGGESTED.. makes sure your user is authenticated
+      console.log("TEST");
+      if (!isLoaded || !user) {
+        console.log("!isLoaded || !user");
+        //CLAUDE SUGGESTED.. makes sure your user is authenticated
         return;
       }
 
       try {
         // get token using useAuth hook
         const token = await getToken();
-        
+
         if (!token) {
-          console.error('No authentication token available');
+          console.error("No authentication token available");
           setProfileCompleted(false);
           setIsCheckingProfile(false); //ask about what setischeckingprofile does
           return;
         }
-
-        const response = await axios.get('/api/profiles/me', {
+        console.log("hit line 47");
+        const response = await axios.get("/api/profiles/me", {
           headers: {
-            'Authorization': `Bearer ${token}`
-          }
+            Authorization: `Bearer ${token}`,
+          },
         });
-        
+        console.log(response);
+
         // Check if profile exists and is completed
         const profileData = response.data;
-        const isCompleted = profileData && profileData.profileCompleted === true;
-        
-        console.log('Profile found:', { 
+        const isCompleted =
+          profileData && profileData.profileCompleted === true;
+
+        console.log("Profile found:", {
           profileExists: Boolean(profileData),
           profileCompleted: profileData?.profileCompleted, //why ?
-          isCompleted 
+          isCompleted,
         });
-        
+
         setProfileCompleted(isCompleted);
       } catch (error) {
         // 404 is expected for new users
-          console.log('New user detected - profile needs to be created or profile not found');
-          setProfileCompleted(false);
-        } finally {
-          setIsCheckingProfile(false);
-        }
+        console.log(
+          "New user detected - profile needs to be created or profile not found"
+        );
+        setProfileCompleted(false);
+      } finally {
+        console.log("setIsCheckingProfile(false);");
+        setIsCheckingProfile(false);
+      }
     };
 
     checkProfileCompletion();
@@ -71,6 +81,9 @@ function ProfileCompletionChecker({ children }: { children: React.ReactNode }) {
 
   // Show loading state while checking profile
   if (isCheckingProfile || !isLoaded) {
+    console.log(
+      `isCheckingProfile = ${isCheckingProfile} || !isLoaded = ${!isLoaded}`
+    );
     return <div>Loading...</div>;
   }
 
@@ -86,9 +99,7 @@ function ProfileCompletionChecker({ children }: { children: React.ReactNode }) {
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   return (
     <SignedIn>
-      <ProfileCompletionChecker>
-        {children}
-      </ProfileCompletionChecker>
+      <ProfileCompletionChecker>{children}</ProfileCompletionChecker>
     </SignedIn>
   );
 }
@@ -112,13 +123,14 @@ function App() {
                   <LandingPage />
                 </SignedOut>
                 <SignedIn>
-                  <Navigate to="/intern-finder" replace /> //what does replace do
+                  <Navigate to="/intern-finder" replace /> //what does replace
+                  do
                 </SignedIn>
               </>
             }
           />
-          
-          <Route 
+
+          <Route
             path="/onboarding"
             element={
               <SignedIn>
@@ -126,17 +138,17 @@ function App() {
               </SignedIn>
             }
           />
-          
+
           {/* Protected routes bc that requires that a user's profile be completed first*/}
-          <Route 
+          <Route
             path="/home"
             element={
               <SignedIn>
-                <HomePage/>
+                <HomePage />
               </SignedIn>
             }
           />
-          <Route 
+          <Route
             path="/edit-profile"
             element={
               <ProtectedRoute>
@@ -144,7 +156,7 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route 
+          <Route
             path="/intern-finder"
             element={
               <ProtectedRoute>
@@ -152,7 +164,7 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route 
+          <Route
             path="/public-profile/:id"
             element={
               <ProtectedRoute>
@@ -160,7 +172,7 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route 
+          <Route
             path="/neighborhoods"
             element={
               <ProtectedRoute>
@@ -168,15 +180,15 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route 
+          <Route
             path="/events"
             element={
               <ProtectedRoute>
-                <Events/>
+                <Events />
               </ProtectedRoute>
             }
           />
-          <Route 
+          <Route
             path="/events/:id"
             element={
               <ProtectedRoute>
@@ -187,7 +199,7 @@ function App() {
         </Routes>
       </main>
     </BrowserRouter>
-  )
+  );
 }
 
-export default App
+export default App;

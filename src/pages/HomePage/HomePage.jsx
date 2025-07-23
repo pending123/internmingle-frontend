@@ -39,7 +39,7 @@ const HomePage = () => {
                   textAlign: "center",
                 }}
               >
-                Welcome to InterMingle
+                Welcome to InternMingle
               </Typography>
               <Typography
                 variant="h6"
