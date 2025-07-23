@@ -4,13 +4,15 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-import NeighborhoodsPage from "./pages/NeighborhoodsPage/NeighborhoodsPage";
-import Navbar from "./components/Navbar/Navbar";
-import LandingPage from "./pages/LandingPage/LandingPage";
-import Events from "./pages/EventsPage/EventsPage";
-import InternFinder from "./pages/InternFinderPage/InternFinder";
-import HomePage from "./pages/HomePage/HomePage";
-import OnboardingPage from "./pages/OnboardingPage/OnboardingPage";
+import NeighborhoodsPage from './pages/NeighborhoodsPage/NeighborhoodsPage';
+import Navbar from './components/Navbar/Navbar';
+import LandingPage from './pages/LandingPage/LandingPage';
+import Events from './pages/EventsPage/EventsPage'
+import InternFinder from './pages/InternFinderPage/InternFinder';
+import HomePage from './pages/HomePage/HomePage';
+import OnboardingPage from './pages/OnboardingPage/OnboardingPage';
+import PublicProfilePage from './pages/PublicProfilePage/PublicProfilePage';
+
 
 // Configure axios base URL to point to your backend //look into this
 axios.defaults.baseURL = "http://localhost:3000";
@@ -168,8 +170,9 @@ function App() {
             path="/public-profile/:id"
             element={
               <ProtectedRoute>
-                <h1>Public Profile</h1>
+                <PublicProfilePage />
               </ProtectedRoute>
+
             }
           />
           <Route

@@ -1,5 +1,6 @@
 import './ProfileCard.css';
 import { Button } from '@mui/material';
+import { Link } from "react-router-dom";
 
 export default function ProfileCard() 
 {
@@ -17,7 +18,9 @@ export default function ProfileCard()
                 <li>Design</li>
                 <li>Video Games</li>
             </ul>
-            <Button variant='contained' color='primary'>View Profile</Button>
+            <Button variant='contained' color='primary'>
+                <Link to="/public-profile/1">View Profile</Link>
+            </Button>
         </div>
         </>
     )

@@ -55,6 +55,7 @@ export default function NeighborhoodsPage()
                                     value={info.walkScore} 
                                     text={`${info.walkScore}`}
                                     styles={buildStyles({
+
                                         pathColor: '#CCE5FF',
                                         textColor: 'black',
                                         strokeLinecap: 'butt'
@@ -70,6 +71,7 @@ export default function NeighborhoodsPage()
                                     value={info.bikeScore} 
                                     text={`${info.bikeScore}`}
                                     styles={buildStyles({
+
                                         pathColor: '#CCE5FF',
                                         textColor: 'black',
                                         strokeLinecap: 'butt'
@@ -85,6 +87,7 @@ export default function NeighborhoodsPage()
                                     value={info.transitScore} 
                                     text={`${info.transitScore}`}
                                     styles={buildStyles({
+
                                         pathColor: '#CCE5FF',
                                         textColor: 'black',
                                         strokeLinecap: 'butt'
@@ -101,10 +104,11 @@ export default function NeighborhoodsPage()
                     (<div className="places">
                         <h2>Points of Interest </h2>
                         <div className="placeList">
-                            {info.places.map((place: { name: string; address: string; }) => (
+                            {info.places.map((place: { name: string; address: string; category: string}) => (
                                 <Place 
                                     name={place.name} 
                                     address={place.address}
+                                    category={place.category}
                                     key={`${place.name}-${place.address}`}
                                 />
                             ))}
