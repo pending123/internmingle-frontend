@@ -32,27 +32,27 @@ export default function PublicProfilePage()
                         <h3><FontAwesomeIcon icon={faCircle}color='#0073EA'/>  Basic Info</h3>
                         <div>
                             <p><strong>School:</strong></p>
-                            <p>Salesforce University</p>
+                            <p className='basicContent'>Salesforce University</p>
                         </div>
                         <Divider />
                         <div>
                             <p><strong>Company:</strong></p>
-                            <p>Salesforce</p>
+                            <p className='basicContent'>Salesforce</p>
                         </div>
                         <Divider />
                         <div>
                             <p><strong>Major:</strong></p>
-                            <p>Computer Science</p>
+                            <p className='basicContent'>Computer Science</p>
                         </div>
                         <Divider />
                         <div>
                             <p><strong>Age:</strong></p>
-                            <p>20</p>
+                            <p className='basicContent'>20</p>
                         </div>
                         <Divider />
                         <div>
                             <p><strong>Location:</strong></p>
-                            <p>San Francisco, CA</p>
+                            <p className='basicContent'>San Francisco, CA</p>
                         </div>
                     </div>
                     <div className='intDetails'>
