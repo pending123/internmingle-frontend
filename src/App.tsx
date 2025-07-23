@@ -10,12 +10,11 @@ import Events from "./pages/EventsPage/EventsPage";
 import InternFinder from "./pages/InternFinderPage/InternFinder";
 import HomePage from "./pages/HomePage/HomePage";
 import OnboardingPage from "./pages/OnboardingPage/OnboardingPage";
-import PublicProfilePage from "./pages/PublicProfilePage/PublicProfilePage";
-import Event from "./pages/EventsPage/event"
+import Event from "./pages/EventsPage/event";
 
 import PublicProfile from "./pages/PublicProfilePage/PublicProfile";
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 axios.defaults.baseURL = BACKEND_URL;
 
 // Checks if profile is complted
@@ -79,7 +78,11 @@ function ProfileCompletionChecker({ children }: { children: React.ReactNode }) {
     console.log(
       `isCheckingProfile = ${isCheckingProfile} || !isLoaded = ${!isLoaded}`
     );
-    return <div><CircularProgress /></div>;
+    return (
+      <div>
+        <CircularProgress />
+      </div>
+    );
   }
   // if profile is not completed, redirect to onboarding
   if (profileCompleted === false) {
@@ -137,10 +140,10 @@ function App() {
             }
           />
           <Route
-            path="/profiles/me" 
+            path="/profiles/me"
             element={
               <ProtectedRoute>
-                <PersonalProfilePage />
+                <PublicProfile />
               </ProtectedRoute>
             }
           />
@@ -189,7 +192,7 @@ function App() {
             path="/events/:eventId"
             element={
               <ProtectedRoute>
-                <Event/>
+                <Event />
               </ProtectedRoute>
             }
           />

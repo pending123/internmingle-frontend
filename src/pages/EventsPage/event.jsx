@@ -328,7 +328,7 @@ const Event = () => {
           <Grid size={6} offset={{ md: "auto" }} >
             <Box
               sx={{
-                bgcolor: "white",
+                
                 p: { xs: 3, sm: 4 },
                 borderRadius: "12px",
                 boxShadow: "0 4px 12px rgba(0,0,0,0.05)",

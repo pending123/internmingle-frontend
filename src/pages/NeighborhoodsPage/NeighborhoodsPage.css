@@ -9,6 +9,7 @@
 .neighborhoodContainer h2 
 {
     font-weight: 500;
+    font-family: 'Inter', sans-serif; 
 }
 
 .neighborhoodContainer > h3 {

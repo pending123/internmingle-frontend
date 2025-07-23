@@ -228,6 +228,7 @@ const EventModal = ({ handleCloseModalClick }) => {
             fullWidth
             margin="normal"
             variant="outlined"
+            mb={0}
           />
 
           {/* Location */}

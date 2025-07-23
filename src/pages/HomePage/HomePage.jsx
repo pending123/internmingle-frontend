@@ -110,7 +110,7 @@ const HomePage = () => {
                 internship company, and interests, helping you find common
                 ground and initiate connections
               </Typography>
-              <Button
+              {/* <Button
                 variant="contained"
                 component={Link}
                 to="/intern-finder"
@@ -126,7 +126,7 @@ const HomePage = () => {
                 }}
               >
                 View Interns Near You
-              </Button>
+              </Button> */}
             </Grid>
             {/* Picture of Interns */}
 
@@ -200,7 +200,7 @@ const HomePage = () => {
                 routes, and the ability to find local attractions, restaurants,
                 and amenities.
               </Typography>
-              <Button
+              {/* <Button
                 variant="contained"
                 component={Link}
                 to="/neighborhoods"
@@ -216,7 +216,7 @@ const HomePage = () => {
                 }}
               >
                 Try it now
-              </Button>
+              </Button> */}
             </Grid>
           </Grid>
         </Container>
@@ -258,7 +258,7 @@ const HomePage = () => {
                 location, and time, helping you plan your social calendar and
                 meet new people with shared interests.
               </Typography>
-              <Button
+              {/* <Button
                 variant="contained"
                 component={Link}
                 to="/events"
@@ -274,7 +274,7 @@ const HomePage = () => {
                 }}
               >
                 View Events Near You
-              </Button>
+              </Button> */}
             </Grid>
             {/* Picture of Interns */}
 
