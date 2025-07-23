@@ -9,6 +9,7 @@ import Navbar from './components/Navbar/Navbar';
 import LandingPage from './pages/LandingPage/LandingPage';
 import Events from './pages/EventsPage/EventsPage'
 import InternFinder from './pages/InternFinderPage/InternFinder';
+import PublicProfilePage from './pages/PublicProfilePage/PublicProfilePage';
 import HomePage from './pages/HomePage/HomePage';
 import OnboardingPage from './pages/OnboardingPage/OnboardingPage';
 
