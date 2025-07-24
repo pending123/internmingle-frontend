@@ -4,6 +4,8 @@ import { format } from "date-fns"; // For date formatting
 import AddImage from "../../assets/AddImage.png";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
+
 
 const Event = () => {
   const { eventId } = useParams();
@@ -17,7 +19,7 @@ const Event = () => {
         setLoading(true);
         setError(null);
         const response = await axios.get(
-          `http://localhost:3001/events/${eventId}`
+          `${BACKEND_URL}/events/${eventId}`
         );
         setEvent(response.data);
       } catch (err) {
