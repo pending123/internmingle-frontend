@@ -2,24 +2,48 @@ import './ProfileCard.css';
 import { Button } from '@mui/material';
 import { Link } from "react-router-dom";
 
-export default function ProfileCard() 
+type Profile = {
+  userId: number;
+  firstName: string;
+  lastName: string;
+  gender: string;
+  university: string;
+  schoolMajor: string;
+  company: string;
+  workPosition: string;
+  workCity: string;
+  bio: string;
+  isLookingForHousing: boolean;
+  hobbies: string[];
+  traits: string[];
+};
+
+type ProfileCardProps = {
+  profile: Profile;
+};
+
+
+
+export default function ProfileCard({ profile }: ProfileCardProps) 
 {
+    const hobbyTags = profile.hobbies.slice(0, 2);
+    const traitTag = profile.traits.length > 0 ? [profile.traits[0]] : [];
+    const tags = [...hobbyTags, ...traitTag];
+
     return (
         <>
         <div className='profileCard'>
             <div className="profilePhoto"></div>
-            <h2>Jane Doe</h2>
-            <h4>UX Design • Salesforce</h4>
-            <p className='profileDesc'>Creative designer who loves sketching, museums and finding the best brunch spots in the city</p>
+            <h2>{profile.firstName}</h2>
+            <h4>{profile.workPosition}• {profile.company}</h4>
+            <p className='profileDesc'>{profile.bio}</p>
             <ul className='profileTags'>
-
-                <li>AI/ML</li>
-
-                <li>Design</li>
-                <li>Video Games</li>
+            {tags.map((tag, index) => (
+                <li key={index}>{tag}</li>
+            ))}
             </ul>
             <Button variant='contained' color='primary'>
-                <Link to="/public-profile/1">View Profile</Link>
+                <Link to={`/public-profile/${profile.userId}`}>View Profile</Link>
             </Button>
         </div>
         </>

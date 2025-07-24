@@ -2,6 +2,8 @@ import axios from "axios";
 import { useState } from "react";
 import "./EventModal.css";
 import { useAuth } from "@clerk/clerk-react";
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
+
 
 //Gets event creation info from Modal and posts it to db
 const EventModal = ({ handleCloseModalClick }) => {
@@ -46,7 +48,7 @@ const EventModal = ({ handleCloseModalClick }) => {
       const token = await getToken();
       console.log("Hello");
       console.log(eventData)
-      await axios.post("http://localhost:3001/events", eventData, {
+      await axios.post(`${BACKEND_URL}/events`, eventData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

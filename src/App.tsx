@@ -15,7 +15,9 @@ import PublicProfilePage from "./pages/PublicProfilePage/PublicProfilePage";
 import Event from "./pages/EventsPage/event"
 
 // Configure axios base URL to point to your backend //look into this
-axios.defaults.baseURL = "http://localhost:3001";
+//DIVINE
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
+axios.defaults.baseURL = BACKEND_URL;
 
 // Checks if profile is complted
 function ProfileCompletionChecker({ children }: { children: React.ReactNode }) {

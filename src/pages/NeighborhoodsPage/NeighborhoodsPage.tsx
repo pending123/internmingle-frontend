@@ -1,11 +1,13 @@
 import SearchBar from "../../components/SearchBar/SearchBar"
 import Place from "../../features/neighborhoods/Place/Place";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import './NeighborhoodsPage.css'
 import axios from "axios";
 import { APIProvider, Map} from "@vis.gl/react-google-maps";
 import { CircularProgressbar, buildStyles} from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
+
 
 export default function NeighborhoodsPage() 
 {
@@ -15,7 +17,7 @@ export default function NeighborhoodsPage()
     async function search(formData: FormData): Promise<void>{
         const query = formData.get("query");
         try {
-            const {data: neighborhoodData} = await axios.get(`http://localhost:3000/api/neighborhoods?query=${query}`)
+            const {data: neighborhoodData} = await axios.get(`${BACKEND_URL}/api/neighborhoods?query=${query}`)
             setInfo(neighborhoodData);
         } catch (err) 
         {
