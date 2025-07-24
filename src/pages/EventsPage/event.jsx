@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Box, Container, Typography, Button, Chip, Grid,CircularProgress } from "@mui/material";
 import { format } from "date-fns"; // For date formatting
-import AddImage from "../../assets/AddImage.png";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
@@ -95,7 +94,7 @@ const Event = () => {
     : "Time TBD";
 
   // Placeholder image since imgUrl is null
-  const imageUrl = event.imgUrl || AddImage;
+  const imageUrl = event.imgUrl || '/assets/AddImage.png';
 
   return (
     <Box sx={{ bgcolor: "#f5f5f5", minHeight: "100vh", py: 6 }}>
