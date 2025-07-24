@@ -1,0 +1,29 @@
+.authContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  width: 100%;
+}
+
+.authButtons {
+  display: flex;
+  gap: 10rem;
+}
+
+.signUp,
+.signIn {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  color: white;
+  background-color: #0073EA;
+  transition: background-color 0.3s ease;
+}
+
+.signUp:hover,
+.signIn:hover {
+  background-color: #3498db; 
+}

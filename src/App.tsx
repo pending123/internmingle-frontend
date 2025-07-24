@@ -13,9 +13,6 @@ import HomePage from './pages/HomePage/HomePage';
 import OnboardingPage from './pages/OnboardingPage/OnboardingPage';
 import PublicProfilePage from './pages/PublicProfilePage/PublicProfilePage';
 
-
-// Configure axios base URL to point to your backend //look into this
-//DIVINE
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
 axios.defaults.baseURL = BACKEND_URL;
 
@@ -113,7 +110,7 @@ function App() {
             element={
               <>
                 <SignedOut>
-                  <LandingPage />
+                  <HomePage />
                 </SignedOut>
                 <SignedIn>
                   <Navigate to="/intern-finder" replace /> //what does replace do
@@ -130,16 +127,7 @@ function App() {
               </SignedIn>
             }
           />
-          
           {/* Protected routes bc that requires that a user's profile be completed first*/}
-          <Route 
-            path="/home"
-            element={
-              <SignedIn>
-                <HomePage/>
-              </SignedIn>
-            }
-          />
           <Route 
             path="/edit-profile"
             element={
