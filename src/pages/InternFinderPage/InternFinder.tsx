@@ -64,6 +64,7 @@ export default function InternFinder()
                     Authorization: `Bearer ${token}`,
                 },
             });
+                console.log(data);
                 setProfiles(data.results);
 
             } catch (err) 
