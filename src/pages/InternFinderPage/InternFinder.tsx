@@ -41,15 +41,31 @@ export default function InternFinder()
             try {
                 const token = await getToken();
 
-                const hobbiesQuery = selectedHobbies.join(",");
-                const traitsQuery = selectedTraits.join(",");
+                const params = new URLSearchParams();
 
-                const { data } = await axios.get(`${baseURL}/api/profiles`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
+                if (selectedCompany) {
+                    params.append("company", selectedCompany);
+                }
+
+                if (selectedHobbies.length > 0) {
+                    params.append("hobbies", selectedHobbies.join(","));
+                }
+
+                if (selectedTraits.length > 0) {
+                    params.append("traits", selectedTraits.join(","));
+                }
+
+                const url = `${baseURL}/api/profiles?${params.toString()}`;
+
+                console.log("Fetching from:", url);
+
+                const { data } = await axios.get(url, {
+                headers: {
+                Authorization: `Bearer ${token}`,
+                },
+            });
                 setProfiles(data.results);
+
             } catch (err) 
             {
                 console.error('Error fetching profiles')
