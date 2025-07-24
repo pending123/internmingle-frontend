@@ -4,12 +4,32 @@ import { Box, Autocomplete, Button, TextField} from '@mui/material';
 import './InternFinder.css'
 import { useState, useEffect } from "react";
 import axios from 'axios'
+import { useAuth } from '@clerk/clerk-react';
 
 export default function InternFinder() 
 {
+    const { getToken } = useAuth();
 
-    const companies = ['Salesforce', 'Meta', 'Google', 'Amazon'];
-    const hobbies = ['Hiking', 'Yoga', 'Video Games', 'Pilates']
+    const baseURL = import.meta.env.VITE_BACKEND_URL;
+
+    const companies = [
+        "TechCorp",
+        "InnoSoft",
+        "WebSolutions",
+        "DataMinds",
+        "SecureNet",
+        "PixelCraft",
+        "AlgoTech",
+        "CloudWave",
+        "AppVentures",
+        "AIMinds",
+        "DataStream",
+        "BrightUI",
+        "FullStackify"
+];
+    const hobbies = [ 'Reading', 'Hiking', 'Cooking', 'Gaming', 'Photography', 'Music', 'Sports', 'Travel', 'Art', 'Fitness', 'Dancing', 'Movies'];
+    const traits = ['Organized', 'Creative', 'Outgoing', 'Analytical', 'Empathetic', 'Adventurous', 'Detail-oriented', 'Team player', 'Independent', 'Optimistic'];
+
 
     const [selectedCompany, setSelectedCompany] = useState<string | null>(null);
     const [selectedHobbies, setSelectedHobbies] = useState<string[]>([]);
@@ -19,8 +39,34 @@ export default function InternFinder()
     useEffect(() => {
         async function fetchProfiles() {
             try {
-                const { data } = await axios.get(`http://localhost:3000/api/profiles/`);
-                setProfiles(data);
+                const token = await getToken();
+
+                const params = new URLSearchParams();
+
+                if (selectedCompany) {
+                    params.append("company", selectedCompany);
+                }
+
+                if (selectedHobbies.length > 0) {
+                    params.append("hobbies", selectedHobbies.join(","));
+                }
+
+                if (selectedTraits.length > 0) {
+                    params.append("traits", selectedTraits.join(","));
+                }
+
+                const url = `${baseURL}/api/profiles?${params.toString()}`;
+
+                console.log("Fetching from:", url);
+
+                const { data } = await axios.get(url, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+                console.log(data);
+                setProfiles(data.results);
+
             } catch (err) 
             {
                 console.error('Error fetching profiles')
@@ -52,7 +98,7 @@ export default function InternFinder()
                     (params) => ( <TextField {...params} label="Filter by Hobbies" variant="outlined" />)
                 } />
                 <Autocomplete 
-                options={companies} sx={{ minWidth: 200, '& fieldset': { borderRadius: 33 }}} multiple disableCloseOnSelect 
+                options={traits} sx={{ minWidth: 200, '& fieldset': { borderRadius: 33 }}} multiple disableCloseOnSelect 
                 value={selectedTraits} 
                 onChange={(_, newValue) => setSelectedTraits(newValue)}
                 renderInput={

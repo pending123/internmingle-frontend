@@ -36,13 +36,14 @@ type Profile = {
 export default function PublicProfilePage() {
   const [profile, setProfile] = useState<Profile | null>(null);
   const { id: profileId } = useParams();
+  const baseURL = import.meta.env.VITE_BACKEND_URL;
 
   useScrollToTop();
 
   useEffect(() => {
     async function fetchProfiles() {
       try {
-        const { data } = await axios.get(`http://localhost:3000/api/profiles/${profileId}`);
+        const { data } = await axios.get(`${baseURL}/api/profiles/${profileId}`);
         setProfile(data);
       } catch (err) {
         console.error('Error fetching profiles');

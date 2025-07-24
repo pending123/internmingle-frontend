@@ -124,7 +124,7 @@ function App() {
             element={
               <>
                 <SignedOut>
-                  <LandingPage />
+                  <HomePage />
                 </SignedOut>
                 <SignedIn>
                   <Navigate to="/intern-finder" replace /> //what does replace
@@ -142,7 +142,6 @@ function App() {
               </SignedIn>
             }
           />
-
           {/* Protected routes bc that requires that a user's profile be completed first*/}
           <Route
             path="/home"

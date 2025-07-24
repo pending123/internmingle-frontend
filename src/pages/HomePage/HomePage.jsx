@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { SignInButton, SignUpButton } from "@clerk/clerk-react";
+
+import './HomePage.css'
 
 import {
   Container,
@@ -37,6 +40,7 @@ const HomePage = () => {
                   fontSize: { xs: "2.5rem", md: "3.5rem" },
                   lineHeight: 1.2,
                   textAlign: "center",
+                  mt: 10,
                 }}
               >
                 Welcome to InternMingle
@@ -51,6 +55,20 @@ const HomePage = () => {
                   textAlign: "center",
                 }}
               ></Typography>
+              <div className="authContainer">
+                <div className="authButtons">
+                  <div style={{ transform: 'scale(1.5)', transformOrigin: 'center' }}>
+                    <SignUpButton>
+                      <button className='signUp'>Sign Up</button>
+                    </SignUpButton>
+                  </div>
+                <div style={{ transform: 'scale(1.5)', transformOrigin: 'center' }}>
+                  <SignInButton>
+                    <button className='signIn'>Log In</button>
+                  </SignInButton>
+                </div>
+              </div>
+            </div>
             </Grid>
           </Grid>
         </Container>
@@ -107,7 +125,7 @@ const HomePage = () => {
                   textTransform: "none",
                 }}
               >
-                View Interns Near You →
+                View Interns Near You
               </Button>
             </Grid>
             {/* Picture of Interns */}
@@ -197,7 +215,7 @@ const HomePage = () => {
                   textTransform: "none",
                 }}
               >
-                Try it now →
+                Try it now
               </Button>
             </Grid>
           </Grid>
@@ -255,7 +273,7 @@ const HomePage = () => {
                   textTransform: "none",
                 }}
               >
-                View Events Near You →
+                View Events Near You
               </Button>
             </Grid>
             {/* Picture of Interns */}
