@@ -1,6 +1,6 @@
 import SearchBar from "../../components/SearchBar/SearchBar"
 import Place from "../../features/neighborhoods/Place/Place";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import './NeighborhoodsPage.css'
 import axios from "axios";
 import { APIProvider, Map} from "@vis.gl/react-google-maps";
