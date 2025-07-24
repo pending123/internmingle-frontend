@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { UserButton } from "@clerk/clerk-react";
 import './Navbar.css'
-import { faHome } from "@fortawesome/free-solid-svg-icons";
 import { faUsers } from "@fortawesome/free-solid-svg-icons";
 import { faCompass } from "@fortawesome/free-solid-svg-icons";
 import { faCalendar } from "@fortawesome/free-solid-svg-icons";
