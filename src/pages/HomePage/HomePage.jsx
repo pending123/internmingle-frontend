@@ -132,7 +132,7 @@ const HomePage = () => {
 
             <Grid size={6} offset={{ md: "auto" }}>
               <img
-                src="src/assets/internsTalking.png"
+                src="/assets/internsTalking.png"
                 alt="Interns Talking"
                 style={{
                   maxWidth: "100%",
@@ -160,7 +160,7 @@ const HomePage = () => {
             {/* Picture of Map */}
             <Grid size={6} offset={{ md: "auto" }}>
               <img
-                src="src/assets/flatMap.png"
+                src="/assets/flatMap.png"
                 alt="Interns Talking"
                 style={{
                   maxWidth: "100%",
@@ -280,7 +280,7 @@ const HomePage = () => {
 
             <Grid size={6} offset={{ md: "auto" }}>
               <img
-                src="src/assets/peopleEvents.png"
+                src="/assets/peopleEvents.png"
                 alt="Interns Talking"
                 style={{
                   maxWidth: "100%",
