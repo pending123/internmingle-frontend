@@ -1,101 +1,227 @@
-// import React, { useState, useEffect } from "react";
-
-
-// fakeEvents= [
-//   {
-//     "id": 101,
-//     "location": "Golden Gate Park, San Francisco",
-//     "category": "Sports",
-//     "dateTime": "2025-07-20T10:00:00",
-//     "description": "Casual Sunday morning pick-up soccer game. All skill levels welcome!",
-//     "imageUrl": "https://example.com/soccer.jpg"
-//   },
-//   {
-//     "id": 102,
-//     "location": "Salesforce Tower, San Francisco",
-//     "category": "Networking",
-//     "dateTime": "2025-07-22T17:30:00",
-//     "description": "Tech Intern Mixer: Meet fellow interns and industry professionals. Free snacks and drinks!",
-//     "imageUrl": "https://example.com/networking.jpg"
-//   },
-//   {
-//     "id": 103,
-//     "location": "Ferry Building, San Francisco",
-//     "category": "Food",
-//     "dateTime": "2025-07-25T19:00:00",
-//     "description": "San Francisco Food Tour: Explore local eateries and culinary delights near the waterfront.",
-//     "imageUrl": "https://example.com/food_tour.jpg"
-//   },
-//   {
-//     "id": 104,
-//     "location": "Online (Zoom)",
-//     "category": "Professional Development",
-//     "dateTime": "2025-07-28T14:00:00",
-//     "description": "Webinar: Navigating Your First Internship - Tips for Success and Career Growth.",
-//     "imageUrl": "https://example.com/webinar.jpg"
-//   },
-//   {
-//     "id": 105,
-//     "location": "The Fillmore, San Francisco",
-//     "category": "Music",
-//     "dateTime": "2025-08-01T20:30:00",
-//     "description": "Live Concert: Indie band 'The City Lights' performing their new album.",
-//     "imageUrl": "https://example.com/concert.jpg"
-//   }
-// ]
-// const EventGrid =  ({events}) =>{
-//     return(
-//         <>
-//         {events.map((event)=>(
-//             <event
-//                 location={event.location}
-//                 category ={event.category}
-//                 dateTime ={event.dateTime}
-//                 description = {event.description}
-
-//                 />
-//         ))}
-//         </>
-//     )
-// }\
-
-
 import React from "react";
-// Assuming Event.jsx is in the same directory as EventGrid.jsx
-// You'll need to create this Event.jsx file for individual event cards.
-import Event from './event.jsx'; 
-import './EventGrid.css'
-import noImage from '../../assets/AddImage.png'
-// Define your fake event data outside the component if it's static
-// or simulate it being passed down from a parent.
-
+import { Box, Typography, Card, CardContent, Stack, Chip, CardActionArea } from "@mui/material";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import { Link } from 'react-router-dom'; 
 
 const EventGrid = ({ events }) => {
-    // Optional: Add a check for no events, so the page isn't just blank
-    if (!events || events.length === 0) {
-        return <p className="no-events-message">No events to display at the moment. Check back soon!</p>;
-    }
-
+  // Optional: Add a check for no events, so the page isn't just blank
+  if (!events || events.length === 0) {
     return (
-        // This <div> will be your actual grid container.
-        // You'll apply CSS Grid or Flexbox styles to this class.
-        <div className="events-grid-container">
-            {events.map((event) => (
-                // FIX: Component names must start with an uppercase letter (<Event />)
-                // Use event.id as the unique 'key' for efficient list rendering
-                <Event
-                    key={event.id} // Essential for React lists
-                    location={event.location}
-                    category={event.category}
-                    dateTime={event.dateTime}
-                    description={event.description}
-                    imageUrl={noImage} // Pass imageUrl if you want to display it
-                    // You could also pass the entire event object as a single prop:
-                    // eventData={event}
-                />
-            ))}
-        </div>
+      <Box
+        sx={{
+          textAlign: "center",
+          py: 8,
+          color: "#666",
+        }}
+      >
+        <Typography variant="h6">
+          No events to display at the moment. Check back soon!
+        </Typography>
+      </Box>
     );
+  }
+
+  const formatDate = (dateTimeString) => {
+    const date = new Date(dateTimeString);
+    const month = date.toLocaleDateString("en-US", { month: "short" });
+    const day = date.getDate();
+    const weekday = date.toLocaleDateString("en-US", { weekday: "short" });
+    return { month, day, weekday };
+  };
+
+  const formatTime = (dateTimeString) => {
+    const date = new Date(dateTimeString);
+    return date.toLocaleTimeString("en-US", {
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+    });
+  };
+
+  return (
+    <Stack spacing={2}>
+      {events.map((event) => {
+        const { month, day, weekday } = formatDate(event.dateTime);
+        const time = formatTime(event.dateTime);
+
+        return (
+          <Card
+            key={event.id}
+            elevation={1}
+            sx={{
+              borderRadius: "12px",
+              transition: "all 0.2s ease-in-out",
+              "&:hover": {
+                elevation: 3,
+                transform: "translateY(-2px)",
+                boxShadow: "0 8px 25px rgba(0,0,0,0.1)",
+              },
+              cursor: "pointer",
+            }}
+          >
+            <CardActionArea
+              component={Link} 
+              to={`/events/${event.eventId}`} 
+              
+            >
+              <CardContent sx={{ p: 0 }}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    minHeight: "120px",
+                  }}
+                >
+                  {/* Date Section - Left Side */}
+                  <Box
+                    sx={{
+                      width: "100px",
+                      backgroundColor: "#f8f9fa",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      borderRadius: "12px 0 0 12px",
+                      py: 2,
+                    }}
+                  >
+                    <Typography
+                      variant="caption"
+                      sx={{
+                        color: "#666",
+                        fontWeight: 600,
+                        textTransform: "uppercase",
+                        letterSpacing: "0.5px",
+                      }}
+                    >
+                      {weekday}
+                    </Typography>
+                    <Typography
+                      variant="h4"
+                      sx={{
+                        fontWeight: 700,
+                        color: "#2E5BFF",
+                        lineHeight: 1,
+                        my: 0.5,
+                      }}
+                    >
+                      {day}
+                    </Typography>
+                    <Typography
+                      variant="caption"
+                      sx={{
+                        color: "#666",
+                        fontWeight: 600,
+                        textTransform: "uppercase",
+                      }}
+                    >
+                      {month}
+                    </Typography>
+                  </Box>
+
+                  {/* Event Details - Right Side */}
+                  <Box
+                    sx={{
+                      flex: 1,
+                      p: 3,
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    {/* Top Section */}
+                    <Box>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "flex-start",
+                          mb: 1,
+                        }}
+                      >
+                        <Typography
+                          variant="h6"
+                          sx={{
+                            fontWeight: 600,
+                            color: "#1a1a1a",
+                            lineHeight: 1.3,
+                            flex: 1,
+                            mr: 2,
+                          }}
+                        >
+                          {event.title.length > 60
+                            ? `${event.title.substring(0, 60)}...`
+                            : event.title}
+                        </Typography>
+                        {/* Category Label */}
+                        {event.category.toLowerCase() !== "none" && (
+                          <Chip
+                            label={event.category}
+                            size="small"
+                            sx={{
+                              backgroundColor: "#E8F0FF",
+                              color: "#2E5BFF",
+                              fontWeight: 600,
+                              fontSize: "0.75rem",
+                            }}
+                          />
+                        )}
+                      </Box>
+                      {/* Shortened Event description */}
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          color: "#666",
+                          mb: 2,
+                          lineHeight: 1.5,
+                        }}
+                      >
+                        {event.description}
+                      </Typography>
+                    </Box>
+
+                    {/* Bottom Section */}
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        pt: 1,
+                        borderTop: "1px solid #f0f0f0",
+                      }}
+                    >
+                      <Box
+                        sx={{ display: "flex", alignItems: "center", gap: 0.5 }}
+                      >
+                        <LocationOnIcon sx={{ fontSize: 16, color: "#666" }} />
+                        <Typography
+                          variant="body2"
+                          sx={{
+                            color: "#666",
+                            fontWeight: 500,
+                          }}
+                        >
+                          {event.location}
+                        </Typography>
+                      </Box>
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          color: "#2E5BFF",
+                          fontWeight: 600,
+                        }}
+                      >
+                        {time}
+                      </Typography>
+                    </Box>
+                  </Box>
+                </Box>
+              </CardContent>
+            </CardActionArea>
+          </Card>
+        );
+      })}
+    </Stack>
+  );
 };
 
 export default EventGrid;

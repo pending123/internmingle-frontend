@@ -5,85 +5,24 @@ import "./EventsPage.css";
 import EventModal from "./eventModal";
 import EventGrid from "./EventGrid";
 import SearchBar from "../../components/SearchBar/SearchBar";
+import {
+  Container,
+  Box,
+  Typography,
+  Button,
+  TextField,
+  InputAdornment,
+  Chip,
+  Stack,
+  Paper,
+} from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
+import AddIcon from "@mui/icons-material/Add";
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
 
 
 const eventsPage = () => {
-  const fakeEvents = [
-    {
-      id: 101,
-      location: "Golden Gate Park, San Francisco",
-      category: "Sports",
-      dateTime: "2025-07-20T10:00:00",
-      description:
-        "Casual Sunday morning pick-up soccer game. All skill levels welcome!",
-      imageUrl: "https://example.com/soccer.jpg",
-    },
-    {
-      id: 102,
-      location: "Salesforce Tower, San Francisco",
-      category: "Networking",
-      dateTime: "2025-07-22T17:30:00",
-      description:
-        "Tech Intern Mixer: Meet fellow interns and industry professionals. Free snacks and drinks!",
-      imageUrl: "https://example.com/networking.jpg",
-    },
-    {
-      id: 103,
-      location: "Ferry Building, San Francisco",
-      category: "Food",
-      dateTime: "2025-07-25T19:00:00",
-      description:
-        "San Francisco Food Tour: Explore local eateries and culinary delights near the waterfront.",
-      imageUrl: "https://example.com/food_tour.jpg",
-    },
-    {
-      id: 104,
-      location: "Online (Zoom)",
-      category: "Professional Development",
-      dateTime: "2025-07-28T14:00:00",
-      description:
-        "Webinar: Navigating Your First Internship - Tips for Success and Career Growth.",
-      imageUrl: "https://example.com/webinar.jpg",
-    },
-    {
-      id: 105,
-      location: "The Fillmore, San Francisco",
-      category: "Music",
-      dateTime: "2025-08-01T20:30:00",
-      description:
-        "Live Concert: Indie band 'The City Lights' performing their new album.",
-      imageUrl: "https://example.com/concert.jpg",
-    },
-    ,
-    {
-      id: 106,
-      location: "Exploratorium, Pier 15, San Francisco",
-      category: "Culture",
-      dateTime: "2025-08-05T11:00:00",
-      description:
-        "Explore interactive exhibits on science, art, and perception. Discounted intern tickets available!",
-      imageUrl: "https://example.com/exploratorium.jpg",
-    },
-    {
-      id: 107,
-      location: "Dolores Park, San Francisco",
-      category: "Social",
-      dateTime: "2025-08-09T16:00:00",
-      description:
-        "Intern Picnic & Games: Enjoy the sun, bring snacks, and meet new friends at Dolores Park.",
-      imageUrl: "https://example.com/dolores_park.jpg",
-    },
-    {
-      id: 108,
-      location: "Lands End Trail, San Francisco",
-      category: "Outdoors",
-      dateTime: "2025-08-15T09:00:00",
-      description:
-        "Morning Hike with ocean views. Moderate difficulty, bring water and good shoes.",
-      imageUrl: "https://example.com/lands_end.jpg",
-    },
-  ];
+  
 
   const [events, setEvents] = useState([]);
   const [category, setCategory] = useState("All");
@@ -108,7 +47,7 @@ const eventsPage = () => {
     setSubmittedSearch(searchInputValue);
   };
 
-  const categories = ["All", "Recent", "Food", "Music", "Sports", "Art"];
+  const categories = ["All", "Food", "Music", "Sports", "Art"];
 
   //useEffect to populate event useState, reloads when search is submitted, category is changed or show more button is clicked (skip changes)
 
@@ -120,12 +59,17 @@ const eventsPage = () => {
         const { data: eventData } = await axios.get(
           `${BACKEND_URL}/events?category=${category}&searchTerm=${submittedSearch}&limit=20&skip=${skip}`
         );
-        setEvents((prevEvents) => [...prevEvents, ...eventData]);
+        if (skip === 0) {
+          setEvents(eventData);
+        } else {
+          setEvents((prevEvents) => [...prevEvents, ...eventData]);
+        }
       } catch (error) {
         console.error("Failed to load Events:", error);
       } finally {
         setLoading(false);
       }
+      console.log(events);
     };
     loadEvents();
   }, [submittedSearch, category, skip]);
@@ -139,60 +83,187 @@ const eventsPage = () => {
   };
 
   return (
-    <>
-      {/* //Creates Search button and sets Submitted Search Input */}
-      <div>
-        <div className="searchBarContainer">
-          <form onSubmit={handleSearchSubmit}>
-            <input
-              className="searchBar"
-              type="text"
-              name="query"
-              placeholder="Search..."
-              value={searchInputValue}
-              onChange={handleOnSearchInputChange}
-            />
-            <button className="searchButton" type="submit">
-              Search
-            </button>
-            <button
-              className="clearButton"
-              type="button"
-              onClick={handleClearSearch}
-            >
-              Clear
-            </button>
-          </form>
-        </div>
-        {/* Changes Category useState and creates category buttons */}
-        <div className="categoriesAndCreateContainer">
-          <div className="categoryButtonsContainer">
+    <Container maxWidth="lg" sx={{ py: 4 }}>
+      {/* Header Section */}
+      <Box sx={{ mb: 4 }}>
+        <Typography
+          variant="h3"
+          component="h1"
+          gutterBottom
+          sx={{
+            fontWeight: 700,
+            color: "#1a1a1a",
+            fontSize: { xs: "2rem", md: "2.5rem" },
+          }}
+        >
+          Events in San Francisco
+        </Typography>
+        <Typography
+          variant="body1"
+          sx={{
+            color: "#666",
+            fontSize: "1.1rem",
+          }}
+        >
+          Discover exciting events and connect with fellow interns in the city.
+        </Typography>
+      </Box>
+
+      {/* Search and Filter Controls */}
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "flex-start",
+          flexDirection: { xs: "column", md: "row" },
+          gap: 3,
+          mb: 4,
+        }}
+      >
+        {/* Left Side - Categories */}
+        <Box sx={{ flex: 1 }}>
+          <Stack
+            direction="row"
+            spacing={1}
+            sx={{
+              flexWrap: "wrap",
+              gap: 1,
+            }}
+          >
             {categories.map((cat) => (
-              <li className={category === cat ? "is-active" : ""} key={cat}>
-                <button
-                  onClick={() => {
-                    console.log("Category clicked:", cat);
-                    setCategory(cat);
-                  }}
-                >
-                  {cat}
-                </button>
-              </li>
+              <Chip
+                key={cat}
+                label={cat}
+                onClick={() => {
+                  console.log("Category clicked:", cat);
+                  setCategory(cat);
+                }}
+                variant={category === cat ? "filled" : "outlined"}
+                size="medium"
+                sx={{
+                  backgroundColor: category === cat ? "#2E5BFF" : "transparent",
+                  color: category === cat ? "white" : "#666",
+                  borderColor: category === cat ? "#2E5BFF" : "#A9A9A9",
+                  fontWeight: category === cat ? 600 : 400,
+                  fontSize: "1rem",
+                  height: "40px",
+                  px: 2,
+                  "&:hover": {
+                    backgroundColor: category === cat ? "#1B4AEF" : "#f5f5f5",
+                    borderColor: category === cat ? "#1B4AEF" : "#bbb",
+                  },
+                  cursor: "pointer",
+                  mb: 1,
+                }}
+              />
             ))}
-          </div>
-          <button className="createEvent" onClick={handleCreateClick}>
-            Create New Event
-          </button>
-        </div>
-      </div>
+          </Stack>
+        </Box>
+
+        {/* Right Side - Search Bar */}
+        <Box
+          sx={{
+            minWidth: { xs: "100%", md: "350px" },
+            maxWidth: { xs: "100%", md: "400px" },
+          }}
+        >
+          <form onSubmit={handleSearchSubmit}>
+            <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
+              <TextField
+                fullWidth
+                variant="outlined"
+                placeholder="Search Events..."
+                value={searchInputValue}
+                onChange={handleOnSearchInputChange}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <SearchIcon sx={{ color: "#666" }} />
+                    </InputAdornment>
+                  ),
+                }}
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: "8px",
+                    "&:hover fieldset": {
+                      borderColor: "#2E5BFF",
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#2E5BFF",
+                    },
+                  },
+                }}
+              />
+              <Button
+                type="submit"
+                variant="contained"
+                sx={{
+                  backgroundColor: "#2E5BFF",
+                  px: 3,
+                  py: 1.5,
+                  borderRadius: "8px",
+                  textTransform: "none",
+                  fontWeight: 600,
+                  minWidth: "auto",
+                  height: "56px",
+                }}
+              >
+                Search
+              </Button>
+              <Button
+                type="button"
+                variant="outlined"
+                onClick={handleClearSearch}
+                sx={{
+                  borderColor: "#A9A9A9",
+                  color: "#666",
+                  px: 3,
+                  py: 1.5,
+                  borderRadius: "8px",
+                  textTransform: "none",
+                  fontWeight: 600,
+                  minWidth: "auto",
+                  height: "56px",
+                }}
+              >
+                Clear
+              </Button>
+            </Box>
+          </form>
+        </Box>
+      </Box>
+
+      {/* Create Event Button */}
+      <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 3 }}>
+        <Button
+          variant="outlined"
+          startIcon={<AddIcon />}
+          onClick={handleCreateClick}
+          sx={{
+            backgroundColor: "#4CAF50",
+            color: "white",
+            px: 4,
+            py: 1.5,
+            borderRadius: "8px",
+            textTransform: "none",
+            fontWeight: 600,
+            "&:hover": {
+              backgroundColor: "#45a049",
+            },
+          }}
+        >
+          Create New Event
+        </Button>
+      </Box>
+
+      {/* Event Modal */}
       {showModal && (
         <EventModal handleCloseModalClick={handleCloseModalClick} />
       )}
 
-      <div>
-        <EventGrid events={fakeEvents} />
-      </div>
-    </>
+      {/* Events Grid */}
+      <EventGrid events={events} />
+    </Container>
   );
 };
 export default eventsPage;
