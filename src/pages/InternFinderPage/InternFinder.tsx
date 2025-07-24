@@ -5,6 +5,7 @@ import './InternFinder.css'
 import { useState, useEffect } from "react";
 import axios from 'axios'
 import { useAuth } from '@clerk/clerk-react';
+import { useAuth } from '@clerk/clerk-react';
 
 export default function InternFinder() 
 {

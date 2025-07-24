@@ -142,7 +142,6 @@ function App() {
               </SignedIn>
             }
           />
-
           {/* Protected routes bc that requires that a user's profile be completed first*/}
           <Route
             path="/home"
