@@ -61,7 +61,7 @@ export default function InternFinder()
 
                 const { data } = await axios.get(url, {
                 headers: {
-                Authorization: `Bearer ${token}`,
+                    Authorization: `Bearer ${token}`,
                 },
             });
                 setProfiles(data.results);
