@@ -40,6 +40,7 @@ const HomePage = () => {
                   fontSize: { xs: "2.5rem", md: "3.5rem" },
                   lineHeight: 1.2,
                   textAlign: "center",
+                  mt: 10,
                 }}
               >
                 Welcome to InternMingle
