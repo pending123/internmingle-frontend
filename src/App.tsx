@@ -12,6 +12,7 @@ import InternFinder from "./pages/InternFinderPage/InternFinder";
 import HomePage from "./pages/HomePage/HomePage";
 import OnboardingPage from "./pages/OnboardingPage/OnboardingPage";
 import PublicProfilePage from "./pages/PublicProfilePage/PublicProfilePage";
+import Event from "./pages/EventsPage/event"
 
 // Configure axios base URL to point to your backend //look into this
 axios.defaults.baseURL = "http://localhost:3001";
@@ -190,10 +191,10 @@ function App() {
             }
           />
           <Route
-            path="/events/:id"
+            path="/events/:eventId"
             element={
               <ProtectedRoute>
-                <h1>Individual Event</h1>
+                <Event/>
               </ProtectedRoute>
             }
           />
