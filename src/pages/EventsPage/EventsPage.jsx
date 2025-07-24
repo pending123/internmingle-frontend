@@ -66,6 +66,7 @@ const eventsPage = () => {
       } finally {
         setLoading(false);
       }
+      console.log(events);
     };
     loadEvents();
   }, [submittedSearch, category, skip]);
