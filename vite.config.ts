@@ -9,6 +9,7 @@ import { fileURLToPath } from 'url';
 const dirname = path.dirname(fileURLToPath(new URL('.', import.meta.url)));
 
 export default defineConfig({
+  base: '/'.
   plugins: [react()],
   resolve: {
     alias: {
