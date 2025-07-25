@@ -2,7 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.tsx'
-import { ClerkProvider } from '@clerk/clerk-react'
+import { ClerkProvider, ClerkLoaded } from '@clerk/clerk-react'
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
 
@@ -28,9 +28,11 @@ const theme = createTheme({
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ClerkProvider publishableKey={PUBLISHABLE_KEY} afterSignOutUrl="/">
-      <ThemeProvider theme={theme}>
-        <App />
-      </ThemeProvider>
+      <ClerkLoaded>
+        <ThemeProvider theme={theme}>
+          <App />
+        </ThemeProvider>
+      </ClerkLoaded>
     </ClerkProvider>
   </StrictMode>,
 )
