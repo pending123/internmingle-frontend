@@ -1,5 +1,4 @@
-.navbar 
-{
+.navbar {
     background-color: #0073EA;
     color: white;
     display: flex;
@@ -10,11 +9,11 @@
     box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;
     font-family: "Inter", sans-serif;
     margin-bottom: 2rem;
+    width: 100vw; 
+    box-sizing: border-box; 
 }
 
-
-.navbar h1 
-{
+.navbar h1 {
     font-family: "Inter", sans-serif;
     font-weight: 600;
     font-size: 2rem;
@@ -22,8 +21,7 @@
     margin: 0;
 }
 
-.navbar a
-{
+.navbar a {
     font-weight: 500;
     text-decoration: none;
     color: white;
@@ -33,16 +31,42 @@
     letter-spacing: -0.2px;
 }
 
-.navbar a:hover 
-{
+.navbar a:hover {
     opacity: 60%;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     border-radius: 0.5rem;
 }
 
-.nav-links 
-{
+.nav-links {
     display: flex;
     gap: 2rem;
     align-items: center;
+}
+
+@media (max-width: 800px) {
+    .navbar {
+        padding: 0.5rem 0.25rem; /* Even less padding */
+        gap: 0.25rem; /* Tiny gap */
+    }
+    
+    .navbar h1 {
+        font-size: 1rem; /* Smaller title */
+    }
+    
+    .navbar a {
+        font-size: 0;
+        padding: 0.25rem; /* Less padding on links */
+    }
+    
+    .navbar a svg {
+        font-size: 1rem !important; /* Smaller icons */
+    }
+    
+    .nav-links {
+        gap: 0.25rem; /* Very small gap */
+    }
+    
+    .nav-links > div:last-child {
+        transform: scale(0.8) !important; /* Make UserButton even smaller */
+    }
 }
