@@ -1,4 +1,17 @@
 /*App Stylesheet*/
+html, body {
+    min-width: 100vw;
+    min-height: 100vh;
+}
+
 body {
+    margin: 0;
+    padding: 0;
     background-color: #e0e5ea;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    width: 100%;
 }
