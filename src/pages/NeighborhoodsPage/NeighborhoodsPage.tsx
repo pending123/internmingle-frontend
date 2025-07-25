@@ -11,7 +11,10 @@ const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
 
 export default function NeighborhoodsPage() 
 {
+    
     const [info, setInfo] = useState<any>(null);
+    
+
     const mapsKey: string = import.meta.env.VITE_MAPS_API_KEY;
 
     async function search(formData: FormData): Promise<void>{
@@ -22,6 +25,8 @@ export default function NeighborhoodsPage()
         } catch (err) 
         {
             console.error("Failed to search for neighborhood")
+        } finally {
+    
         }
     }
 

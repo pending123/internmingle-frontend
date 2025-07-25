@@ -2,7 +2,9 @@ import "./App.css";
 import { SignedIn, SignedOut, useUser, useAuth } from "@clerk/clerk-react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { CircularProgress } from "@mui/material";
 import axios from "axios";
+
 
 import NeighborhoodsPage from "./pages/NeighborhoodsPage/NeighborhoodsPage";
 import Navbar from "./components/Navbar/Navbar";
@@ -13,8 +15,7 @@ import OnboardingPage from "./pages/OnboardingPage/OnboardingPage";
 import PublicProfilePage from "./pages/PublicProfilePage/PublicProfilePage";
 import Event from "./pages/EventsPage/event"
 
-// Configure axios base URL to point to your backend //look into this
-//DIVINE
+
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
 axios.defaults.baseURL = BACKEND_URL;
 
@@ -87,7 +88,7 @@ function ProfileCompletionChecker({ children }: { children: React.ReactNode }) {
     console.log(
       `isCheckingProfile = ${isCheckingProfile} || !isLoaded = ${!isLoaded}`
     );
-    return <div>Loading...</div>;
+    return <div><CircularProgress /></div>;
   }
 
   // if profile is not completed, redirect to onboarding
