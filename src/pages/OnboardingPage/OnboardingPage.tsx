@@ -70,9 +70,9 @@ export default function OnboardingPage() {
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
-  const [isCheckingProfile, setIsCheckingProfile] = useState(true); //LOOK INTO THIS
+  const [isCheckingProfile, setIsCheckingProfile] = useState(true);
 
-  const [formData, setFormData] = useState<OnboardingData>({ //LOOK INTO THIS.. how does this work? why do you intially have to make everything an empty string
+  const [formData, setFormData] = useState<OnboardingData>({
     workCity: '',
     workZipcode: '',
     university: '',
@@ -93,14 +93,14 @@ export default function OnboardingPage() {
     noiseLevel: ''
   });
 
-  const updateFormData = (updates: Partial<OnboardingData>) => { //what does this do?
+  const updateFormData = (updates: Partial<OnboardingData>) => {
     setFormData(prev => ({ ...prev, ...updates }));
   };
 
   // check if profile is already completed
   useEffect(() => {
     const checkIfAlreadyCompleted = async () => {
-      if (!user) return; //what does this line do?
+      if (!user) return; //prevents API calls when user isn't logged in
 
       try {
         const token = await getToken();
@@ -115,7 +115,7 @@ export default function OnboardingPage() {
           navigate('/intern-finder', { replace: true });
         }
       } catch (error: any) {
-        // 404 error message expected for new users since completing profile for the first time --- CLAUDE SUGGESTED
+        // 404 error message expected for new users since completing profile for the first time
         if (error.response?.status === 404) {
           console.log('New user confirmed - starting onboarding');
         } else {
@@ -127,7 +127,7 @@ export default function OnboardingPage() {
     };
 
     checkIfAlreadyCompleted();
-  }, [user, getToken, navigate]); //how does this work??
+  }, [user, getToken, navigate]);
 
   const validateStep = () => {
     switch (currentStep) {
@@ -137,7 +137,7 @@ export default function OnboardingPage() {
         return true; // This step is optional, a user may choose to skip it.
       case 3:
         return (
-          formData.university.trim() !== '' && // why do you have to trim?
+          formData.university.trim() !== '' && // prevents users from just entering whitespace
           formData.schoolMajor.trim() !== '' &&
           formData.company.trim() !== '' &&
           formData.workPosition.trim() !== '' &&

@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { UserButton } from "@clerk/clerk-react";
 import './Navbar.css'
-import { faHome } from "@fortawesome/free-solid-svg-icons";
 import { faUsers } from "@fortawesome/free-solid-svg-icons";
 import { faCompass } from "@fortawesome/free-solid-svg-icons";
 import { faCalendar } from "@fortawesome/free-solid-svg-icons";
@@ -13,7 +12,6 @@ export default function Navbar()
         <div className="navbar">
             <h1>InternMingle</h1>
             <div className="nav-links">
-                <Link to="/home"><FontAwesomeIcon icon={faHome} /> Home</Link>
                 <Link to="/intern-finder"><FontAwesomeIcon icon={faUsers} /> Intern Finder</Link>
                 <Link to="/neighborhoods"><FontAwesomeIcon icon={faCompass} /> Neighborhood Exploration</Link>
                 <Link to="/events"><FontAwesomeIcon icon={faCalendar} /> Events</Link>
