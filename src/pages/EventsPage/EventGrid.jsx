@@ -2,15 +2,12 @@ import React from "react";
 import { Box, Typography, Card, CardContent, Stack, Chip, CardActionArea } from "@mui/material";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { Link } from 'react-router-dom'; 
-import { Box, Typography, Card, CardContent, Stack, Chip, CardActionArea } from "@mui/material";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
-import { Link } from 'react-router-dom'; 
+ 
 
 const EventGrid = ({ events }) => {
   // Optional: Add a check for no events, so the page isn't just blank
   if (!events || events.length === 0) {
-  // Optional: Add a check for no events, so the page isn't just blank
-  if (!events || events.length === 0) {
+
     return (
       <Box
         sx={{
@@ -230,5 +227,6 @@ const EventGrid = ({ events }) => {
     </Stack>
   );
 };
+
 
 export default EventGrid;

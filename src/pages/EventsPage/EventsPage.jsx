@@ -18,19 +18,6 @@ import {
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import AddIcon from "@mui/icons-material/Add";
-import {
-  Container,
-  Box,
-  Typography,
-  Button,
-  TextField,
-  InputAdornment,
-  Chip,
-  Stack,
-  Paper,
-} from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
-import AddIcon from "@mui/icons-material/Add";
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 const eventsPage = () => {
@@ -57,7 +44,6 @@ const eventsPage = () => {
     setSubmittedSearch(searchInputValue);
   };
 
-  const categories = ["All", "Food", "Music", "Sports", "Art"];
   const categories = ["All", "Food", "Music", "Sports", "Art"];
 
   //useEffect to populate event useState, reloads when search is submitted, category is changed or show more button is clicked (skip changes)
@@ -91,6 +77,10 @@ const eventsPage = () => {
   const handleCloseModalClick = () => {
     setShowModal(false);
   };
+
+  useEffect(() => {
+    console.log("Events state updated in frontend:", events); // <--- What does this show?
+}, [events]);
 
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>

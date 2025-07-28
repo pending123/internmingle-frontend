@@ -273,7 +273,7 @@ const Event = () => {
         </Grid>
         {/* Map of Location */}
 
-        <Grid container spacing={6} alignItems="center" columns={12}>
+        <Grid container spacing={6} alignItems="stretch" columns={12}>
           <Grid size={6}>
             <Typography
               variant="h5"
@@ -323,7 +323,7 @@ const Event = () => {
 
           {/* Event Description and Actions Section */}
 
-          <Grid size={6} offset={{ md: "auto" }}>
+          <Grid size={6} offset={{ md: "auto" }} >
             <Box
               sx={{
                 bgcolor: "white",

@@ -210,9 +210,8 @@ const EventModal = ({ handleCloseModalClick }) => {
           Create New Event
         </Typography>
       </DialogTitle>
-      <DialogContent dividers>
+      <DialogContent>
         {" "}
-        {/* `dividers` adds a divider below the content */}
         <Box
           component="form"
           onSubmit={handleFormSubmit}
@@ -305,6 +304,7 @@ const EventModal = ({ handleCloseModalClick }) => {
             variant="outlined"
             multiline
             rows={4}
+             sx={{ mt: -1, mb:-1 }}
           />
 
           {/* Category button selection */}
@@ -326,6 +326,32 @@ const EventModal = ({ handleCloseModalClick }) => {
               ))}
             </Stack>
           </Box>
+          <TextField
+            label="Search Event Photo"
+            id="photoSearch"
+            name="photoSearch"
+            value={photoSearchInput}
+            onChange={(e) => setPhotoSearchInput(e.target.value)}
+            fullWidth
+            variant="outlined"
+            InputLabelProps={{ shrink: true }}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <Button onClick={handleImageSearch} edge="end">
+                    Search
+                  </Button>
+                </InputAdornment>
+              ),
+            }}
+          />
+          {!imageUrl && (imageResults.length > 0 || showImages) && (
+            <ImageSearchResultsGrid
+              results={imageResults}
+              onSelectImage={handleImageSelect}
+              loading={isSearchingImages}
+            />
+          )}
 
           {/* Date of Event */}
           <TextField
@@ -356,32 +382,7 @@ const EventModal = ({ handleCloseModalClick }) => {
             variant="outlined"
             InputLabelProps={{ shrink: true }}
           />
-          <TextField
-            label="Search Event Photo"
-            id="photoSearch"
-            name="photoSearch"
-            value={photoSearchInput}
-            onChange={(e) => setPhotoSearchInput(e.target.value)}
-            fullWidth
-            variant="outlined"
-            InputLabelProps={{ shrink: true }}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <Button onClick={handleImageSearch} edge="end">
-                    Search
-                  </Button>
-                </InputAdornment>
-              ),
-            }}
-          />
-          {!imageUrl && (imageResults.length > 0 || showImages) && (
-            <ImageSearchResultsGrid
-              results={imageResults}
-              onSelectImage={handleImageSelect}
-              loading={isSearchingImages}
-            />
-          )}
+          
         </Box>
       </DialogContent>
       <DialogActions sx={{ p: 3, justifyContent: "center" }}>
