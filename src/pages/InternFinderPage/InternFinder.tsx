@@ -80,7 +80,7 @@ export default function InternFinder()
         <div className="internFinder">
             <Box className="filters">
                 <Autocomplete 
-                options={companies} sx={{ minWidth: { xs: 150, sm: 200 }, '& fieldset': { borderRadius: 33 }}} 
+                options={companies} sx={{ minWidth: 200, '& fieldset': { borderRadius: 33 }}} 
                 value={selectedCompany} 
                 onChange={(_, newValue) => setSelectedCompany(newValue)}
                 renderInput={
@@ -88,14 +88,17 @@ export default function InternFinder()
                 } />
                 <Autocomplete 
                 options={hobbies} 
-                sx={{minWidth: { xs: 150, sm: 200 }, '& fieldset': { borderRadius: 33 }}} multiple disableCloseOnSelect  
+                sx={
+                    {minWidth: 200, '& fieldset': { borderRadius: 33 }}
+                } 
+                multiple disableCloseOnSelect  
                 value={selectedHobbies} 
                 onChange={(_, newValue) => setSelectedHobbies(newValue)}
                 renderInput={
                     (params) => ( <TextField {...params} label="Filter by Hobbies" variant="outlined" />)
                 } />
                 <Autocomplete 
-                options={traits} sx={{ minWidth: { xs: 150, sm: 200 }, '& fieldset': { borderRadius: 33 }}} multiple disableCloseOnSelect 
+                options={traits} sx={{ minWidth: 200, '& fieldset': { borderRadius: 33 }}} multiple disableCloseOnSelect 
                 value={selectedTraits} 
                 onChange={(_, newValue) => setSelectedTraits(newValue)}
                 renderInput={
