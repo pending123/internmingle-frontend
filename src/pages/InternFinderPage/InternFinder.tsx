@@ -84,10 +84,7 @@ export default function InternFinder()
                 </Box>
                 <Autocomplete 
                 options={hobbies} 
-                sx={
-                    {minWidth: 200, '& fieldset': { borderRadius: 33 }}
-                } 
-                multiple disableCloseOnSelect  
+                sx={{minWidth: { xs: 150, sm: 200 }, '& fieldset': { borderRadius: 33 }}} multiple disableCloseOnSelect  
                 value={selectedHobbies} 
                 onChange={(_, newValue) => setSelectedHobbies(newValue)}
                 renderInput={
