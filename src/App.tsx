@@ -42,22 +42,23 @@ function ProfileCompletionChecker({ children }: { children: React.ReactNode }) {
           setIsCheckingProfile(false); //ask about what setischeckingprofile does
           return;
         }
-        console.log("hit line 47");
         const response = await axios.get("/api/profiles/me", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-        console.log(response);
+
         // Check if profile exists and is completed
         const profileData = response.data;
         const isCompleted =
           profileData && profileData.profileCompleted === true;
+
         console.log("Profile found:", {
           profileExists: Boolean(profileData),
           profileCompleted: profileData?.profileCompleted, //why ?
           isCompleted,
         });
+
         setProfileCompleted(isCompleted);
       } catch (error) {
         // 404 is expected for new users
@@ -66,7 +67,6 @@ function ProfileCompletionChecker({ children }: { children: React.ReactNode }) {
         );
         setProfileCompleted(false);
       } finally {
-        console.log("setIsCheckingProfile(false);");
         setIsCheckingProfile(false);
       }
     };
@@ -195,4 +195,5 @@ function App() {
     </BrowserRouter>
   );
 }
+
 export default App;
