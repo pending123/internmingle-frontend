@@ -69,9 +69,10 @@ const eventsPage = () => {
       } finally {
         setLoading(false);
       }
-      console.log(events);
+
     };
     loadEvents();
+    
   }, [submittedSearch, category, skip]);
 
   const handleCreateClick = () => {
@@ -81,6 +82,7 @@ const eventsPage = () => {
   const handleCloseModalClick = () => {
     setShowModal(false);
   };
+
 
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>

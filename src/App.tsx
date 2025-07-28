@@ -48,13 +48,11 @@ function ProfileCompletionChecker({ children }: { children: React.ReactNode }) {
           setIsCheckingProfile(false); //ask about what setischeckingprofile does
           return;
         }
-        console.log("hit line 47");
         const response = await axios.get("/api/profiles/me", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-        console.log(response);
 
         // Check if profile exists and is completed
         const profileData = response.data;
@@ -75,7 +73,6 @@ function ProfileCompletionChecker({ children }: { children: React.ReactNode }) {
         );
         setProfileCompleted(false);
       } finally {
-        console.log("setIsCheckingProfile(false);");
         setIsCheckingProfile(false);
       }
     };

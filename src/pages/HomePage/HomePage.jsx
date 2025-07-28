@@ -119,9 +119,9 @@ const HomePage = () => {
                 style={{
                   maxWidth: "100%",
                   height: "auto",
-                  width: "90%", // Make it 50% of the Grid item's width
+                  width: "90%", 
                   display: "block",
-                  marginLeft: "auto", // Use specific margin properties for 'auto' with 'style'
+                  marginLeft: "auto", 
                   marginRight: "auto",
                   borderRadius: "8px",
                 }}

@@ -175,7 +175,9 @@ const EventGrid = ({ events }) => {
                           lineHeight: 1.5,
                         }}
                       >
-                        {event.description}
+                        {event.description.length>60
+                        ?`${event.description.substring(0, 60)}...`
+                        :event.description}
                       </Typography>
                     </Box>
 
