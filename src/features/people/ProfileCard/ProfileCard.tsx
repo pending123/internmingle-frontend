@@ -36,7 +36,6 @@ export default function ProfileCard({ profile }: ProfileCardProps)
             <div className="profilePhoto"></div>
             <h2>{profile.firstName}</h2>
             <h4>{profile.workPosition}• {profile.company}</h4>
-            <p className='profileDesc'>{profile.bio}</p>
             <ul className='profileTags'>
             {tags.map((tag, index) => (
                 <li key={index}>{tag}</li>

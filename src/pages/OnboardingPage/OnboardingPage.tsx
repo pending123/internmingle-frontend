@@ -447,7 +447,7 @@ export default function OnboardingPage() {
 
               {/* Traits Section */}
               <div className="traits-section">
-                <label className="section-label">Traits (optional)</label>
+                <label className="section-label">Traits</label>
                 <div className="tags-container">
                   {AVAILABLE_TRAITS.map(trait => (
                     <button
@@ -464,7 +464,7 @@ export default function OnboardingPage() {
 
               {/* Hobbies Section */}
               <div className="hobbies-section">
-                <label className="section-label">Hobbies (optional)</label>
+                <label className="section-label">Hobbies</label>
                 <div className="tags-container">
                   {AVAILABLE_HOBBIES.map(hobby => (
                     <button
