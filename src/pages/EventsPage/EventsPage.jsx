@@ -80,10 +80,6 @@ const eventsPage = () => {
     setShowModal(false);
   };
 
-  useEffect(() => {
-    console.log("Events state updated in frontend:", events); // <--- What does this show?
-}, [events]);
-
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
       {/* Header Section */}
