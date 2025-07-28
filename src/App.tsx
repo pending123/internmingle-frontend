@@ -2,8 +2,8 @@ import "./App.css";
 import { SignedIn, SignedOut, useUser, useAuth } from "@clerk/clerk-react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { CircularProgress } from "@mui/material";
 import axios from "axios";
-
 import NeighborhoodsPage from "./pages/NeighborhoodsPage/NeighborhoodsPage";
 import Navbar from "./components/Navbar/Navbar";
 import Events from "./pages/EventsPage/EventsPage";
@@ -12,9 +12,6 @@ import HomePage from "./pages/HomePage/HomePage";
 import OnboardingPage from "./pages/OnboardingPage/OnboardingPage";
 import PublicProfilePage from "./pages/PublicProfilePage/PublicProfilePage";
 import Event from "./pages/EventsPage/event"
-
-// Configure axios base URL to point to your backend //look into this
-//DIVINE
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
 axios.defaults.baseURL = BACKEND_URL;
 
@@ -26,17 +23,14 @@ function ProfileCompletionChecker({ children }: { children: React.ReactNode }) {
     null
   );
   const [isCheckingProfile, setIsCheckingProfile] = useState(true);
-
   //makes sure profile is completed before proceeding
   useEffect(() => {
     const checkProfileCompletion = async () => {
       console.log("TEST");
       if (!isLoaded || !user) {
         console.log("!isLoaded || !user");
-        //CLAUDE SUGGESTED.. makes sure your user is authenticated
         return;
       }
-
       try {
         // get token using useAuth hook
         const token = await getToken();
@@ -54,18 +48,15 @@ function ProfileCompletionChecker({ children }: { children: React.ReactNode }) {
           },
         });
         console.log(response);
-
         // Check if profile exists and is completed
         const profileData = response.data;
         const isCompleted =
           profileData && profileData.profileCompleted === true;
-
         console.log("Profile found:", {
           profileExists: Boolean(profileData),
           profileCompleted: profileData?.profileCompleted, //why ?
           isCompleted,
         });
-
         setProfileCompleted(isCompleted);
       } catch (error) {
         // 404 is expected for new users
@@ -78,26 +69,21 @@ function ProfileCompletionChecker({ children }: { children: React.ReactNode }) {
         setIsCheckingProfile(false);
       }
     };
-
     checkProfileCompletion();
   }, [user, isLoaded, getToken]);
-
   // Show loading state while checking profile
   if (isCheckingProfile || !isLoaded) {
     console.log(
       `isCheckingProfile = ${isCheckingProfile} || !isLoaded = ${!isLoaded}`
     );
-    return <div>Loading...</div>;
+    return <div><CircularProgress /></div>;
   }
-
   // if profile is not completed, redirect to onboarding
   if (profileCompleted === false) {
     return <Navigate to="/onboarding" replace />;
   }
-
   return <>{children}</>;
 }
-
 // Protected route makes sure that user has completed onboarding first
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   return (
@@ -106,7 +92,6 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
     </SignedIn>
   );
 }
-
 function App() {
   return (
     <BrowserRouter>
@@ -115,7 +100,6 @@ function App() {
           <Navbar />
         </SignedIn>
       </header>
-
       <main>
         <Routes>
           <Route
@@ -132,7 +116,6 @@ function App() {
               </>
             }
           />
-
           <Route
             path="/onboarding"
             element={
@@ -203,5 +186,4 @@ function App() {
     </BrowserRouter>
   );
 }
-
 export default App;
