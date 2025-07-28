@@ -14,12 +14,22 @@
 .filters 
 {
     display: flex;
-    gap: 2rem;
+    gap: 3.5rem;
     margin: 4vh;
+    align-items: center;
 }
 
-.filters 
+.customSearch 
 {
-    caret-color: transparent;
+    background-color: #e0e5ea;
+    box-shadow: none;
+    border-radius: 1rem;
+}
 
+.customSearch Button 
+{
+    background-color: #e0e5ea;
+    color: rgba(0, 0, 0, 0.54);
+    box-shadow: none;
+    font-size: large;
 }
