@@ -1,10 +1,12 @@
 import SearchBar from "../../components/SearchBar/SearchBar"
 import Place from "../../features/neighborhoods/Place/Place";
-import { useState } from "react";
+import { useState} from "react";
+import { flushSync } from "react-dom";
 import './NeighborhoodsPage.css'
 import axios from "axios";
 import { APIProvider, Map} from "@vis.gl/react-google-maps";
 import { CircularProgressbar, buildStyles} from 'react-circular-progressbar';
+import { CircularProgress, Box } from "@mui/material";
 import 'react-circular-progressbar/dist/styles.css';
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
 
@@ -12,16 +14,28 @@ const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
 export default function NeighborhoodsPage() 
 {
     const [info, setInfo] = useState<any>(null);
+    const [loading, setLoading] = useState<boolean>(false)
+    const [error, setError] = useState<boolean>(false);
+
     const mapsKey: string = import.meta.env.VITE_MAPS_API_KEY;
 
     async function search(formData: FormData): Promise<void>{
         const query = formData.get("query");
+
+        flushSync(() => {
+            setLoading(true);
+            setError(false);
+            setInfo(null);
+        });
+
         try {
+
             const {data: neighborhoodData} = await axios.get(`${BACKEND_URL}/api/neighborhoods?query=${query}`)
             setInfo(neighborhoodData);
-        } catch (err) 
-        {
-            console.error("Failed to search for neighborhood")
+        } catch (err) {
+            setError(true);
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -29,8 +43,24 @@ export default function NeighborhoodsPage()
         <>
         <div className="neighborhoodContainer">
             <h2>Enter an address, zip code or neighborhood to get started</h2>
-            <SearchBar action={search}/>
-            {info && <h3>Showing results for {info.neighborhood}</h3>}
+            <Box sx={{ width: '100%', maxWidth: 1000, mx: '2rem' }}>
+                <SearchBar action={search} />
+            </Box>
+
+            {loading && (
+                <div className="loading-container">
+                    <p>Searching for neighborhood data...</p>
+                    <CircularProgress />
+                </div>
+            )}
+
+            {error && !loading && (
+                <div className="error-message">
+                    <p>Failed to load neighborhood data. Please try again.</p>
+                </div>
+            )}
+
+            {info && !loading && <h3>Showing results for {info.neighborhood}</h3>}
 
             <div className="infoDisplay">
                 <div className="mapPanel">
@@ -58,7 +88,7 @@ export default function NeighborhoodsPage()
                                     text={`${info.walkScore}`}
                                     styles={buildStyles({
 
-                                        pathColor: '#CCE5FF',
+                                        pathColor: '#4A9DAE',
                                         textColor: 'black',
                                         strokeLinecap: 'butt'
                                     })} />
@@ -74,7 +104,7 @@ export default function NeighborhoodsPage()
                                     text={`${info.bikeScore}`}
                                     styles={buildStyles({
 
-                                        pathColor: '#CCE5FF',
+                                        pathColor: '#4A9DAE',
                                         textColor: 'black',
                                         strokeLinecap: 'butt'
                                     })} />
@@ -90,7 +120,7 @@ export default function NeighborhoodsPage()
                                     text={`${info.transitScore}`}
                                     styles={buildStyles({
 
-                                        pathColor: '#CCE5FF',
+                                        pathColor: '#4A9DAE',
                                         textColor: 'black',
                                         strokeLinecap: 'butt'
                                     })} />
@@ -104,7 +134,7 @@ export default function NeighborhoodsPage()
                     
                     {info && 
                     (<div className="places">
-                        <h2>Points of Interest </h2>
+                        <h2><strong>Points of Interest</strong></h2>
                         <div className="placeList">
                             {info.places.map((place: { name: string; address: string; category: string}) => (
                                 <Place 

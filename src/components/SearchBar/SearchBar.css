@@ -1,32 +1,32 @@
-.searchBar 
-{
-    box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
-    background-color: white;
-    border-radius: 0.3rem;
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
-    width: 100%;
-    max-width: 1000px;
-    min-width: 20vw;
+.searchBar {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border-radius: 33px;
+  padding: 0 0.5rem;
+  height: 40px; 
+  box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, 
+              rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
+  width: 100%;
 }
 
-.clearBtn 
-{
-    all: unset;
-    cursor: pointer;
-    padding-left: 0.5rem;
+.searchInput {
+  flex-grow: 1;
+  padding: 0.4rem;
+  border: none;
+  font-size: 1rem;
+  min-width: 0;
+  background: transparent;
 }
 
-.searchInput 
-{
-    flex-grow: 1;
-    padding: 0.4rem;
-    border: 0;
-    min-width: 0;
+.searchInput:focus {
+  outline: none;
 }
 
-.searchInput:focus 
-{
-    outline: none;
+.clearBtn {
+  all: unset;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding-right: 0.5rem;
 }

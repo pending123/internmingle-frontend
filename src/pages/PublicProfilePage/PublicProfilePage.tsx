@@ -9,8 +9,6 @@ import axios from 'axios';
 
 import { getAge, getWeeksBetween } from '../../utils/TimeHelper'
 
-
-
 type Profile = {
   userId: number;
   firstName: string;

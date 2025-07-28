@@ -11,6 +11,7 @@ const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
 
 axios.defaults.baseURL = BACKEND_URL;
 
+//hard coded for now
 const AVAILABLE_TRAITS = [
   'Organized', 'Creative', 'Outgoing', 'Analytical', 'Empathetic', 
   'Adventurous', 'Detail-oriented', 'Team player', 'Independent', 'Optimistic'
@@ -33,7 +34,7 @@ const NOISE_LEVELS = [
   'Don\'t mind noise'
 ];
 
-// Options for num of roomomates
+// options for num of roomomates
 const ROOMMATE_COUNT_OPTIONS = [
   { value: '1', label: '1 roommate' },
   { value: '2', label: '2 roommates' },
@@ -110,6 +111,7 @@ export default function OnboardingPage() {
           headers: { 'Authorization': `Bearer ${token}` }
         });
 
+        //redirects user
         if (response.data?.profileCompleted) {
           console.log('Profile already completed, redirecting to main app...');
           navigate('/intern-finder', { replace: true });
@@ -134,7 +136,7 @@ export default function OnboardingPage() {
       case 1:
         return formData.workCity.trim() !== '';
       case 2:
-        return true; // This step is optional, a user may choose to skip it.
+        return true; // step is optional, a user may choose to skip
       case 3:
         return (
           formData.university.trim() !== '' && // prevents users from just entering whitespace
@@ -164,7 +166,7 @@ export default function OnboardingPage() {
           formData.noiseLevel.trim() !== ''
         );
       case 6:
-        return true; // Final step
+        return true; //last step
       default:
         return false;
     }
@@ -182,7 +184,7 @@ export default function OnboardingPage() {
     setError('');
     
     if (currentStep === 4) {
-      // Skip step 5 if not looking for housing
+      // skip 5 if not looking for housing
       if (!formData.isLookingForHousing) {
         setCurrentStep(6);
       } else {
