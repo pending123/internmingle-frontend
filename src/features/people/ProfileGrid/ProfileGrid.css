@@ -3,7 +3,18 @@
     margin-right: auto;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 4rem;
+    gap: 4rem; 
     padding: 1rem;
-    max-width: 90vw; 
+    max-width: 90vw;
+}
+
+@media (max-width: 800px) {
+    .profileGrid {
+        grid-template-columns: 1fr; 
+        column-gap: 1rem; 
+        row-gap: 4rem;
+        width: 300px;
+        padding: 0.5rem;
+        align-self: center;
+    }
 }
