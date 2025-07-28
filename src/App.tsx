@@ -12,6 +12,7 @@ import HomePage from "./pages/HomePage/HomePage";
 import OnboardingPage from "./pages/OnboardingPage/OnboardingPage";
 import PublicProfilePage from "./pages/PublicProfilePage/PublicProfilePage";
 import Event from "./pages/EventsPage/event"
+import PersonalProfilePage from "./pages/PersonalProfilePage/PersonalProfilePage";
 import ChatPage from "./pages/ChatPage/ChatPage";
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
 axios.defaults.baseURL = BACKEND_URL;
@@ -134,6 +135,15 @@ function App() {
               </SignedIn>
             }
           />
+          <Route
+            path="/profiles/me" 
+            element={
+              <ProtectedRoute>
+                <PersonalProfilePage />
+              </ProtectedRoute>
+            }
+          />
+
           <Route
             path="/edit-profile"
             element={
