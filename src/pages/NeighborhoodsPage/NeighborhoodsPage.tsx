@@ -5,6 +5,7 @@ import './NeighborhoodsPage.css'
 import axios from "axios";
 import { APIProvider, Map} from "@vis.gl/react-google-maps";
 import { CircularProgressbar, buildStyles} from 'react-circular-progressbar';
+import { CircularProgress } from "@mui/material";
 import 'react-circular-progressbar/dist/styles.css';
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
 
@@ -12,16 +13,25 @@ const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
 export default function NeighborhoodsPage() 
 {
     const [info, setInfo] = useState<any>(null);
+    const [loading, setLoading] = useState<boolean>(false)
+    const [error, setError] = useState<boolean>(false);
+
     const mapsKey: string = import.meta.env.VITE_MAPS_API_KEY;
 
     async function search(formData: FormData): Promise<void>{
         const query = formData.get("query");
+
+        setLoading(true);
+        setError(false)
+
         try {
             const {data: neighborhoodData} = await axios.get(`${BACKEND_URL}/api/neighborhoods?query=${query}`)
             setInfo(neighborhoodData);
-        } catch (err) 
-        {
+        } catch (err) {
             console.error("Failed to search for neighborhood")
+            setError(true);
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -30,7 +40,21 @@ export default function NeighborhoodsPage()
         <div className="neighborhoodContainer">
             <h2>Enter an address, zip code or neighborhood to get started</h2>
             <SearchBar action={search}/>
-            {info && <h3>Showing results for {info.neighborhood}</h3>}
+
+            {loading && (
+                <div className="loading-container">
+                    <p>Searching for neighborhood data...</p>
+                    <CircularProgress />
+                </div>
+            )}
+
+            {error && !loading && (
+                <div className="error-message">
+                    <p>Failed to load neighborhood data. Please try again.</p>
+                </div>
+            )}
+
+            {info && !loading && <h3>Showing results for {info.neighborhood}</h3>}
 
             <div className="infoDisplay">
                 <div className="mapPanel">
