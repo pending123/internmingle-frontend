@@ -10,7 +10,6 @@ import Events from "./pages/EventsPage/EventsPage";
 import InternFinder from "./pages/InternFinderPage/InternFinder";
 import HomePage from "./pages/HomePage/HomePage";
 import OnboardingPage from "./pages/OnboardingPage/OnboardingPage";
-import PublicProfilePage from "./pages/PublicProfilePage/PublicProfilePage";
 import Event from "./pages/EventsPage/event"
 
 import PublicProfile from "./pages/PublicProfilePage/PublicProfile";
@@ -140,7 +139,7 @@ function App() {
             path="/profiles/me" 
             element={
               <ProtectedRoute>
-                <PersonalProfilePage />
+                <PublicProfile />
               </ProtectedRoute>
             }
           />
