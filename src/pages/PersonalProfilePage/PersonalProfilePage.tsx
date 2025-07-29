@@ -1,11 +1,12 @@
 import './PersonalProfilePage.css';
 import { useEffect, useState } from 'react';
-import { Divider } from '@mui/material';
+import { Divider, Button } from '@mui/material';
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useScrollToTop } from '../../hooks/useScrollToTop';
 import { useAuth } from '@clerk/clerk-react';
 import axios from 'axios';
+import EditProfileModal from './EditProfileModal';
 
 import { getAge, getWeeksBetween } from '../../utils/TimeHelper'
 
@@ -20,19 +21,21 @@ type Profile = {
     company: string;
     workPosition: string;
     workCity: string;
+    workZipcode?: string;
     internshipStartDate: string;
     internshipEndDate: string;
     bio: string;
     isLookingForHousing: boolean;
     hobbies: string[];
     traits: string[];
-    sleepSchedule: string;
-    numOfRoomates: number;
-    noiseLevel: string;
+    sleepSchedule?: string;
+    numOfRoomates?: number;
+    noiseLevel?: string;
 };
 
 export default function PersonalProfilePage() {
     const [profile, setProfile] = useState<Profile | null>(null);
+    const [editModalOpen, setEditModalOpen] = useState(false);
     const { getToken } = useAuth();
 
     useScrollToTop();
@@ -60,9 +63,42 @@ export default function PersonalProfilePage() {
         fetchProfile();
     }, [getToken]);
 
+    const handleProfileUpdate = (updatedProfile: Profile) => {
+        setProfile(updatedProfile);
+    };
+
+    const handleEditClick = () => {
+        setEditModalOpen(true);
+    };
+
+    const handleEditClose = () => {
+        setEditModalOpen(false);
+    };
+
     return !profile ? null : (
         <>
             <div className='profile'>
+                {/* Edit Profile Button */}
+                <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '1rem', paddingBottom: '0' }}>
+                    <Button
+                        variant="contained"
+                        onClick={handleEditClick}
+                        sx={{
+                            backgroundColor: '#0073EA',
+                            color: 'white',
+                            padding: '0.5rem 1.5rem',
+                            borderRadius: '2rem',
+                            fontWeight: 500,
+                            textTransform: 'none',
+                            '&:hover': {
+                                backgroundColor: '#0056b3',
+                            }
+                        }}
+                    >
+                        Edit Profile
+                    </Button>
+                </div>
+
                 <div className='demographics'>
                     <div className="profilePhoto"></div>
                     <div className='coreInfo'>
@@ -128,42 +164,53 @@ export default function PersonalProfilePage() {
                             <p>{getWeeksBetween(new Date(profile.internshipStartDate), new Date(profile.internshipEndDate))} weeks</p>
                         </div>
                     </div>
-                    <div className='traits'>
+                    <div>
                         <h3><FontAwesomeIcon icon={faCircle} color='#0073EA' />  Traits</h3>
                         <div className='traitList'>
-                            {profile.traits.map((trait) => (
-                                <div>{trait}</div>
-                            ))}
-                        </div>
-                    </div>  
-                    <div className='hobbies'>
-                        <h3><FontAwesomeIcon icon={faCircle} color='#0073EA' />  Hobbies</h3>
-                        <div className='hobbyList'>
-                            {profile.hobbies.map((hobby) => (
-                                <div>{hobby}</div>
+                            {profile.traits.map((trait, index) => (
+                                <div key={index}>{trait}</div>
                             ))}
                         </div>
                     </div>
-                    {profile.isLookingForHousing ?
+                    <div>
+                        <h3><FontAwesomeIcon icon={faCircle} color='#0073EA' />  Hobbies</h3>
+                        <div className='hobbyList'>
+                            {profile.hobbies.map((hobby, index) => (
+                                <div key={index}>{hobby}</div>
+                            ))}
+                        </div>
+                    </div>
+                    {profile.isLookingForHousing && (
                         <div className='housingPrefs'>
                             <h3><FontAwesomeIcon icon={faCircle} color='#0073EA' />  Housing Preferences</h3>
                             <div className='prefList'>
-                            <div>
-                                <p>SLEEP SCHEDULE</p>
-                                <p><strong>{profile.sleepSchedule}</strong></p>
+                                <div>
+                                    <p><strong>Sleep Schedule</strong></p>
+                                    <p>{profile.sleepSchedule}</p>
+                                </div>
+                                <div>
+                                    <p><strong>Number of Roommates</strong></p>
+                                    <p>{profile.numOfRoomates}</p>
+                                </div>
+                                <div>
+                                    <p><strong>Noise Level</strong></p>
+                                    <p>{profile.noiseLevel}</p>
+                                </div>
                             </div>
-                            <div>
-                                <p>DESIRED ROOMMATE COUNT</p>
-                                <p><strong>{profile.numOfRoomates}</strong></p>
-                            </div>
-                            <div>
-                                <p>NOISE LEVEL</p>
-                                <p><strong>{profile.noiseLevel}</strong></p>
-                            </div>
-                            </div>
-                        </div> : null}
+                        </div>
+                    )}
                 </div>
             </div>
+
+            {/* Edit Profile Modal */}
+            {profile && (
+                <EditProfileModal
+                    open={editModalOpen}
+                    onClose={handleEditClose}
+                    profile={profile}
+                    onProfileUpdate={handleProfileUpdate}
+                />
+            )}
         </>
     );
 }
