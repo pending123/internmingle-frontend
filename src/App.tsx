@@ -11,7 +11,7 @@ import InternFinder from "./pages/InternFinderPage/InternFinder";
 import HomePage from "./pages/HomePage/HomePage";
 import OnboardingPage from "./pages/OnboardingPage/OnboardingPage";
 import Event from "./pages/EventsPage/event"
-
+import ChatPage from "./pages/ChatPage/ChatPage";
 import PublicProfile from "./pages/PublicProfilePage/PublicProfile";
 import ChatPage from "./pages/ChatPage/ChatPage";
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
