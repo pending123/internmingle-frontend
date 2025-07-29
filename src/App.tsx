@@ -12,6 +12,7 @@ import HomePage from "./pages/HomePage/HomePage";
 import OnboardingPage from "./pages/OnboardingPage/OnboardingPage";
 import PublicProfilePage from "./pages/PublicProfilePage/PublicProfilePage";
 import Event from "./pages/EventsPage/event"
+import ChatPage from "./pages/ChatPage/ChatPage";
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
 axios.defaults.baseURL = BACKEND_URL;
 
@@ -178,6 +179,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <Event/>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/chats"
+            element={
+              <ProtectedRoute>
+                <ChatPage/>
               </ProtectedRoute>
             }
           />
