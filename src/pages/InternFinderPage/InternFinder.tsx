@@ -22,23 +22,18 @@ export default function InternFinder()
     const [selectedTraits, setSelectedTraits] = useState<string[]>([]);
     const [profiles, setProfiles] = useState<any[]>([]);
 
-    async function clearFilters() {
-        setCompanySearch("");
-        setSelectedHobbies([]);
-        setSelectedTraits([]);
-    }
+    const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const [loadingMore, setLoadingMore] = useState(false);
 
-    useEffect(() => {
-        async function fetchProfiles() {
+    async function fetchProfiles(newPage = 1, append = false) {
             try {
                 const token = await getToken();
-
                 const params = new URLSearchParams();
 
                 if (companySearch.trim() !== "") {
                     params.append("company", companySearch.trim());
                 }
-
 
                 if (selectedHobbies.length > 0) {
                     params.append("hobbies", selectedHobbies.join(","));
@@ -48,8 +43,9 @@ export default function InternFinder()
                     params.append("traits", selectedTraits.join(","));
                 }
 
-                const url = `${baseURL}/api/profiles?${params.toString()}`;
+                params.append("page", newPage.toString());
 
+                const url = `${baseURL}/api/profiles?${params.toString()}`;
                 console.log("Fetching from:", url);
 
                 const { data } = await axios.get(url, {
@@ -58,14 +54,35 @@ export default function InternFinder()
                 },
             });
                 console.log(data);
-                setProfiles(data.results);
-
-            } catch (err) 
-            {
+                setTotalPages(data.totalPages);
+                if (append) {
+                    setProfiles(prev => [...prev, ...data.results]);
+                } else {
+                    setProfiles(data.results);
+                } 
+            } catch (err) {
                 console.error('Error fetching profiles')
             }
         };
-        fetchProfiles();
+
+    const handleViewMore = async () => {
+        const nextPage = page + 1;
+        setLoadingMore(true);
+        await fetchProfiles(nextPage, true);
+        setPage(nextPage);
+        setLoadingMore(false);
+};
+
+
+    async function clearFilters() {
+        setCompanySearch("");
+        setSelectedHobbies([]);
+        setSelectedTraits([]);
+    }
+
+    useEffect(() => {
+        setPage(1);
+        fetchProfiles(1, false);
     }, [companySearch, selectedHobbies, selectedTraits])
 
     return (
@@ -105,13 +122,23 @@ export default function InternFinder()
             {profiles.length > 0 ? (
                 <>
                     <ProfileGrid profiles={profiles} />
-                    <Button variant="contained" size="large">View More Profiles</Button>
+                    {page < totalPages && (
+                        <Button 
+                            variant="contained" 
+                            size="large" 
+                            onClick={handleViewMore}
+                            disabled={loadingMore}
+                        >
+                            {loadingMore ? "Loading..." : "View More Profiles"}
+                        </Button>
+                    )}
                 </>
             ) : (
                 <Box sx={{ textAlign: 'center', padding: '2rem', color: '#0073EA' }}>
                     No profiles found. Try narrowing your selected filters.
                 </Box>
             )}
+
         </div>
         </>
     )

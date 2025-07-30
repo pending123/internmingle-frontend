@@ -46,6 +46,7 @@ export default function ProfileCard({ profile }: ProfileCardProps)
             color="primary"
             component={Link}
             to={`/public-profile/${profile.userId}`}
+            style={{ marginTop: 'auto' }}
             >
             View Profile
             </Button>

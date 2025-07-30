@@ -24,6 +24,7 @@ export default function ChatPage() {
   const [messageHistory, setMessageHistory] = useState({})
 
   const location = useLocation();
+  const [socket, setSocket] = useState(null);
   const userId = useSocketSetup(getToken, socket, BACKEND_URL);
   const partnerId = location.state?.userId; 
 
@@ -86,6 +87,16 @@ export default function ChatPage() {
     ? messageHistory[selectedContact.userId] || []
     : []
 
+
+  useEffect(() => {
+    const newSocket = io(URL, { withCredentials: true });
+    setSocket(newSocket);
+
+    return () => {
+      newSocket.disconnect();
+    };
+  }, []);
+  
   useEffect(() => {
     const container = document.querySelector('.messagesContainer');
     if (container && currentMessages.length > 0) {
