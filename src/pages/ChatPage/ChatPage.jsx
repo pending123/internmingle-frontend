@@ -260,13 +260,24 @@ async function fetchNewContact(userId) {
               }}
             >
               <TextField
-                autoComplete='off'
-                name='message'
-                size='small'
+                autoComplete="off"
+                name="message"
+                size="small"
                 sx={{
-                  '& .MuiOutlinedInput-root': { borderRadius: '10px' }
+                    '& .MuiOutlinedInput-root': {
+                    borderRadius: '10px',
+                    '& fieldset': {
+                        borderWidth: '2px', 
+                    },
+                    '&:hover fieldset': {
+                        borderWidth: '2px', 
+                    },
+                    '&.Mui-focused fieldset': {
+                        borderWidth: '2px', 
+                    },
+                    }
                 }}
-              />
+                />
               <Button
                 type='submit'
                 sx={{ px: 2, minWidth: 'auto' }}

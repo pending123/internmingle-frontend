@@ -41,8 +41,13 @@ export default function ProfileCard({ profile }: ProfileCardProps)
                 <li key={index}>{tag}</li>
             ))}
             </ul>
-            <Button variant='contained' color='primary'>
-                <Link to={`/public-profile/${profile.userId}`}>View Profile</Link>
+            <Button
+            variant="contained"
+            color="primary"
+            component={Link}
+            to={`/public-profile/${profile.userId}`}
+            >
+            View Profile
             </Button>
         </div>
         </>
