@@ -1,6 +1,6 @@
 import './ChatPage.css'
 import { Button, TextField } from '@mui/material'
-import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'
+import { faPaperPlane, faInbox } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useState, useEffect } from 'react'
 import { useAuth } from '@clerk/clerk-react'
@@ -190,7 +190,7 @@ async function fetchNewContact(userId) {
   return (
     <div className='chatLayout'>
       <div className='sidebar'>
-        <h2>Inbox</h2>
+        <h2><FontAwesomeIcon icon={faInbox} color='#4166F5' /> Inbox</h2>
         <div className='contactsList'>
           {loading ? (
             <p>Loading contacts...</p>
