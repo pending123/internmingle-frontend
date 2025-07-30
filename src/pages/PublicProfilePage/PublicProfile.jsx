@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
@@ -30,9 +30,10 @@ import VolumeUpIcon from "@mui/icons-material/VolumeUp";
 
 
 const PublicProfile = () => {
+  const location = useLocation()
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
-  const { id: profileId } = useParams();
+  const profileId = location.state?.userId
   const baseURL = import.meta.env.VITE_BACKEND_URL;
   const navigate = useNavigate();
 

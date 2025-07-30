@@ -160,7 +160,7 @@ function App() {
             }
           />
           <Route
-            path="/public-profile/:id"
+            path="/public-profile/"
             element={
               <ProtectedRoute>
                 <PublicProfile />

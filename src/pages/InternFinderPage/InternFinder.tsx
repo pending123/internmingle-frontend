@@ -15,11 +15,13 @@ export default function InternFinder()
 
     const hobbies = [ 'Reading', 'Hiking', 'Cooking', 'Gaming', 'Photography', 'Music', 'Sports', 'Travel', 'Art', 'Fitness', 'Dancing', 'Movies'];
     const traits = ['Organized', 'Creative', 'Outgoing', 'Analytical', 'Empathetic', 'Adventurous', 'Detail-oriented', 'Team player', 'Independent', 'Optimistic'];
-
+    const housingOptions = ['Yes', 'No']
 
     const [companySearch, setCompanySearch] = useState<string>("");
     const [selectedHobbies, setSelectedHobbies] = useState<string[]>([]);
     const [selectedTraits, setSelectedTraits] = useState<string[]>([]);
+    const [selectedHousing, setSelectedHousing] = useState<string | null>("");
+
     const [profiles, setProfiles] = useState<any[]>([]);
 
     const [page, setPage] = useState(1);
@@ -41,6 +43,14 @@ export default function InternFinder()
 
                 if (selectedTraits.length > 0) {
                     params.append("traits", selectedTraits.join(","));
+                }
+
+                if (selectedHousing !== null && selectedHousing !== '') {
+                    if (selectedHousing === 'Yes') {
+                        params.append("housing", "true");
+                    } else if (selectedHousing === 'No') {
+                        params.append("housing", "false");
+                    }
                 }
 
                 params.append("page", newPage.toString());
@@ -78,12 +88,13 @@ export default function InternFinder()
         setCompanySearch("");
         setSelectedHobbies([]);
         setSelectedTraits([]);
+        setSelectedHousing("");
     }
 
     useEffect(() => {
         setPage(1);
         fetchProfiles(1, false);
-    }, [companySearch, selectedHobbies, selectedTraits])
+    }, [companySearch, selectedHobbies, selectedTraits, selectedHousing])
 
     return (
         <>
@@ -116,6 +127,13 @@ export default function InternFinder()
                 onChange={(_, newValue) => setSelectedTraits(newValue)}
                 renderInput={
                     (params) => ( <TextField {...params} label="Filter by Traits" variant="outlined" />)
+                } />
+                <Autocomplete 
+                options={housingOptions} sx={{ minWidth: 220,'& fieldset': { borderRadius: 33 }}}
+                value={selectedHousing} 
+                onChange={(_, newValue) => setSelectedHousing(newValue)}
+                renderInput={
+                    (params) => ( <TextField {...params} label="Looking for Housing?" variant="outlined" />)
                 } />
                 <Button variant="contained" size="large" onClick={clearFilters}>Clear Filters</Button>
             </Box>
