@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 import axios from "axios";
 import {
   Box,
@@ -26,11 +28,13 @@ import BedtimeIcon from "@mui/icons-material/Bedtime";
 import PeopleIcon from "@mui/icons-material/People";
 import VolumeUpIcon from "@mui/icons-material/VolumeUp";
 
+
 const PublicProfile = () => {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const { id: profileId } = useParams();
   const baseURL = import.meta.env.VITE_BACKEND_URL;
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchProfiles() {
@@ -146,6 +150,9 @@ const getWeeksBetween = (d1, d2) => {
                 <LocationOnIcon fontSize="small" /> {profile.workCity}
               </Typography>
             )}
+            <Button sx={{ mt: 1.5 }} variant="contained" onClick={() => navigate('/chats', { state: { userId: profileId } })}>
+                Message   
+            </Button>
             </Stack>
           </Grid>
         </Grid>
