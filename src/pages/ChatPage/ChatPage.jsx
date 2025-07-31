@@ -28,6 +28,10 @@ export default function ChatPage() {
   const userId = useSocketSetup(getToken, socket, BACKEND_URL);
   const partnerId = location.state?.userId; 
 
+  function getInitials(firstName = '', lastName = '') {
+    return `${firstName[0] || ''}${lastName[0] || ''}`.toUpperCase();
+  }
+
   async function handleContactClick(partner) {
     setSelectedContact(partner)
     try {
@@ -216,7 +220,9 @@ async function fetchNewContact(userId) {
                 }`}
                 onClick={() => handleContactClick(contact.partner)}
               >
-                <div className='contactPhoto'></div>
+                <div className='contactPhoto'>
+                  {getInitials(contact.partner.firstName, contact.partner.lastName)}
+                </div>
                 <div className='contactDetails'>
                   <div className='contactName'>
                     {`${contact.partner.firstName} ${contact.partner.lastName}`|| 'Unnamed'}
