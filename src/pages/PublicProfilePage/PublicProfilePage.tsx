@@ -15,6 +15,7 @@ type Profile = {
   userId: number;
   firstName: string;
   lastName: string;
+  imageUrl?: string; //IDK-- CHECK
   gender: string;
   birthday: Date;
   university: string;
@@ -56,7 +57,12 @@ export default function PublicProfilePage() {
     <>
       <div className='profile'>
         <div className='demographics'>
-          <div className="profilePhoto"></div>
+          <div className="profilePhoto">
+              <img
+                src={profile.imageUrl}
+                className="profileImage"
+              />
+          </div>
           <div className='coreInfo'>
             <h2>{profile.firstName} {profile.lastName}</h2>
             <p>{profile.workPosition} • {profile.company}</p>

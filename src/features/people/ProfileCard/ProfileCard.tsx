@@ -6,6 +6,7 @@ type Profile = {
   userId: number;
   firstName: string;
   lastName: string;
+  imageUrl?: string;
   gender: string;
   university: string;
   schoolMajor: string;
@@ -33,7 +34,12 @@ export default function ProfileCard({ profile }: ProfileCardProps)
     return (
         <>
         <div className='profileCard'>
-            <div className="profilePhoto"></div>
+            <div className="profilePhoto">
+                <img
+                    src={profile.imageUrl}
+                    className="profileImage"
+                />
+            </div>
             <h2>{profile.firstName}</h2>
             <h4>{profile.workPosition}• {profile.company}</h4>
             <p className='profileDesc'>{profile.bio}</p>
