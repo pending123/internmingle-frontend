@@ -36,6 +36,7 @@ const PublicProfile = () => {
   const [loading, setLoading] = useState(true);
   const profileId = location.state?.userId
   const baseURL = import.meta.env.VITE_BACKEND_URL;
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchProfiles() {
