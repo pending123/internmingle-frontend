@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+
 import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
@@ -28,12 +29,12 @@ import BedtimeIcon from "@mui/icons-material/Bedtime";
 import PeopleIcon from "@mui/icons-material/People";
 import VolumeUpIcon from "@mui/icons-material/VolumeUp";
 
-
 const PublicProfile = () => {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const { id: profileId } = useParams();
   const baseURL = import.meta.env.VITE_BACKEND_URL;
+
   const navigate = useNavigate();
 
   useEffect(() => {
