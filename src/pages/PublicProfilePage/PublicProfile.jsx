@@ -112,7 +112,10 @@ const getWeeksBetween = (d1, d2) => {
       >
         <Grid container spacing={4} alignItems="center">
           <Grid item xs={12} sm={2}>
-            <Avatar sx={{ width: 175, height: 175 }} />
+            <Avatar 
+              src={profile.imageUrl}
+              sx={{ width: 175, height: 175 }} 
+            />
           </Grid>
           <Grid
             item
