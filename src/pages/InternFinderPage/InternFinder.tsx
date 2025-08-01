@@ -1,6 +1,7 @@
 import ProfileGrid from "../../features/people/ProfileGrid/ProfileGrid"
 
 import { Box, Autocomplete, Button, TextField} from '@mui/material';
+import SearchBar from "../../components/SearchBar/SearchBar";
 import './InternFinder.css'
 import { useState, useEffect } from "react";
 import axios from 'axios'
@@ -12,29 +13,20 @@ export default function InternFinder()
 
     const baseURL = import.meta.env.VITE_BACKEND_URL;
 
-    const companies = [
-        "TechCorp",
-        "InnoSoft",
-        "WebSolutions",
-        "DataMinds",
-        "SecureNet",
-        "PixelCraft",
-        "AlgoTech",
-        "CloudWave",
-        "AppVentures",
-        "AIMinds",
-        "DataStream",
-        "BrightUI",
-        "FullStackify"
-];
     const hobbies = [ 'Reading', 'Hiking', 'Cooking', 'Gaming', 'Photography', 'Music', 'Sports', 'Travel', 'Art', 'Fitness', 'Dancing', 'Movies'];
     const traits = ['Organized', 'Creative', 'Outgoing', 'Analytical', 'Empathetic', 'Adventurous', 'Detail-oriented', 'Team player', 'Independent', 'Optimistic'];
 
 
-    const [selectedCompany, setSelectedCompany] = useState<string | null>(null);
+    const [companySearch, setCompanySearch] = useState<string>("");
     const [selectedHobbies, setSelectedHobbies] = useState<string[]>([]);
     const [selectedTraits, setSelectedTraits] = useState<string[]>([]);
     const [profiles, setProfiles] = useState<any[]>([]);
+
+    async function clearFilters() {
+        setCompanySearch("");
+        setSelectedHobbies([]);
+        setSelectedTraits([]);
+    }
 
     useEffect(() => {
         async function fetchProfiles() {
@@ -43,9 +35,10 @@ export default function InternFinder()
 
                 const params = new URLSearchParams();
 
-                if (selectedCompany) {
-                    params.append("company", selectedCompany);
+                if (companySearch.trim() !== "") {
+                    params.append("company", companySearch.trim());
                 }
+
 
                 if (selectedHobbies.length > 0) {
                     params.append("hobbies", selectedHobbies.join(","));
@@ -73,19 +66,22 @@ export default function InternFinder()
             }
         };
         fetchProfiles();
-    }, [selectedCompany, selectedHobbies, selectedTraits])
+    }, [companySearch, selectedHobbies, selectedTraits])
 
     return (
         <>
         <div className="internFinder">
             <Box className="filters">
-                <Autocomplete 
-                options={companies} sx={{ minWidth: 200, '& fieldset': { borderRadius: 33 }}} 
-                value={selectedCompany} 
-                onChange={(_, newValue) => setSelectedCompany(newValue)}
-                renderInput={
-                    (params) => ( <TextField {...params} label="Filter by Company" variant="outlined" />)
-                } />
+                <Box sx={{ maxWidth: 300}}>
+                    <SearchBar
+                        placeholder="Search by Company"
+                        className="customSearch"
+                        action={(formData) => {
+                            const query = formData.get("query")?.toString() || "";
+                            setCompanySearch(query);
+                        }}
+                    />
+                </Box>
                 <Autocomplete 
                 options={hobbies} 
                 sx={
@@ -98,17 +94,25 @@ export default function InternFinder()
                     (params) => ( <TextField {...params} label="Filter by Hobbies" variant="outlined" />)
                 } />
                 <Autocomplete 
-                options={traits} sx={{ minWidth: 200, '& fieldset': { borderRadius: 33 }}} multiple disableCloseOnSelect 
+                options={traits} sx={{ minWidth: 200,'& fieldset': { borderRadius: 33 }}} multiple disableCloseOnSelect 
                 value={selectedTraits} 
                 onChange={(_, newValue) => setSelectedTraits(newValue)}
                 renderInput={
                     (params) => ( <TextField {...params} label="Filter by Traits" variant="outlined" />)
                 } />
+                <Button variant="contained" size="large" onClick={clearFilters}>Clear Filters</Button>
             </Box>
-            <ProfileGrid profiles={profiles}/>
-            <Button variant="contained" size="large">View More Profiles</Button>
+            {profiles.length > 0 ? (
+                <>
+                    <ProfileGrid profiles={profiles} />
+                    <Button variant="contained" size="large">View More Profiles</Button>
+                </>
+            ) : (
+                <Box sx={{ textAlign: 'center', padding: '2rem', color: '#0073EA' }}>
+                    No profiles found. Try narrowing your selected filters.
+                </Box>
+            )}
         </div>
-
         </>
     )
 }

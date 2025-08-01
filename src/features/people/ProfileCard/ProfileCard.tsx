@@ -42,14 +42,19 @@ export default function ProfileCard({ profile }: ProfileCardProps)
             </div>
             <h2>{profile.firstName}</h2>
             <h4>{profile.workPosition}• {profile.company}</h4>
-            <p className='profileDesc'>{profile.bio}</p>
+
             <ul className='profileTags'>
             {tags.map((tag, index) => (
                 <li key={index}>{tag}</li>
             ))}
             </ul>
-            <Button variant='contained' color='primary'>
-                <Link to={`/public-profile/${profile.userId}`}>View Profile</Link>
+            <Button
+            variant="contained"
+            color="primary"
+            component={Link}
+            to={`/public-profile/${profile.userId}`}
+            >
+            View Profile
             </Button>
         </div>
         </>

@@ -24,7 +24,8 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import CloseIcon from '@mui/icons-material/Close';
 
 import { format } from "date-fns"; // For date formatting
-import AddImage from "../../assets/AddImage.png";
+//import AddImage from "../../../public/assets/AddImage.png";
+
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "@clerk/clerk-react";
@@ -195,7 +196,8 @@ const Event = () => {
     : "Time TBD";
 
   // Placeholder image since imgUrl is null
-  const imageUrl = event.imgUrl || AddImage;
+  const imageUrl = event.imgUrl //|| AddImage;
+
 
   return (
     <Box sx={{ bgcolor: "#f5f5f5", minHeight: "100vh", py: 6 }}>

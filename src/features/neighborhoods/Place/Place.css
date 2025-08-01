@@ -12,9 +12,9 @@
 .placeCategory 
 {
     border: 1px solid black;
-    color: white;
+    color: black;
     height: fit-content;
     padding: 0.5rem;
     border-radius: 1rem;
-    background-color: #0073EA;
+    background-color: #B3EBF2;
 }
