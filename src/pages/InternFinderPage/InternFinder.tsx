@@ -7,20 +7,56 @@ import { useState, useEffect } from "react";
 import axios from 'axios'
 import { useAuth } from '@clerk/clerk-react';
 
+interface FilterState {
+    companySearch: string;
+    selectedHobbies: string[];
+    selectedTraits: string[];
+    selectedHousing: string | null;
+}
+
 export default function InternFinder() 
 {
     const { getToken } = useAuth();
 
     const baseURL = import.meta.env.VITE_BACKEND_URL;
+    const FILTER_STORAGE_KEY = 'internFinder_filters';
+
+    const loadFiltersFromStorage = (): FilterState => {
+        try {
+            const stored = localStorage.getItem(FILTER_STORAGE_KEY);
+            if (stored) {
+                return JSON.parse(stored);
+            }
+        } catch (error) {
+            console.error('Error loading filters:', error);
+        }
+        return {
+            companySearch: "",
+            selectedHobbies: [],
+            selectedTraits: [],
+            selectedHousing: ""
+        };
+    };
+
+    const saveFiltersToStorage = (filters: FilterState): void => {
+        try {
+            localStorage.setItem(FILTER_STORAGE_KEY, JSON.stringify(filters));
+        } catch (error) {
+            console.error('Error saving filters:', error);
+        }
+    };
 
     const hobbies = [ 'Reading', 'Hiking', 'Cooking', 'Gaming', 'Photography', 'Music', 'Sports', 'Travel', 'Art', 'Fitness', 'Dancing', 'Movies'];
     const traits = ['Organized', 'Creative', 'Outgoing', 'Analytical', 'Empathetic', 'Adventurous', 'Detail-oriented', 'Team player', 'Independent', 'Optimistic'];
     const housingOptions = ['Yes', 'No']
 
-    const [companySearch, setCompanySearch] = useState<string>("");
-    const [selectedHobbies, setSelectedHobbies] = useState<string[]>([]);
-    const [selectedTraits, setSelectedTraits] = useState<string[]>([]);
-    const [selectedHousing, setSelectedHousing] = useState<string | null>("");
+
+    const initialFilters = loadFiltersFromStorage();
+
+    const [companySearch, setCompanySearch] = useState<string>(initialFilters.companySearch);
+    const [selectedHobbies, setSelectedHobbies] = useState<string[]>(initialFilters.selectedHobbies);
+    const [selectedTraits, setSelectedTraits] = useState<string[]>(initialFilters.selectedTraits);
+    const [selectedHousing, setSelectedHousing] = useState<string | null>(initialFilters.selectedHousing);
 
     const [profiles, setProfiles] = useState<any[]>([]);
 
@@ -89,9 +125,17 @@ export default function InternFinder()
         setSelectedHobbies([]);
         setSelectedTraits([]);
         setSelectedHousing("");
+        localStorage.removeItem(FILTER_STORAGE_KEY);
     }
 
     useEffect(() => {
+        const currentFilters: FilterState = {
+            companySearch,
+            selectedHobbies,
+            selectedTraits,
+            selectedHousing
+        };
+        saveFiltersToStorage(currentFilters);
         setPage(1);
         fetchProfiles(1, false);
     }, [companySearch, selectedHobbies, selectedTraits, selectedHousing])
