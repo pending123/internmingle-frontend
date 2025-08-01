@@ -58,7 +58,7 @@ type Profile = {
   firstName: string;
   lastName: string;
   gender: string;
-  birthday: Date;
+  birthday?: Date | null;
   university: string;
   schoolMajor: string;
   company: string;
