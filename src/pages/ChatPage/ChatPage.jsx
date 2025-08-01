@@ -24,8 +24,13 @@ export default function ChatPage() {
   const [messageHistory, setMessageHistory] = useState({})
 
   const location = useLocation();
+  const [socket, setSocket] = useState(null);
   const userId = useSocketSetup(getToken, socket, BACKEND_URL);
   const partnerId = location.state?.userId; 
+
+  function getInitials(firstName = '', lastName = '') {
+    return `${firstName[0] || ''}${lastName[0] || ''}`.toUpperCase();
+  }
 
   async function handleContactClick(partner) {
     setSelectedContact(partner)
@@ -86,6 +91,16 @@ export default function ChatPage() {
     ? messageHistory[selectedContact.userId] || []
     : []
 
+
+  useEffect(() => {
+    const newSocket = io(URL, { withCredentials: true });
+    setSocket(newSocket);
+
+    return () => {
+      newSocket.disconnect();
+    };
+  }, []);
+  
   useEffect(() => {
     const container = document.querySelector('.messagesContainer');
     if (container && currentMessages.length > 0) {
@@ -205,7 +220,9 @@ async function fetchNewContact(userId) {
                 }`}
                 onClick={() => handleContactClick(contact.partner)}
               >
-                <div className='contactPhoto'></div>
+                <div className='contactPhoto'>
+                  {getInitials(contact.partner.firstName, contact.partner.lastName)}
+                </div>
                 <div className='contactDetails'>
                   <div className='contactName'>
                     {`${contact.partner.firstName} ${contact.partner.lastName}`|| 'Unnamed'}
