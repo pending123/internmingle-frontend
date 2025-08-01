@@ -43,6 +43,15 @@ const ROOMMATE_COUNT_OPTIONS = [
   { value: '5', label: '5+ roommates' }
 ];
 
+interface TraitOption {
+  traitId: number;
+  trait: string; // The string name of the trait
+}
+
+interface HobbyOption {
+  hobbyId: number;
+  hobby: string; // The string name of the hobby
+}
 interface OnboardingData {
   workCity: string;
   workZipcode: string;
@@ -466,8 +475,7 @@ export default function OnboardingPage() {
                 onChange={(e) => updateFormData({ bio: e.target.value })}
                 required
               />
-
-              {/* Traits Section */}
+{/* Traits Section */}
               <div className="traits-section">
                 <label className="section-label">Traits</label>
                 <div className="tags-container">

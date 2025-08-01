@@ -15,7 +15,7 @@ import ChatPage from "./pages/ChatPage/ChatPage";
 import PublicProfile from "./pages/PublicProfilePage/PublicProfile";
 import PersonalProfilePage from "./pages/PersonalProfilePage/PersonalProfilePage";
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 axios.defaults.baseURL = BACKEND_URL;
 
 // Checks if profile is complted
@@ -37,7 +37,6 @@ function ProfileCompletionChecker({ children }: { children: React.ReactNode }) {
       try {
         // get token using useAuth hook
         const token = await getToken();
-        console.log("token", token);
         if (!token) {
           console.error("No authentication token available");
           setProfileCompleted(false);
@@ -79,7 +78,11 @@ function ProfileCompletionChecker({ children }: { children: React.ReactNode }) {
     console.log(
       `isCheckingProfile = ${isCheckingProfile} || !isLoaded = ${!isLoaded}`
     );
-    return <div><CircularProgress /></div>;
+    return (
+      <div>
+        <CircularProgress />
+      </div>
+    );
   }
   // if profile is not completed, redirect to onboarding
   if (profileCompleted === false) {
@@ -137,7 +140,7 @@ function App() {
             }
           />
           <Route
-            path="/profiles/me" 
+            path="/profiles/me"
             element={
               <ProtectedRoute>
                 <PublicProfile />

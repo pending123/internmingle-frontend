@@ -54,7 +54,7 @@ const eventsPage = () => {
         setLoading(true);
 
         const { data: eventData } = await axios.get(
-          `${BACKEND_URL}/events?category=${category}&searchTerm=${submittedSearch}&limit=20&skip=${skip}`
+          `${BACKEND_URL}/events?category=${category}&searchTerm=${submittedSearch}&limit=100&skip=${skip}`
         );
         if (skip === 0) {
           setEvents(eventData);
@@ -118,7 +118,7 @@ const eventsPage = () => {
           mb: 4,
         }}
       >
-        {/* Left Side - Categories */}
+        {/* Categories */}
         <Box sx={{ flex: 1 }}>
           <Stack
             direction="row"
