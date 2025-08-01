@@ -143,7 +143,7 @@ function App() {
             path="/profiles/me"
             element={
               <ProtectedRoute>
-                <PublicProfile />
+                <PersonalProfilePage />
               </ProtectedRoute>
             }
           />
