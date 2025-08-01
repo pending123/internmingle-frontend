@@ -13,11 +13,8 @@ import OnboardingPage from "./pages/OnboardingPage/OnboardingPage";
 import Event from "./pages/EventsPage/event"
 import ChatPage from "./pages/ChatPage/ChatPage";
 import PublicProfile from "./pages/PublicProfilePage/PublicProfile";
-<<<<<<< HEAD
 import PersonalProfilePage from "./pages/PersonalProfilePage/PersonalProfilePage";
-=======
 
->>>>>>> main
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
 axios.defaults.baseURL = BACKEND_URL;
 
@@ -143,11 +140,7 @@ function App() {
             path="/profiles/me" 
             element={
               <ProtectedRoute>
-<<<<<<< HEAD
                 <PersonalProfilePage />
-=======
-                <PublicProfile />
->>>>>>> main
               </ProtectedRoute>
             }
           />
