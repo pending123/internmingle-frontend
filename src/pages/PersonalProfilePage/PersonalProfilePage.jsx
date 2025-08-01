@@ -327,85 +327,66 @@ const PersonalProfilePage = () => {
           </Grid>
         </Grid>
         
-        {/* Traits and Hobbies */}
-        <Grid container spacing={10}>
-          <Grid size={6}>
-            {(profile.traits && profile.traits.length > 0) || (profile.hobbies && profile.hobbies.length > 0) ? (
-              <Box sx={{ mt: 4 }}>
-                {profile.traits && profile.traits.length > 0 && (
-                  <Box sx={{ mb: 3 }}>
-                    <Typography
-                      variant="h5"
-                      component="h2"
-                      sx={{
-                        fontWeight: 600,
-                        color: "#1a1a1a",
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 1,
-                        mb: 2,
-                      }}
-                    >
-                      <WcIcon fontSize="small" sx={{ color: "#2E5BFF" }} /> Traits
-                    </Typography>
-                    <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
-                      {profile.traits.map((trait, index) => (
-                        <Chip
-                          key={index}
-                          label={trait}
-                          sx={{
-                            backgroundColor: "#2E5BFF",
-                            color: "white",
-                            fontWeight: 500,
-                            "&:hover": {
-                              backgroundColor: "#1E3A8A",
-                            },
-                          }}
-                        />
-                      ))}
-                    </Box>
-                  </Box>
-                )}
-                
-                {profile.hobbies && profile.hobbies.length > 0 && (
-                  <Box>
-                    <Typography
-                      variant="h5"
-                      component="h2"
-                      sx={{
-                        fontWeight: 600,
-                        color: "#1a1a1a",
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 1,
-                        mb: 2,
-                      }}
-                    >
-                      <CakeIcon fontSize="small" sx={{ color: "#2E5BFF" }} /> Hobbies
-                    </Typography>
-                    <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
-                      {profile.hobbies.map((hobby, index) => (
-                        <Chip
-                          key={index}
-                          label={hobby}
-                          variant="outlined"
-                          sx={{
-                            borderColor: "#2E5BFF",
-                            color: "#2E5BFF",
-                            fontWeight: 500,
-                            "&:hover": {
-                              backgroundColor: "#E8F0FF",
-                            },
-                          }}
-                        />
-                      ))}
-                    </Box>
-                  </Box>
-                )}
+         {/* Traits and Hobbies */}
+         <Grid container spacing={10} >
+            <Grid item size={6}>
+        {(profile.traits && profile.traits.length > 0) || (profile.hobbies && profile.hobbies.length > 0) ? (
+          <Box sx={{ mt: 4, mb: 4 }}>
+            <Typography
+              variant="h5"
+              component="h2"
+              gutterBottom
+              sx={{
+                fontWeight: 600,
+                color: "#1a1a1a",
+                display: 'flex',
+                alignItems: 'center',
+                gap: 1,
+                mb: 2,
+              }}
+            >
+              <CakeIcon fontSize="small" sx={{ color: '#2E5BFF' }} /> Interests & Traits
+            </Typography>
+
+            {profile.traits && profile.traits.length > 0 && (
+              <Box sx={{ mb: 3 }}>
+                <Typography variant="subtitle1" fontWeight="bold" sx={{ mb: 1 }}>Traits:</Typography>
+                <Stack direction="row" flexWrap="wrap" sx={{
+                columnGap: 1, 
+                rowGap: 1,   
+              }}>
+                  {profile.traits.map((userTrait, index) => (
+                    <Chip key={userTrait.trait.traitId || index} label={userTrait.trait.trait} size="medium" variant="filled" sx={{
+                        backgroundColor: '#0073EA',
+                        color: 'white',             
+                        fontWeight: 600,            
+                        }} />
+                  ))}
+                </Stack>
               </Box>
-            ) : null}
-          </Grid>
-          
+            )}
+
+            {profile.hobbies && profile.hobbies.length > 0 && (
+              <Box>
+                <Typography variant="subtitle1" fontWeight="bold" sx={{ mb: 1 }}>Hobbies:</Typography>
+                <Stack direction="row" flexWrap="wrap"  sx={{
+                columnGap: 1, 
+                rowGap: 1,   
+              }}>
+                  {profile.hobbies.map((userHobby, index) => (
+                    <Chip key={userHobby.hobby.hobbyId || index} label={userHobby.hobby.hobby} size="medium" variant="filled" sx={{
+                        backgroundColor: '#0073EA',
+                        color: 'white',             
+                        fontWeight: 600,            
+                        }}/>
+                  ))}
+                </Stack>
+              </Box>
+            )}
+          </Box>
+        ) : null}
+        </Grid>
+
           {/* Housing Preferences */}
           {profile.isLookingForHousing && (
             <Grid size={6}>

@@ -308,7 +308,10 @@ const getWeeksBetween = (d1, d2) => {
             {profile.traits && profile.traits.length > 0 && (
               <Box sx={{ mb: 3 }}>
                 <Typography variant="subtitle1" fontWeight="bold" sx={{ mb: 1 }}>Traits:</Typography>
-                <Stack direction="row" flexWrap="wrap" spacing={1}>
+                <Stack direction="row" flexWrap="wrap" sx={{
+                columnGap: 1, 
+                rowGap: 1,   
+              }}>
                   {profile.traits.map((userTrait, index) => (
                     <Chip key={index} label={userTrait} size="medium" variant="filled" sx={{
                         backgroundColor: '#0073EA',
@@ -323,7 +326,10 @@ const getWeeksBetween = (d1, d2) => {
             {profile.hobbies && profile.hobbies.length > 0 && (
               <Box>
                 <Typography variant="subtitle1" fontWeight="bold" sx={{ mb: 1 }}>Hobbies:</Typography>
-                <Stack direction="row" flexWrap="wrap" spacing={1}>
+                <Stack direction="row" flexWrap="wrap"  sx={{
+                columnGap: 1, 
+                rowGap: 1,   
+              }}>
                   {profile.hobbies.map((userHobby, index) => (
                     <Chip key={index} label={userHobby} size="medium" variant="filled" sx={{
                         backgroundColor: '#0073EA',
@@ -337,6 +343,7 @@ const getWeeksBetween = (d1, d2) => {
           </Box>
         ) : null}
         </Grid>
+        
         
         {/* Housing Preferences Section */}
         <Grid item size={6}>
