@@ -9,22 +9,26 @@ import axios from 'axios';
 
 import { getAge, getWeeksBetween } from '../../utils/TimeHelper'
 
+//helper functions so json doesn't add a default date if a user doesn't enter one
+const formatDate = (d: string | null | undefined): string => !d || isNaN(new Date(d).getTime()) || new Date(d).getFullYear() < 1970 ? '--' : new Date(d).toLocaleDateString('en-us', { year: 'numeric', month: 'long', day: 'numeric' });
+const formatAge = (b: Date | string | null | undefined): string => !b || isNaN(new Date(b).getTime()) || new Date(b).getFullYear() < 1970 ? '--' : getAge(new Date(b)).toString();
+const formatDuration = (s: string | null | undefined, e: string | null | undefined): string => !s || !e || isNaN(new Date(s).getTime()) || isNaN(new Date(e).getTime()) || new Date(s).getFullYear() < 1970 || new Date(e).getFullYear() < 1970 ? '--' : `${getWeeksBetween(new Date(s), new Date(e))} weeks`;
 
 
 type Profile = {
   userId: number;
   firstName: string;
   lastName: string;
-  imageUrl?: string; //IDK-- CHECK
+  imageUrl?: string;
   gender: string;
-  birthday: Date;
+  birthday?: Date | string | null;
   university: string;
   schoolMajor: string;
   company: string;
   workPosition: string;
   workCity: string;
-  internshipStartDate: string;
-  internshipEndDate: string;
+  internshipStartDate?: string | null;
+  internshipEndDate?: string | null;
   bio: string;
   isLookingForHousing: boolean;
   hobbies: string[];
@@ -95,7 +99,7 @@ export default function PublicProfilePage() {
             <Divider />
             <div>
               <p><strong>Age:</strong></p>
-              <p className='basicContent'>{getAge(new Date(profile.birthday))}</p>
+              <p className='basicContent'>{formatAge(profile.birthday)}</p>
             </div>
             <Divider />
             <div>
@@ -107,23 +111,15 @@ export default function PublicProfilePage() {
             <h3><FontAwesomeIcon icon={faCircle} color='#0073EA' />  Internship Details</h3>
             <div>
               <p className='intHeading'>Start Date</p>
-              <p>{new Date(profile.internshipStartDate).toLocaleDateString('en-us', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-              })}</p>
+              <p>{formatDate(profile.internshipStartDate)}</p>
             </div>
             <div>
               <p className='intHeading'>End Date</p>
-              <p>{new Date(profile.internshipEndDate).toLocaleDateString('en-us', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-              })}</p>
+              <p>{formatDate(profile.internshipEndDate)}</p>
             </div>
             <div>
               <p className='intHeading'>Duration</p>
-              <p>{getWeeksBetween(new Date(profile.internshipStartDate), new Date(profile.internshipEndDate))} weeks</p>
+              <p>{formatDuration(profile.internshipStartDate, profile.internshipEndDate)}</p>
             </div>
           </div>
           <div className='traits'>

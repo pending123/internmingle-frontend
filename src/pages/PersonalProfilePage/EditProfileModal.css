@@ -1,6 +1,4 @@
-/* File: src/pages/PersonalProfilePage/EditProfileModal.css */
 
-/* MUI Dialog Paper Styling */
 .edit-profile-modal .MuiDialog-paper {
   border-radius: 1.5rem;
   max-height: 90vh;

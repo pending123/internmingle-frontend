@@ -1,29 +1,62 @@
-import './PersonalProfilePage.css';
 import { useEffect, useState } from 'react';
-import { Divider, Button } from '@mui/material';
-import { faCircle } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useScrollToTop } from '../../hooks/useScrollToTop';
 import { useAuth } from '@clerk/clerk-react';
 import axios from 'axios';
-import EditProfileModal from './EditProfileModal';
+import {
+    Box,
+    Typography,
+    Divider,
+    Grid,
+    Avatar,
+    Chip,
+    Stack,
+    Button,
+    Container,
+} from '@mui/material';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import BusinessIcon from '@mui/icons-material/Business';
+import SchoolIcon from '@mui/icons-material/School';
+import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import StraightenIcon from '@mui/icons-material/Straighten';
+import HomeIcon from '@mui/icons-material/Home';
+import CakeIcon from '@mui/icons-material/Cake';
+import EditIcon from '@mui/icons-material/Edit';
 
-import { getAge, getWeeksBetween } from '../../utils/TimeHelper'
+import { useScrollToTop } from '../../hooks/useScrollToTop';
+import EditProfileModal from './EditProfileModal';
+import { getAge, getWeeksBetween } from '../../utils/TimeHelper';
+
+// Helper functions so json doesn't add a default date if a user doesn't enter one
+const formatDate = (d: string | null | undefined): string => 
+  !d || isNaN(new Date(d).getTime()) || new Date(d).getFullYear() < 1970 
+    ? '--' 
+    : new Date(d).toLocaleDateString('en-us', { year: 'numeric', month: 'long', day: 'numeric' });
+
+const formatAge = (b: Date | string | null | undefined): string => 
+  !b || isNaN(new Date(b).getTime()) || new Date(b).getFullYear() < 1970 
+    ? '--' 
+    : getAge(new Date(b)).toString();
+
+const formatDuration = (s: string | null | undefined, e: string | null | undefined): string => 
+  !s || !e || isNaN(new Date(s).getTime()) || isNaN(new Date(e).getTime()) || 
+  new Date(s).getFullYear() < 1970 || new Date(e).getFullYear() < 1700 
+    ? '--' 
+    : `${getWeeksBetween(new Date(s), new Date(e))} weeks`;
 
 type Profile = {
     userId: number;
     firstName: string;
     lastName: string;
+    imageUrl?: string;
     gender: string;
-    birthday: Date;
+    birthday?: Date | null;
     university: string;
     schoolMajor: string;
     company: string;
     workPosition: string;
     workCity: string;
     workZipcode?: string;
-    internshipStartDate: string;
-    internshipEndDate: string;
+    internshipStartDate: string | null;
+    internshipEndDate: string | null;
     bio: string;
     isLookingForHousing: boolean;
     hobbies: string[];
@@ -76,131 +109,313 @@ export default function PersonalProfilePage() {
     };
 
     return !profile ? null : (
-        <>
-            <div className='profile'>
-                {/* Edit Profile Button */}
-                <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '1rem', paddingBottom: '0' }}>
-                    <Button
-                        variant="contained"
-                        onClick={handleEditClick}
+        <Container maxWidth="md" sx={{ py: 4 }}>
+            {/* Profile Header */}
+            <Box
+                sx={{
+                    bgcolor: "white",
+                    p: { xs: 3, sm: 4 },
+                    borderRadius: "12px",
+                    boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
+                    mb: 2
+                }}
+            >
+                {/* Profile Photo and Name/Work info */}
+                <Grid container spacing={4} alignItems="center">
+                    <Grid item xs={12} sm={2}>
+                        <Avatar 
+                            src={profile.imageUrl}
+                            sx={{ width: 175, height: 175 }}
+                        />
+                    </Grid>
+                    <Grid
+                        item
+                        xs={12}
+                        sm={true}
                         sx={{
-                            backgroundColor: '#0073EA',
-                            color: 'white',
-                            padding: '0.5rem 1.5rem',
-                            borderRadius: '2rem',
-                            fontWeight: 500,
-                            textTransform: 'none',
-                            '&:hover': {
-                                backgroundColor: '#0056b3',
-                            }
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "center",
                         }}
                     >
-                        Edit Profile
-                    </Button>
-                </div>
+                        <Stack>
+                            <Typography
+                                variant="h5"
+                                component="h2"
+                                gutterBottom
+                                sx={{
+                                    fontWeight: 600,
+                                    color: "#1a1a1a",
+                                    mb: 2,
+                                    textAlign: "left",
+                                }}
+                            >
+                                {profile.firstName} {profile.lastName}
+                            </Typography>
 
-                <div className='demographics'>
-                    <div className="profilePhoto"></div>
-                    <div className='coreInfo'>
-                        <h2>{profile.firstName} {profile.lastName}</h2>
-                        <p>{profile.workPosition} • {profile.company}</p>
-                    </div>
-                </div>
-                <Divider />
-                <div className='about'>
-                    <h3><FontAwesomeIcon icon={faCircle} color='#0073EA' />  About Me</h3>
-                    <p className='bio'>
-                        {profile.bio}
-                    </p>
-                </div>
-                <div className='moreInfo'>
-                    <div className='basicInfo'>
-                        <h3><FontAwesomeIcon icon={faCircle} color='#0073EA' />  Basic Info</h3>
-                        <div>
-                            <p><strong>School:</strong></p>
-                            <p className='basicContent'>{profile.university}</p>
-                        </div>
-                        <Divider />
-                        <div>
-                            <p><strong>Company:</strong></p>
-                            <p className='basicContent'>{profile.company}</p>
-                        </div>
-                        <Divider />
-                        <div>
-                            <p><strong>Major:</strong></p>
-                            <p className='basicContent'>{profile.schoolMajor}</p>
-                        </div>
-                        <Divider />
-                        <div>
-                            <p><strong>Age:</strong></p>
-                            <p className='basicContent'>{getAge(new Date(profile.birthday))}</p>
-                        </div>
-                        <Divider />
-                        <div>
-                            <p><strong>Location:</strong></p>
-                            <p className='basicContent'>{profile.workCity}</p>
-                        </div>
-                    </div>
-                    <div className='intDetails'>
-                        <h3><FontAwesomeIcon icon={faCircle} color='#0073EA' />  Internship Details</h3>
-                        <div>
-                            <p className='intHeading'>Start Date</p>
-                            <p>{new Date(profile.internshipStartDate).toLocaleDateString('en-us', {
-                                year: 'numeric',
-                                month: 'long',
-                                day: 'numeric',
-                            })}</p>
-                        </div>
-                        <div>
-                            <p className='intHeading'>End Date</p>
-                            <p>{new Date(profile.internshipEndDate).toLocaleDateString('en-us', {
-                                year: 'numeric',
-                                month: 'long',
-                                day: 'numeric',
-                            })}</p>
-                        </div>
-                        <div>
-                            <p className='intHeading'>Duration</p>
-                            <p>{getWeeksBetween(new Date(profile.internshipStartDate), new Date(profile.internshipEndDate))} weeks</p>
-                        </div>
-                    </div>
-                    <div>
-                        <h3><FontAwesomeIcon icon={faCircle} color='#0073EA' />  Traits</h3>
-                        <div className='traitList'>
-                            {profile.traits.map((trait, index) => (
-                                <div key={index}>{trait}</div>
-                            ))}
-                        </div>
-                    </div>
-                    <div>
-                        <h3><FontAwesomeIcon icon={faCircle} color='#0073EA' />  Hobbies</h3>
-                        <div className='hobbyList'>
-                            {profile.hobbies.map((hobby, index) => (
-                                <div key={index}>{hobby}</div>
-                            ))}
-                        </div>
-                    </div>
-                    {profile.isLookingForHousing && (
-                        <div className='housingPrefs'>
-                            <h3><FontAwesomeIcon icon={faCircle} color='#0073EA' />  Housing Preferences</h3>
-                            <div className='prefList'>
-                                <div>
-                                    <p><strong>Sleep Schedule</strong></p>
-                                    <p>{profile.sleepSchedule}</p>
-                                </div>
-                                <div>
-                                    <p><strong>Number of Roommates</strong></p>
-                                    <p>{profile.numOfRoomates}</p>
-                                </div>
-                                <div>
-                                    <p><strong>Noise Level</strong></p>
-                                    <p>{profile.noiseLevel}</p>
-                                </div>
-                            </div>
-                        </div>
-                    )}
-                </div>
-            </div>
+                            {/* Work Position & Company */}
+                            {profile.workPosition && profile.company && (
+                                <Typography variant="body1" color="text.secondary" sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                                    <BusinessIcon fontSize="small" /> {profile.workPosition} at {profile.company}
+                                </Typography>
+                            )}
+
+                            {profile.workCity && (
+                                <Typography variant="body1" color="text.secondary" sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                                    <LocationOnIcon fontSize="small" /> {profile.workCity}
+                                </Typography>
+                            )}
+                            
+                            {/* Edit Profile Button */}
+                            <Button
+                                variant="contained"
+                                onClick={handleEditClick}
+                                startIcon={<EditIcon />}
+                                sx={{
+                                    mt: 1.5,
+                                    backgroundColor: '#0073EA',
+                                    color: 'white',
+                                    padding: '0.5rem 1rem',
+                                    borderRadius: '2rem',
+                                    fontWeight: 500,
+                                    textTransform: 'none',
+                                    width: 'fit-content',
+                                    '&:hover': {
+                                        backgroundColor: '#0056b3',
+                                    }
+                                }}
+                            >
+                                Edit Profile
+                            </Button>
+                        </Stack>
+                    </Grid>
+                </Grid>
+            </Box>
+
+            {/* Profile Bio and Details */}
+            <Box
+                sx={{
+                    bgcolor: "white",
+                    p: { xs: 3, sm: 4 },
+                    borderRadius: "12px",
+                    boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
+                }}
+            >
+                {/* About Me Section */}
+                {profile.bio && (
+                    <Box sx={{ mb: 4 }}> 
+                        <Typography
+                            variant="h5"
+                            component="h2"
+                            gutterBottom
+                            sx={{
+                                fontWeight: 600,
+                                color: "#1a1a1a", 
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: 1,
+                                mb: 2,
+                            }}
+                        >
+                            <StraightenIcon fontSize="small" sx={{ color: '#2E5BFF' }} /> About Me
+                        </Typography>
+                        <Typography variant="body1" color="text.secondary" sx={{ lineHeight: 1.6 }}>
+                            {profile.bio}
+                        </Typography>
+                    </Box>
+                )}
+
+                {/* Basic Info and Internship Details Section */}
+                <Grid container spacing={10}>
+                    {/* Basic Info */}
+                    <Grid item size={6}>
+                        <Box sx={{ height: '100%' }}> 
+                            <Typography
+                                variant="h5"
+                                component="h2"
+                                sx={{
+                                    fontWeight: 600,
+                                    color: "#1a1a1a",
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: 1,
+                                    mb: 2,
+                                }}
+                            >
+                                <CalendarTodayIcon fontSize="small" sx={{ color: '#2E5BFF' }} /> Basic Info
+                            </Typography>
+                            <Stack divider={<Divider orientation="horizontal" flexItem />} spacing={2}>
+                                {profile.university && (
+                                    <Box>
+                                        <Typography variant="body2" fontWeight="bold">School:</Typography>
+                                        <Typography variant="body2" color="text.secondary">{profile.university}</Typography>
+                                    </Box>
+                                )}
+                                {profile.company && (
+                                    <Box>
+                                        <Typography variant="body2" fontWeight="bold">Company:</Typography>
+                                        <Typography variant="body2" color="text.secondary">{profile.company}</Typography>
+                                    </Box>
+                                )}
+                                {profile.schoolMajor && (
+                                    <Box>
+                                        <Typography variant="body2" fontWeight="bold">Major:</Typography>
+                                        <Typography variant="body2" color="text.secondary">{profile.schoolMajor}</Typography>
+                                    </Box>
+                                )}
+                                {profile.birthday && (
+                                    <Box>
+                                        <Typography variant="body2" fontWeight="bold">Age:</Typography>
+                                        <Typography variant="body2" color="text.secondary">{formatAge(profile.birthday)}</Typography>
+                                    </Box>
+                                )}
+                            </Stack>
+                        </Box>
+                    </Grid>
+
+                    {/* Internship Details */}
+                    <Grid item size={6}>
+                        {(profile.internshipStartDate || profile.internshipEndDate || profile.workPosition) && (
+                            <Box sx={{ height: '100%' }}>
+                                <Typography
+                                    variant="h5"
+                                    component="h2"
+                                    sx={{
+                                        fontWeight: 600,
+                                        color: "#1a1a1a",
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: 1,
+                                        mb: 2,
+                                    }}
+                                >
+                                    <BusinessIcon fontSize="small" sx={{ color: '#2E5BFF' }} /> Internship Details
+                                </Typography>
+                                <Stack divider={<Divider orientation="horizontal" flexItem />} spacing={2}>
+                                    <Box>
+                                        <Typography variant="body2" fontWeight="bold">Start Date:</Typography>
+                                        <Typography variant="body2" color="text.secondary">{formatDate(profile.internshipStartDate)}</Typography>
+                                    </Box>
+                                    <Box>
+                                        <Typography variant="body2" fontWeight="bold">End Date:</Typography>
+                                        <Typography variant="body2" color="text.secondary">{formatDate(profile.internshipEndDate)}</Typography>
+                                    </Box>
+                                    <Box>
+                                        <Typography variant="body2" fontWeight="bold">Duration:</Typography>
+                                        <Typography variant="body2" color="text.secondary">{formatDuration(profile.internshipStartDate, profile.internshipEndDate)}</Typography>
+                                    </Box>
+                                </Stack>
+                            </Box>
+                        )}
+                    </Grid>
+                </Grid>
+
+                {/* Interests & Traits Section */}
+                {(profile.traits?.length > 0 || profile.hobbies?.length > 0) && (
+                    <Box sx={{ mt: 4, mb: 4 }}>
+                        <Typography
+                            variant="h5"
+                            component="h2"
+                            gutterBottom
+                            sx={{
+                                fontWeight: 600,
+                                color: "#1a1a1a",
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: 1,
+                                mb: 2,
+                            }}
+                        >
+                            <CakeIcon fontSize="small" sx={{ color: '#2E5BFF' }} /> Interests & Traits
+                        </Typography>
+
+                        {profile.traits && profile.traits.length > 0 && (
+                            <Box sx={{ mb: 3 }}>
+                                <Typography variant="subtitle1" fontWeight="bold" sx={{ mb: 1 }}>Traits:</Typography>
+                                <Stack direction="row" flexWrap="wrap" spacing={1}>
+                                    {profile.traits.map((trait, index) => (
+                                        <Chip 
+                                            key={index} 
+                                            label={trait} 
+                                            size="medium" 
+                                            variant="filled" 
+                                            sx={{
+                                                backgroundColor: '#0073EA',
+                                                color: 'white',             
+                                                fontWeight: 600,            
+                                            }} 
+                                        />
+                                    ))}
+                                </Stack>
+                            </Box>
+                        )}
+
+                        {profile.hobbies && profile.hobbies.length > 0 && (
+                            <Box>
+                                <Typography variant="subtitle1" fontWeight="bold" sx={{ mb: 1 }}>Hobbies:</Typography>
+                                <Stack direction="row" flexWrap="wrap" spacing={1}>
+                                    {profile.hobbies.map((hobby, index) => (
+                                        <Chip 
+                                            key={index} 
+                                            label={hobby} 
+                                            size="medium" 
+                                            variant="filled" 
+                                            sx={{
+                                                backgroundColor: '#0073EA',
+                                                color: 'white',             
+                                                fontWeight: 600,            
+                                            }}
+                                        />
+                                    ))}
+                                </Stack>
+                            </Box>
+                        )}
+                    </Box>
+                )}
+
+                {/* Housing Preferences Section */}
+                {profile.isLookingForHousing && (
+                    <Box sx={{ mt: 4, mb: 4 }}>
+                        <Typography
+                            variant="h5"
+                            component="h2"
+                            gutterBottom
+                            sx={{
+                                fontWeight: 600,
+                                color: "#1a1a1a",
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: 1,
+                                mb: 2,
+                            }}
+                        >
+                            <HomeIcon fontSize="small" sx={{ color: '#2E5BFF' }} /> Housing Preferences
+                        </Typography>
+                        <Grid container spacing={2}>
+                            <Stack divider={<Divider orientation="horizontal" flexItem />} spacing={2}>
+                                {profile.sleepSchedule && (
+                                    <Box>
+                                        <Typography variant="body2" fontWeight="bold">Sleep Schedule:</Typography>
+                                        <Typography variant="body2" color="text.secondary">{profile.sleepSchedule}</Typography>
+                                    </Box>
+                                )}
+                                {profile.numOfRoomates !== undefined && (
+                                    <Box>
+                                        <Typography variant="body2" fontWeight="bold">Number of Roommates:</Typography>
+                                        <Typography variant="body2" color="text.secondary">{profile.numOfRoomates}</Typography>
+                                    </Box>
+                                )}
+                                {profile.noiseLevel && (
+                                    <Box>
+                                        <Typography variant="body2" fontWeight="bold">Noise Level:</Typography>
+                                        <Typography variant="body2" color="text.secondary">{profile.noiseLevel}</Typography>
+                                    </Box>
+                                )}
+                            </Stack>
+                        </Grid>
+                    </Box>
+                )}
+            </Box>
 
             {/* Edit Profile Modal */}
             {profile && (
@@ -211,6 +426,6 @@ export default function PersonalProfilePage() {
                     onProfileUpdate={handleProfileUpdate}
                 />
             )}
-        </>
+        </Container>
     );
 }
