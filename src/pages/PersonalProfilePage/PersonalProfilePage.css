@@ -1,4 +1,4 @@
-.profile 
+/* .profile 
 {
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     border-radius: 1.5rem;
@@ -42,7 +42,7 @@ h2
 }
 
 /* makes sure image isn't crazy if loaded from google o-auth */
-.profileImage {
+/* .profileImage {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -196,4 +196,4 @@ h2
 .prefList p 
 {
     margin: 0.5rem;
-}
+} */
