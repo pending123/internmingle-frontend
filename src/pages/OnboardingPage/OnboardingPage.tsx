@@ -143,10 +143,7 @@ export default function OnboardingPage() {
           formData.schoolMajor.trim() !== '' &&
           formData.company.trim() !== '' &&
           formData.workPosition.trim() !== '' &&
-          formData.birthday !== null &&
           formData.gender.trim() !== '' &&
-          formData.internshipStartDate !== null &&
-          formData.internshipEndDate !== null &&
           formData.bio.trim() !== ''
         );
       case 4:
@@ -230,10 +227,10 @@ export default function OnboardingPage() {
         schoolMajor: formData.schoolMajor,
         company: formData.company,
         workPosition: formData.workPosition,
-        birthday: formData.birthday?.toISOString(),
+        birthday: formData.birthday?.toISOString() || null,
         gender: formData.gender,
-        internshipStartDate: formData.internshipStartDate?.toISOString(),
-        internshipEndDate: formData.internshipEndDate?.toISOString(),
+        internshipStartDate: formData.internshipStartDate?.toISOString() || null,
+        internshipEndDate: formData.internshipEndDate?.toISOString() || null,
         bio: formData.bio,
         isLookingForHousing: formData.isLookingForHousing,
         // Fix housing preferences data handling
@@ -387,13 +384,13 @@ export default function OnboardingPage() {
 
               <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DatePicker
-                  label="Birthday"
+                  label="Birthday (optional)"
                   value={formData.birthday}
                   onChange={(date) => updateFormData({ birthday: date })}
                   slotProps={{
                     textField: {
                       fullWidth: true,
-                      required: true,
+                      required: false, //TEST
                       className: 'date-picker-field'
                     }
                   }}
@@ -411,13 +408,13 @@ export default function OnboardingPage() {
 
               <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DatePicker
-                  label="Internship Start Date"
+                  label="Internship Start Date (optional)"
                   value={formData.internshipStartDate}
                   onChange={(date) => updateFormData({ internshipStartDate: date })}
                   slotProps={{
                     textField: {
                       fullWidth: true,
-                      required: true,
+                      required: false, //TEST
                       className: 'date-picker-field'
                     }
                   }}
@@ -426,13 +423,13 @@ export default function OnboardingPage() {
 
               <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DatePicker
-                  label="Internship End Date"
+                  label="Internship End Date (optional)"
                   value={formData.internshipEndDate}
                   onChange={(date) => updateFormData({ internshipEndDate: date })}
                   slotProps={{
                     textField: {
                       fullWidth: true,
-                      required: true,
+                      required: false,
                       className: 'date-picker-field'
                     }
                   }}

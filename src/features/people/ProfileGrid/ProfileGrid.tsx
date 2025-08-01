@@ -5,6 +5,7 @@ type Profile = {
   userId: number;
   firstName: string;
   lastName: string;
+  imageUrl?: string;
   gender: string;
   university: string;
   schoolMajor: string;
