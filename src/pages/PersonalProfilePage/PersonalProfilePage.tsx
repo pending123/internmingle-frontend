@@ -14,7 +14,6 @@ import {
 } from '@mui/material';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import BusinessIcon from '@mui/icons-material/Business';
-import SchoolIcon from '@mui/icons-material/School';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import StraightenIcon from '@mui/icons-material/Straighten';
 import HomeIcon from '@mui/icons-material/Home';
