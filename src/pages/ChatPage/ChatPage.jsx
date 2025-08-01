@@ -11,9 +11,7 @@ import { io } from 'socket.io-client'
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
 
-const URL = process.env.NODE_ENV === 'production' ? undefined : 'http://localhost:3000';
-
-const socket = io(URL, { withCredentials: true });
+const URL = process.env.NODE_ENV === 'production' ? BACKEND_URL: 'http://localhost:3000';
 
 export default function ChatPage() {
   const { getToken } = useAuth()

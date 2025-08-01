@@ -1,0 +1,238 @@
+
+.edit-profile-modal .MuiDialog-paper {
+  border-radius: 1.5rem;
+  max-height: 90vh;
+  width: 90%;
+  max-width: 600px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+/* Dialog Title */
+.edit-profile-modal .MuiDialogTitle-root {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 1rem;
+}
+
+/* Dialog Content */
+.edit-profile-modal .MuiDialogContent-root {
+  padding: 1.5rem;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+/* Section Headers */
+.edit-profile-modal .section-header {
+  margin-bottom: 1rem;
+  color: #0073EA;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+/* Form Layout */
+.edit-profile-modal .form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.edit-profile-modal .single-column {
+  grid-template-columns: 1fr;
+}
+
+/* MUI TextField Customization */
+.edit-profile-modal .MuiTextField-root {
+  margin-bottom: 1rem;
+}
+
+.edit-profile-modal .MuiOutlinedInput-root {
+  border-radius: 2rem;
+}
+
+.edit-profile-modal .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+  border-color: #0073EA;
+}
+
+.edit-profile-modal .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: #0073EA;
+  border-width: 2px;
+}
+
+/* MUI Select Dropdown Customization */
+.edit-profile-modal .MuiSelect-select {
+  border-radius: 2rem;
+}
+
+/* MUI Autocomplete Customization */
+.edit-profile-modal .MuiAutocomplete-root .MuiOutlinedInput-root {
+  border-radius: 2rem;
+}
+
+/* Error Messages */
+.edit-profile-modal .error-message {
+  background-color: #ffebee;
+  color: #c62828;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+/* Character Count Helper Text */
+.edit-profile-modal .character-count {
+  text-align: right;
+  font-size: 0.75rem;
+  color: #666;
+  margin-top: 0.25rem;
+}
+
+/* Tags Section */
+.edit-profile-modal .tags-section {
+  margin-bottom: 1.5rem;
+}
+
+.edit-profile-modal .section-label {
+  display: block;
+  color: #555;
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+  font-size: 0.95rem;
+}
+
+.edit-profile-modal .tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.edit-profile-modal .tag-button {
+  padding: 0.5rem 1rem;
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 2rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #666;
+}
+
+.edit-profile-modal .tag-button:hover {
+  background-color: #e8f4ff;
+  border-color: #0073EA;
+  color: #0073EA;
+}
+
+.edit-profile-modal .tag-selected {
+  background-color: #0073EA;
+  border-color: #0073EA;
+  color: white;
+}
+
+/* Housing Preferences Section */
+.edit-profile-modal .housing-preferences {
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: #e0e5ea;
+  border-radius: 0.8rem;
+}
+
+/* Disabled Section */
+.edit-profile-modal .disabled-section {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* Note Text */
+.edit-profile-modal .note-text {
+  color: #666;
+  font-style: italic;
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+}
+
+/* Dialog Actions */
+.edit-profile-modal .MuiDialogActions-root {
+  padding: 1rem 1.5rem;
+  gap: 1rem;
+  border-top: 1px solid #e0e0e0;
+}
+
+/* Cancel Button */
+.edit-profile-modal .cancel-button {
+  color: #666;
+  border-color: #ddd;
+  padding: 0.5rem 1.5rem;
+  border-radius: 2rem;
+  text-transform: none;
+  transition: all 0.2s ease;
+}
+
+.edit-profile-modal .cancel-button:hover {
+  border-color: #0073EA;
+  color: #0073EA;
+}
+
+/* Save Button */
+.edit-profile-modal .save-button {
+  background-color: #0073EA;
+  color: white;
+  padding: 0.75rem 2rem;
+  border-radius: 2rem;
+  font-weight: 500;
+  text-transform: none;
+  transition: all 0.2s ease;
+}
+
+.edit-profile-modal .save-button:hover {
+  background-color: #0056b3;
+}
+
+.edit-profile-modal .save-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Date Picker Styling */
+.edit-profile-modal .date-picker-field .MuiOutlinedInput-root {
+  border-radius: 2rem;
+}
+
+.edit-profile-modal .date-picker-field .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+  border-color: #0073EA;
+}
+
+.edit-profile-modal .date-picker-field .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: #0073EA;
+  border-width: 2px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .edit-profile-modal .form-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .edit-profile-modal .MuiDialog-paper {
+    margin: 1rem;
+    width: calc(100% - 2rem);
+    max-width: none;
+  }
+  
+  .edit-profile-modal .tags-container {
+    justify-content: center;
+  }
+  
+  .edit-profile-modal .MuiDialogActions-root {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .edit-profile-modal .cancel-button,
+  .edit-profile-modal .save-button {
+    width: 100%;
+  }
+}
