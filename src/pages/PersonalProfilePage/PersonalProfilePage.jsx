@@ -386,8 +386,7 @@ const PersonalProfilePage = () => {
           </Box>
         ) : null}
         </Grid>
-        
-        
+
           {/* Housing Preferences */}
           {profile.isLookingForHousing && (
             <Grid size={6}>

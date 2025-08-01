@@ -53,28 +53,27 @@ const ROOMMATE_COUNT_OPTIONS = [
   { value: 5, label: '5+ roommates' }
 ];
 
-// FIXED: Updated Profile type to match PersonalProfilePage
 type Profile = {
   userId: number;
   firstName: string;
   lastName: string;
   gender: string;
-  birthday: Date | null; // Changed from Date to Date | null to match PersonalProfilePage
+  birthday?: Date | null;
   university: string;
   schoolMajor: string;
   company: string;
   workPosition: string;
   workCity: string;
   workZipcode?: string;
-  internshipStartDate: string | null; // Changed from string to string | null
-  internshipEndDate: string | null;   // Changed from string to string | null
+  internshipStartDate: string;
+  internshipEndDate: string;
   bio: string;
   isLookingForHousing: boolean;
   hobbies: string[];
   traits: string[];
-  sleepSchedule?: string; // Made optional to match PersonalProfilePage
-  numOfRoomates?: number; // Made optional to match PersonalProfilePage
-  noiseLevel?: string;    // Made optional to match PersonalProfilePage
+  sleepSchedule: string;
+  numOfRoomates: number;
+  noiseLevel: string;
 };
 
 interface EditProfileModalProps {
@@ -139,6 +138,7 @@ export default function EditProfileModal({ open, onClose, profile, onProfileUpda
     setFormData(prev => ({ ...prev, ...updates }));
   };
 
+
   //CLAUDE SUGGESTED--NEEDS TO CHANGE!!
   const toggleTrait = (trait: string) => {
     const newTraits = formData.traits.includes(trait)
@@ -163,19 +163,17 @@ export default function EditProfileModal({ open, onClose, profile, onProfileUpda
     }
 
     // validates required fields -- SHOULD MAJOR BE REQUIRED??
-    if (!formData.university || !formData.company || !formData.workPosition || !formData.gender) {
-      setError('Please fill in all required fields.');
+    if (!formData.university || !formData.company ||
+        !formData.workPosition || !formData.workCity || !formData.bio || !formData.gender) {
+      setError('Please fill in all required fields');
       return;
     }
 
-    const isLookingForHousing = formData.isLookingForHousing === 'yes';
-
     // validates housing preferences if looking for housing
-    if (isLookingForHousing) {
-      if (!formData.sleepSchedule || !formData.numOfRoomates || !formData.noiseLevel) {
-        setError('Please fill in all housing preference fields.');
-        return;
-      }
+    const isLookingForHousing = formData.isLookingForHousing === 'yes';
+    if (isLookingForHousing && (!formData.sleepSchedule || !formData.numOfRoomates || !formData.noiseLevel)) {
+      setError('Please fill in all housing preferences when looking for roommates');
+      return;
     }
 
     setIsSubmitting(true);
@@ -183,14 +181,20 @@ export default function EditProfileModal({ open, onClose, profile, onProfileUpda
 
     try {
       const token = await getToken();
-      
+      if (!token) {
+        setError('Authentication required');
+        return;
+      }
+
+      const isLookingForHousing = formData.isLookingForHousing === 'yes';
+
       const submitData = {
         university: formData.university,
         company: formData.company,
         schoolMajor: formData.schoolMajor,
-        birthday: formData.birthday?.toISOString() || null,
-        internshipStartDate: formData.internshipStartDate?.toISOString() || null,
-        internshipEndDate: formData.internshipEndDate?.toISOString() || null,
+        birthday: formData.birthday?.toISOString(),
+        internshipStartDate: formData.internshipStartDate?.toISOString(),
+        internshipEndDate: formData.internshipEndDate?.toISOString(),
         workCity: formData.workCity,
         workZipcode: formData.workZipcode ? formData.workZipcode : undefined, // ensure string or undefined-- CLAUDE SUGGESTED
         workPosition: formData.workPosition,
@@ -212,20 +216,18 @@ export default function EditProfileModal({ open, onClose, profile, onProfileUpda
       });
 
       if (response.status === 200) {
-        // updates the profile in the parent component - FIXED: Ensure type compatibility
-        const updatedProfile: Profile = {
+        // updates the profile in the parent component
+        onProfileUpdate({
           ...profile,
           ...submitData,
-          birthday: formData.birthday || null, // Ensure Date | null type
-          internshipStartDate: formData.internshipStartDate?.toISOString() || null,
-          internshipEndDate: formData.internshipEndDate?.toISOString() || null,
+          birthday: formData.birthday || profile.birthday,
+          internshipStartDate: formData.internshipStartDate?.toISOString() || profile.internshipStartDate,
+          internshipEndDate: formData.internshipEndDate?.toISOString() || profile.internshipEndDate,
           workZipcode: formData.workZipcode ? formData.workZipcode : undefined,
-          numOfRoomates: isLookingForHousing ? parseInt(formData.numOfRoomates) : undefined,
-          sleepSchedule: isLookingForHousing ? formData.sleepSchedule : undefined,
-          noiseLevel: isLookingForHousing ? formData.noiseLevel : undefined
-        };
-        
-        onProfileUpdate(updatedProfile);
+          numOfRoomates: isLookingForHousing ? parseInt(formData.numOfRoomates) : 0,
+          sleepSchedule: isLookingForHousing ? formData.sleepSchedule : "",
+          noiseLevel: isLookingForHousing ? formData.noiseLevel : ""
+        });
         onClose();
       }
     } catch (err: any) {
@@ -349,6 +351,7 @@ export default function EditProfileModal({ open, onClose, profile, onProfileUpda
             />
           </Box>
 
+
           {/* TEST THIS ON THE ONBOARDING FORM !!!! MAKE REQUIURED WHEN UPDATING PROFILE??? */}
           <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 2 }}>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -388,7 +391,8 @@ export default function EditProfileModal({ open, onClose, profile, onProfileUpda
                 onChange={(date) => updateFormData({ internshipStartDate: date })}
                 slotProps={{
                   textField: {
-                    fullWidth: true
+                    fullWidth: true,
+                    //required: false
                   }
                 }}
               />
@@ -400,7 +404,8 @@ export default function EditProfileModal({ open, onClose, profile, onProfileUpda
                 onChange={(date) => updateFormData({ internshipEndDate: date })}
                 slotProps={{
                   textField: {
-                    fullWidth: true
+                    fullWidth: true,
+                    //required: false
                   }
                 }}
               />
@@ -413,6 +418,7 @@ export default function EditProfileModal({ open, onClose, profile, onProfileUpda
               value={formData.workCity}
               onChange={(e) => updateFormData({ workCity: e.target.value })}
               fullWidth
+              required
             />
             <TextField
               label="Work Zipcode"
@@ -422,7 +428,7 @@ export default function EditProfileModal({ open, onClose, profile, onProfileUpda
             />
           </Box>
 
-          <Divider sx={{ my: 2 }} />
+          <Divider sx={{ my: 1 }} />
 
           {/* Bio */}
           <Typography variant="h6" sx={{ color: '#0073EA', fontWeight: 600 }}>
@@ -434,44 +440,102 @@ export default function EditProfileModal({ open, onClose, profile, onProfileUpda
             value={formData.bio}
             onChange={(e) => updateFormData({ bio: e.target.value })}
             multiline
-            rows={4}
+            rows={3}
             fullWidth
-            helperText={`${formData.bio.length}/2500 characters`}
+            required
+            helperText={`${formData.bio.length}/150 characters`}
+            error={formData.bio.length > 150}
           />
 
-          <Divider sx={{ my: 2 }} />
+          <Divider sx={{ my: 1 }} />
+
+          {/* CLAUDE SUGGESTED ---- Traits */}
+          <Typography variant="h6" sx={{ color: '#0073EA', fontWeight: 600 }}>
+            Traits (optional) 
+            <Typography component="span" sx={{ fontSize: '0.8rem', color: '#999', fontWeight: 400, ml: 1 }}>
+              - UI ready, backend implementation pending
+            </Typography>
+          </Typography>
+          
+          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+            {AVAILABLE_TRAITS.map(trait => (
+              <Chip
+                key={trait}
+                label={trait}
+                clickable
+                onClick={() => toggleTrait(trait)}
+                color={formData.traits.includes(trait) ? 'primary' : 'default'}
+                variant={formData.traits.includes(trait) ? 'filled' : 'outlined'}
+                sx={{
+                  backgroundColor: formData.traits.includes(trait) ? '#0073EA' : 'transparent',
+                  color: formData.traits.includes(trait) ? 'white' : '#666',
+                  '&:hover': {
+                    backgroundColor: formData.traits.includes(trait) ? '#0056b3' : '#e8f4ff'
+                  }
+                }}
+              />
+            ))}
+          </Box>
+
+          {/* CLAUDE SUGGESTED----Hobbies */}
+          <Typography variant="h6" sx={{ color: '#0073EA', fontWeight: 600, mt: 2 }}>
+            Hobbies (optional)
+            <Typography component="span" sx={{ fontSize: '0.8rem', color: '#999', fontWeight: 400, ml: 1 }}>
+              - UI ready, backend implementation pending
+            </Typography>
+          </Typography>
+          
+          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+            {AVAILABLE_HOBBIES.map(hobby => (
+              <Chip
+                key={hobby}
+                label={hobby}
+                clickable
+                onClick={() => toggleHobby(hobby)}
+                color={formData.hobbies.includes(hobby) ? 'primary' : 'default'}
+                variant={formData.hobbies.includes(hobby) ? 'filled' : 'outlined'}
+                sx={{
+                  backgroundColor: formData.hobbies.includes(hobby) ? '#0073EA' : 'transparent',
+                  color: formData.hobbies.includes(hobby) ? 'white' : '#666',
+                  '&:hover': {
+                    backgroundColor: formData.hobbies.includes(hobby) ? '#0056b3' : '#e8f4ff'
+                  }
+                }}
+              />
+            ))}
+          </Box>
+
+          <Divider sx={{ my: 1 }} />
 
           {/* Housing Preferences */}
-          <Typography variant="h6" sx={{ color: '#0073EA', fontWeight: 600 }}>
+          <Typography variant="h6" sx={{ color: '#0073EA', fontWeight: 600, mt: 2 }}>
             Housing Preferences
           </Typography>
 
           <FormControl fullWidth>
-            <InputLabel>Looking for Housing?</InputLabel>
+            <InputLabel>Are you looking for roommates?</InputLabel>
             <Select
               value={formData.isLookingForHousing}
               onChange={(e) => updateFormData({ isLookingForHousing: e.target.value })}
-              label="Looking for Housing?"
+              label="Are you looking for roommates?"
             >
-              <MenuItem value="yes">Yes</MenuItem>
-              <MenuItem value="no">No</MenuItem>
+              <MenuItem value="yes">Yes, I'm looking for roommates.</MenuItem>
+              <MenuItem value="no">No, I'm not interested in finding roommates.</MenuItem>
             </Select>
           </FormControl>
 
+          {/* Housing Details - only shown if user looking for housing */}
           {isLookingForHousing && (
-            <>
+            <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 2, mt: 2 }}>
               <FormControl fullWidth>
                 <InputLabel>Sleep Schedule</InputLabel>
                 <Select
                   value={formData.sleepSchedule}
                   onChange={(e) => updateFormData({ sleepSchedule: e.target.value })}
                   label="Sleep Schedule"
-                  required
                 >
-                  {SLEEP_SCHEDULES.map((schedule) => (
-                    <MenuItem key={schedule} value={schedule}>
-                      {schedule}
-                    </MenuItem>
+                  {SLEEP_SCHEDULES.map(schedule => (
+                    <MenuItem key={schedule} value={schedule}>{schedule}</MenuItem>
                   ))}
                 </Select>
               </FormControl>
@@ -482,59 +546,77 @@ export default function EditProfileModal({ open, onClose, profile, onProfileUpda
                   value={formData.numOfRoomates}
                   onChange={(e) => updateFormData({ numOfRoomates: e.target.value })}
                   label="Number of Roommates"
-                  required
                 >
-                  {ROOMMATE_COUNT_OPTIONS.map((option) => (
-                    <MenuItem key={option.value} value={option.value.toString()}>
-                      {option.label}
-                    </MenuItem>
+                  {ROOMMATE_COUNT_OPTIONS.map(option => (
+                    <MenuItem key={option.value} value={option.value}>{option.label}</MenuItem>
                   ))}
                 </Select>
               </FormControl>
 
               <FormControl fullWidth>
-                <InputLabel>Noise Level Preference</InputLabel>
+                <InputLabel>Noise Level</InputLabel>
                 <Select
                   value={formData.noiseLevel}
                   onChange={(e) => updateFormData({ noiseLevel: e.target.value })}
-                  label="Noise Level Preference"
-                  required
+                  label="Noise Level"
                 >
-                  {NOISE_LEVELS.map((level) => (
-                    <MenuItem key={level} value={level}>
-                      {level}
-                    </MenuItem>
+                  {NOISE_LEVELS.map(level => (
+                    <MenuItem key={level} value={level}>{level}</MenuItem>
                   ))}
                 </Select>
               </FormControl>
-            </>
+            </Box>
           )}
 
-          {/* Error Display */}
           {error && (
-            <Typography color="error" variant="body2" sx={{ mt: 1 }}>
+            <Typography color="error" sx={{ textAlign: 'center', mt: 2 }}>
               {error}
             </Typography>
           )}
         </Box>
       </DialogContent>
 
-      <DialogActions sx={{ px: 3, pb: 3, gap: 2 }}>
-        <Button onClick={handleCancel} variant="outlined" disabled={isSubmitting}>
+          {/* REFER TO STYLING OF OTHER FILES */}
+      <DialogActions sx={{ p: 3, justifyContent: 'center', gap: 2 }}>
+        <Button
+          variant="outlined"
+          onClick={handleCancel}
+          disabled={isSubmitting}
+          sx={{
+            borderColor: '#ccc',
+            color: '#666',
+            '&:hover': {
+              borderColor: '#999',
+              color: '#333',
+              bgcolor: 'rgba(0,0,0,0.04)'
+            },
+            px: 4,
+            py: 1.5,
+            fontSize: '1rem',
+            fontWeight: 600,
+            borderRadius: '8px',
+            textTransform: 'none'
+          }}
+        >
           Cancel
         </Button>
-        <Button 
-          onClick={handleSubmit} 
-          variant="contained" 
+        
+        <Button
+          variant="contained"
+          onClick={handleSubmit}
           disabled={isSubmitting}
           sx={{
             backgroundColor: '#0073EA',
-            '&:hover': {
-              backgroundColor: '#0056b3'
-            }
+            '&:hover': { backgroundColor: '#0056b3' },
+            px: 4,
+            py: 1.5,
+            fontSize: '1rem',
+            fontWeight: 600,
+            borderRadius: '8px',
+            textTransform: 'none'
           }}
         >
-          {isSubmitting ? <CircularProgress size={20} color="inherit" /> : 'Save Changes'}
+          {isSubmitting ? <CircularProgress size={24} color="inherit" /> : 'Save'}
         </Button>
       </DialogActions>
     </Dialog>

@@ -41,8 +41,7 @@ export default function ProfileCard({ profile }: ProfileCardProps)
                 />
             </div>
             <h2>{profile.firstName}</h2>
-            <h4>{profile.workPosition}• {profile.company}</h4>
-
+            <h4>{profile.workPosition} • {profile.company}</h4>
             <ul className='profileTags'>
             {tags.map((tag, index) => (
                 <li key={index}>{tag}</li>
@@ -52,7 +51,9 @@ export default function ProfileCard({ profile }: ProfileCardProps)
             variant="contained"
             color="primary"
             component={Link}
-            to={`/public-profile/${profile.userId}`}
+            to="/public-profile" 
+            state={{ userId: profile.userId }}
+            style={{ marginTop: 'auto' }}
             >
             View Profile
             </Button>
