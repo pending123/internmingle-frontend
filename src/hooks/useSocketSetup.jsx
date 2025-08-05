@@ -5,6 +5,8 @@ export function useSocketSetup(getToken, socket, BACKEND_URL) {
   const [userId, setUserId] = useState(null);
 
   useEffect(() => {
+    if (!socket) return;
+    
     async function initialize() {
       try {
         const token = await getToken();

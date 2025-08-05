@@ -11,16 +11,16 @@ const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
 
 axios.defaults.baseURL = BACKEND_URL;
 
-//hard coded for now
-const AVAILABLE_TRAITS = [
-  'Organized', 'Creative', 'Outgoing', 'Analytical', 'Empathetic', 
-  'Adventurous', 'Detail-oriented', 'Team player', 'Independent', 'Optimistic'
-];
+interface TraitOption {
+  traitId: number;
+  trait: string; // The string name of the trait
+}
 
-const AVAILABLE_HOBBIES = [
-  'Reading', 'Hiking', 'Cooking', 'Gaming', 'Photography', 'Music', 
-  'Sports', 'Travel', 'Art', 'Fitness', 'Dancing', 'Movies'
-];
+interface HobbyOption {
+  hobbyId: number;
+  hobby: string; // The string name of the hobby
+}
+
 
 const SLEEP_SCHEDULES = [
   'Early bird (before 10 PM)', 
@@ -43,6 +43,15 @@ const ROOMMATE_COUNT_OPTIONS = [
   { value: '5', label: '5+ roommates' }
 ];
 
+interface TraitOption {
+  traitId: number;
+  trait: string; // The string name of the trait
+}
+
+interface HobbyOption {
+  hobbyId: number;
+  hobby: string; // The string name of the hobby
+}
 interface OnboardingData {
   workCity: string;
   workZipcode: string;
@@ -54,8 +63,8 @@ interface OnboardingData {
   gender: string;
   internshipStartDate: Date | null;
   internshipEndDate: Date | null;
-  traits: string[];
-  hobbies: string[];
+  traits: number[]; 
+  hobbies: number[];
   bio: string;
   isLookingForHousing: boolean | null;
   budgetRange: string;
@@ -72,6 +81,10 @@ export default function OnboardingPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [isCheckingProfile, setIsCheckingProfile] = useState(true);
+
+  const [availableTraits, setAvailableTraits] = useState<TraitOption[]>([]);
+  const [availableHobbies, setAvailableHobbies] = useState<HobbyOption[]>([]);
+
 
   const [formData, setFormData] = useState<OnboardingData>({
     workCity: '',
@@ -97,6 +110,23 @@ export default function OnboardingPage() {
   const updateFormData = (updates: Partial<OnboardingData>) => {
     setFormData(prev => ({ ...prev, ...updates }));
   };
+
+  useEffect(() => {
+    const fetchAvailableOptions = async () => {
+      try {
+        const [traitsRes, hobbiesRes] = await Promise.all([
+          axios.get<TraitOption[]>(`${BACKEND_URL}/api/traits`), 
+          axios.get<HobbyOption[]>(`${BACKEND_URL}/api/hobbies`) 
+        ]);
+        setAvailableTraits(traitsRes.data);
+        setAvailableHobbies(hobbiesRes.data);
+      } catch (err) {
+        console.error("Failed to fetch available traits/hobbies:", err);
+        setError("Failed to load trait and hobby options. Please refresh.");
+      }
+    };
+    fetchAvailableOptions();
+  }, [BACKEND_URL]);
 
   // check if profile is already completed
   useEffect(() => {
@@ -237,7 +267,9 @@ export default function OnboardingPage() {
         budgetRange: formData.isLookingForHousing ? parseInt(formData.budgetRange) : null,
         sleepSchedule: formData.isLookingForHousing ? formData.sleepSchedule : null,
         numOfRoomates: formData.isLookingForHousing ? parseInt(formData.numOfRoomates) : null,
-        noiseLevel: formData.isLookingForHousing ? formData.noiseLevel : null
+        noiseLevel: formData.isLookingForHousing ? formData.noiseLevel : null,
+        traitIds: formData.traits, 
+        hobbyIds: formData.hobbies,
       };
 
       console.log('Submitting onboarding data:', submitData);
@@ -277,17 +309,17 @@ export default function OnboardingPage() {
     }
   };
 
-  const toggleTrait = (trait: string) => {
-    const newTraits = formData.traits.includes(trait)
-      ? formData.traits.filter(t => t !== trait)
-      : [...formData.traits, trait];
+  const toggleTrait = (traitId: number) => { 
+    const newTraits = formData.traits.includes(traitId)
+      ? formData.traits.filter(id => id !== traitId) 
+      : [...formData.traits, traitId];
     updateFormData({ traits: newTraits });
   };
 
-  const toggleHobby = (hobby: string) => {
-    const newHobbies = formData.hobbies.includes(hobby)
-      ? formData.hobbies.filter(h => h !== hobby)
-      : [...formData.hobbies, hobby];
+  const toggleHobby = (hobbyId: number) => { 
+    const newHobbies = formData.hobbies.includes(hobbyId)
+      ? formData.hobbies.filter(id => id !== hobbyId) 
+      : [...formData.hobbies, hobbyId];
     updateFormData({ hobbies: newHobbies });
   };
 
@@ -443,19 +475,18 @@ export default function OnboardingPage() {
                 onChange={(e) => updateFormData({ bio: e.target.value })}
                 required
               />
-
-              {/* Traits Section */}
+{/* Traits Section */}
               <div className="traits-section">
                 <label className="section-label">Traits</label>
                 <div className="tags-container">
-                  {AVAILABLE_TRAITS.map(trait => (
+                  {availableTraits.map(trait => ( 
                     <button
-                      key={trait}
+                      key={trait.traitId} 
                       type="button"
-                      className={`tag-button ${formData.traits.includes(trait) ? 'tag-selected' : ''}`}
-                      onClick={() => toggleTrait(trait)}
+                      className={`tag-button ${formData.traits.includes(trait.traitId) ? 'tag-selected' : ''}`}
+                      onClick={() => toggleTrait(trait.traitId)} 
                     >
-                      {trait}
+                      {trait.trait} {/* Display trait.trait (the string name) */}
                     </button>
                   ))}
                 </div>
@@ -465,14 +496,14 @@ export default function OnboardingPage() {
               <div className="hobbies-section">
                 <label className="section-label">Hobbies</label>
                 <div className="tags-container">
-                  {AVAILABLE_HOBBIES.map(hobby => (
+                  {availableHobbies.map(hobby => ( 
                     <button
-                      key={hobby}
+                      key={hobby.hobbyId} 
                       type="button"
-                      className={`tag-button ${formData.hobbies.includes(hobby) ? 'tag-selected' : ''}`}
-                      onClick={() => toggleHobby(hobby)}
+                      className={`tag-button ${formData.hobbies.includes(hobby.hobbyId) ? 'tag-selected' : ''}`}
+                      onClick={() => toggleHobby(hobby.hobbyId)}
                     >
-                      {hobby}
+                      {hobby.hobby} {/* Display hobby.hobby (the string name) */}
                     </button>
                   ))}
                 </div>

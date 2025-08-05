@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 import { useNavigate } from "react-router-dom";
 
@@ -29,12 +29,13 @@ import BedtimeIcon from "@mui/icons-material/Bedtime";
 import PeopleIcon from "@mui/icons-material/People";
 import VolumeUpIcon from "@mui/icons-material/VolumeUp";
 
+
 const PublicProfile = () => {
+  const location = useLocation()
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
-  const { id: profileId } = useParams();
+  const profileId = location.state?.userId
   const baseURL = import.meta.env.VITE_BACKEND_URL;
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -307,7 +308,10 @@ const getWeeksBetween = (d1, d2) => {
             {profile.traits && profile.traits.length > 0 && (
               <Box sx={{ mb: 3 }}>
                 <Typography variant="subtitle1" fontWeight="bold" sx={{ mb: 1 }}>Traits:</Typography>
-                <Stack direction="row" flexWrap="wrap" spacing={1}>
+                <Stack direction="row" flexWrap="wrap" sx={{
+                columnGap: 1, 
+                rowGap: 1,   
+              }}>
                   {profile.traits.map((userTrait, index) => (
                     <Chip key={index} label={userTrait} size="medium" variant="filled" sx={{
                         backgroundColor: '#0073EA',
@@ -322,7 +326,10 @@ const getWeeksBetween = (d1, d2) => {
             {profile.hobbies && profile.hobbies.length > 0 && (
               <Box>
                 <Typography variant="subtitle1" fontWeight="bold" sx={{ mb: 1 }}>Hobbies:</Typography>
-                <Stack direction="row" flexWrap="wrap" spacing={1}>
+                <Stack direction="row" flexWrap="wrap"  sx={{
+                columnGap: 1, 
+                rowGap: 1,   
+              }}>
                   {profile.hobbies.map((userHobby, index) => (
                     <Chip key={index} label={userHobby} size="medium" variant="filled" sx={{
                         backgroundColor: '#0073EA',
@@ -336,6 +343,7 @@ const getWeeksBetween = (d1, d2) => {
           </Box>
         ) : null}
         </Grid>
+        
         
         {/* Housing Preferences Section */}
         <Grid item size={6}>
