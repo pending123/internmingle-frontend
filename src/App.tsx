@@ -15,7 +15,9 @@ import ChatPage from "./pages/ChatPage/ChatPage";
 import PublicProfile from "./pages/PublicProfilePage/PublicProfile";
 import PersonalProfilePage from "./pages/PersonalProfilePage/PersonalProfilePage";
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
+
 axios.defaults.baseURL = BACKEND_URL;
 
 // Checks if profile is complted
