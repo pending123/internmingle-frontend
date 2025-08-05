@@ -22,6 +22,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import ShareIcon from '@mui/icons-material/Share'; 
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import CloseIcon from '@mui/icons-material/Close';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 import { format } from "date-fns"; // For date formatting
 //import AddImage from "../../../public/assets/AddImage.png";
@@ -200,7 +201,24 @@ const Event = () => {
 
 
   return (
-    <Box sx={{ bgcolor: "#f5f5f5", minHeight: "100vh", py: 6 }}>
+    
+    <Box sx={{  minHeight: "100vh", py: 6 }}>
+      <IconButton
+        sx={{
+          top: { xs: 16, sm: 2 }, 
+          left: { xs: 16, sm: 300 }, 
+          zIndex: 10, 
+          bgcolor: 'rgba(255,255,255,0.8)', 
+          '&:hover': {
+            bgcolor: 'rgba(255,255,255,1)', 
+          },
+          boxShadow: 1, 
+        }}
+        onClick={() => navigate('/events')} 
+        aria-label="go back"
+      >
+        <ArrowBackIcon />
+      </IconButton>
       <Container maxWidth="md">
         <Grid container spacing={6} alignItems="center" columns={12}>
           <Grid size={6}>
@@ -234,6 +252,11 @@ const Event = () => {
               >
                 {event.title}
               </Typography>
+              {event.user && ( 
+                <Typography variant="h6" color="text.secondary" sx={{ mb: 0.5 }}>
+                  Hosted By: {event.user.firstName} {event.user.lastName}
+                </Typography>
+              )}
               <Typography
                 variant="h6"
                 component="p"
@@ -328,10 +351,9 @@ const Event = () => {
           <Grid size={6} offset={{ md: "auto" }} >
             <Box
               sx={{
-                bgcolor: "white",
                 p: { xs: 3, sm: 4 },
                 borderRadius: "12px",
-                boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
+                //boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
               }}
             >
               <Typography
