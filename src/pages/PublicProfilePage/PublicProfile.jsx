@@ -15,6 +15,7 @@ import {
   CircularProgress,
   Button,
   Container,
+  IconButton
 } from "@mui/material";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import BusinessIcon from "@mui/icons-material/Business";
@@ -28,6 +29,7 @@ import CakeIcon from "@mui/icons-material/Cake";
 import BedtimeIcon from "@mui/icons-material/Bedtime";
 import PeopleIcon from "@mui/icons-material/People";
 import VolumeUpIcon from "@mui/icons-material/VolumeUp";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'; 
 
 
 const PublicProfile = () => {
@@ -100,6 +102,20 @@ const getWeeksBetween = (d1, d2) => {
 
   return (
     <Container maxWidth="md" sx={{ py: 4 }}>
+      <IconButton
+        sx={{
+      
+          bgcolor: 'rgba(255,255,255,0.8)', 
+          '&:hover': {
+            bgcolor: 'rgba(255,255,255,1)', 
+          },
+          boxShadow: 1, 
+        }}
+        onClick={() => navigate('/intern-finder')} 
+        aria-label="go back"
+      >
+        <ArrowBackIcon />
+      </IconButton>
         {/* Profile Photo and Name/Work info */}
       <Box
         sx={{
@@ -107,9 +123,11 @@ const getWeeksBetween = (d1, d2) => {
           p: { xs: 3, sm: 4 },
           borderRadius: "12px",
           boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
+        
           
         }}
         mb={2}
+        mt={1}
       >
         <Grid container spacing={4} alignItems="center">
           <Grid item xs={12} sm={2}>

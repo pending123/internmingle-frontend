@@ -7,11 +7,44 @@ import { useState, useEffect } from "react";
 import axios from 'axios'
 import { useAuth } from '@clerk/clerk-react';
 
+interface FilterState {
+    companySearch: string;
+    selectedHobbies: string[];
+    selectedTraits: string[];
+    selectedHousing: string | null;
+}
+
 export default function InternFinder() 
 {
     const { getToken } = useAuth();
 
     const baseURL = import.meta.env.VITE_BACKEND_URL;
+    const FILTER_STORAGE_KEY = 'internFinder_filters';
+
+    const loadFiltersFromStorage = (): FilterState => {
+        try {
+            const stored = localStorage.getItem(FILTER_STORAGE_KEY);
+            if (stored) {
+                return JSON.parse(stored);
+            }
+        } catch (error) {
+            console.error('Error loading filters:', error);
+        }
+        return {
+            companySearch: "",
+            selectedHobbies: [],
+            selectedTraits: [],
+            selectedHousing: ""
+        };
+    };
+
+    const saveFiltersToStorage = (filters: FilterState): void => {
+        try {
+            localStorage.setItem(FILTER_STORAGE_KEY, JSON.stringify(filters));
+        } catch (error) {
+            console.error('Error saving filters:', error);
+        }
+    };
 
     const hobbies = [ 'Reading', 'Hiking', 'Cooking', 'Gaming', 'Photography', 'Music', 'Sports', 'Travel', 'Art', 'Fitness', 'Dancing', 'Movies'];
     const traits = ['Organized', 'Creative', 'Outgoing', 'Analytical', 'Empathetic', 'Adventurous', 'Detail-oriented', 'Team player', 'Independent', 'Optimistic'];
