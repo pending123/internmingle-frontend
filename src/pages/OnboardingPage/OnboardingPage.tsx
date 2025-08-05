@@ -67,7 +67,6 @@ interface OnboardingData {
   hobbies: number[];
   bio: string;
   isLookingForHousing: boolean | null;
-  budgetRange: string;
   sleepSchedule: string;
   numOfRoomates: string;
   noiseLevel: string;
@@ -101,7 +100,6 @@ export default function OnboardingPage() {
     hobbies: [],
     bio: '',
     isLookingForHousing: null,
-    budgetRange: '',
     sleepSchedule: '',
     numOfRoomates: '',
     noiseLevel: ''
@@ -180,14 +178,10 @@ export default function OnboardingPage() {
         return formData.isLookingForHousing !== null;
       case 5:
         // Validate housing preferences more thoroughly-- CLAUDE SUGGESTED
-        const isBudgetValid = formData.budgetRange.trim() !== '' && 
-                            !isNaN(Number(formData.budgetRange)) && 
-                            Number(formData.budgetRange) > 0;
         const isRoommatesValid = formData.numOfRoomates.trim() !== '' && 
                                 !isNaN(Number(formData.numOfRoomates)) && 
                                 Number(formData.numOfRoomates) > 0;
         return (
-          isBudgetValid &&
           formData.sleepSchedule.trim() !== '' &&
           isRoommatesValid &&
           formData.noiseLevel.trim() !== ''
@@ -202,7 +196,7 @@ export default function OnboardingPage() {
   const handleNext = () => {
     if (!validateStep()) {
       if (currentStep === 5) {
-        setError('Please fill in all required fields. Budget and number of roommates must be valid numbers.');
+        setError('Please fill in all required fields. number of roommates must be valid numbers.');
       } else {
         setError('Please fill in all required fields');
       }
@@ -264,7 +258,6 @@ export default function OnboardingPage() {
         bio: formData.bio,
         isLookingForHousing: formData.isLookingForHousing,
         // Fix housing preferences data handling
-        budgetRange: formData.isLookingForHousing ? parseInt(formData.budgetRange) : null,
         sleepSchedule: formData.isLookingForHousing ? formData.sleepSchedule : null,
         numOfRoomates: formData.isLookingForHousing ? parseInt(formData.numOfRoomates) : null,
         noiseLevel: formData.isLookingForHousing ? formData.noiseLevel : null,
@@ -550,16 +543,6 @@ export default function OnboardingPage() {
             <h2 className="step-subtitle">Please specify your housing preferences.</h2>
             
             <div className="form-grid">
-              <input
-                type="number"
-                placeholder="Budget (Monthly in USD)"
-                className="form-input"
-                value={formData.budgetRange}
-                onChange={(e) => updateFormData({ budgetRange: e.target.value })}
-                min="0"
-                required
-              />
-
               <select
                 className="form-select"
                 value={formData.sleepSchedule}
