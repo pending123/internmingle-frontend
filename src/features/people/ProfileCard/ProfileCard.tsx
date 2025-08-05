@@ -119,7 +119,8 @@ export default function ProfileCard({ profile }: ProfileCardProps) {
                 variant="contained"
                 color="primary" 
                 component={Link} 
-                to={`/public-profile/${profile.userId}`} 
+                to={`/public-profile/`}
+                state={{userId: profile.userId}} 
                 size="large"
                 sx={{
                     mt: 'auto', 
