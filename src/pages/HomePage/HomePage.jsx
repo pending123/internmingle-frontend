@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { SignInButton, SignUpButton } from "@clerk/clerk-react";
 
@@ -16,72 +16,119 @@ import {
 } from "@mui/material";
 
 const HomePage = () => {
+
+  const internConnectionRef = useRef(null);
+
+  const handleFindOutMoreClick = () => {
+    if (internConnectionRef.current) {
+      internConnectionRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <Box>
+      
       <Box
         sx={{
-          minHeight: "20vh",
-          display: "flex",
-          alignItems: "center",
-          flexDirection: "column",
-          justifyContent: "center",
-          pb: 2,
+          minHeight: "100vh", 
+          overflow: 'hidden',   
+          display: 'flex',    
+          flexDirection: 'column',
+          justifyContent: 'center', 
+          alignItems: 'flex-start', 
         }}
       >
-        <Container maxWidth="lg">
-          <Grid alignItems="center">
-            <Grid alignItems="center">
-              <Typography
-                variant="h2"
-                component="h1"
-                gutterBottom
+        
+
+        
+        <Container maxWidth="md" sx={{ textAlign: 'left',  ml: { xs: 0, sm: 8 } }}> 
+          
+          <Typography
+            variant="h2" 
+            component="h1"
+            gutterBottom
+            sx={{
+              fontWeight: 700,
+              fontSize: { xs: "2.5rem", sm: "3.5rem", md: "4.5rem" },
+              lineHeight: 1.1,
+              color: "#1a1a1a", 
+              mb: 4, 
+            }}
+          >
+            Connect, explore, and discover with InternMingle
+          </Typography>
+
+          
+          <Box sx={{ display: 'flex', gap: 2, justifyContent: 'flex-start', flexWrap: 'wrap' }}>
+            <Button
+              variant="contained"
+              size="large"
+              onClick={handleFindOutMoreClick} 
+              sx={{
+                backgroundColor: "#A9A9A9", 
+                "&:hover": { backgroundColor: "#8c8c8c" },
+                px: 4,
+                py: 1.5,
+                fontSize: "1.1rem",
+                fontWeight: 600,
+                borderRadius: "4px", 
+                textTransform: "none",
+              }}
+            >
+              Find out More
+            </Button>
+
+            <SignUpButton >
+              <Button
+                variant="contained" 
+                size="large"
                 sx={{
-                  fontWeight: 700,
-                  fontSize: { xs: "2.5rem", md: "3.5rem" },
-                  lineHeight: 1.2,
-                  textAlign: "center",
-                  mt: 10,
+                  backgroundColor: "#2E5BFF", 
+                  "&:hover": { backgroundColor: "#1a4bd9" },
+                  px: 4,
+                  py: 1.5,
+                  fontSize: "1.1rem",
+                  fontWeight: 600,
+                  borderRadius: "4px", 
+                  textTransform: "none",
                 }}
               >
-                Welcome to InternMingle
-              </Typography>
-              <Typography
-                variant="h6"
+                Sign Up
+              </Button>
+            </SignUpButton>
+
+            <SignInButton >
+            <Button
+              variant="contained" 
+                size="large"
                 sx={{
-                  mb: 4,
-                  opacity: 0.9,
+                  backgroundColor: "#2E5BFF", 
+                  "&:hover": { backgroundColor: "#1a4bd9" },
+                  px: 4,
+                  py: 1.5,
                   fontSize: "1.1rem",
-                  lineHeight: 1.6,
-                  textAlign: "center",
+                  fontWeight: 600,
+                  borderRadius: "4px", 
+                  textTransform: "none",
                 }}
-              ></Typography>
-              <div className="authContainer">
-                <div className="authButtons">
-                  <div style={{ transform: 'scale(1.5)', transformOrigin: 'center' }}>
-                    <SignUpButton>
-                      <button className='signUp'>Sign Up</button>
-                    </SignUpButton>
-                  </div>
-                <div style={{ transform: 'scale(1.5)', transformOrigin: 'center' }}>
-                  <SignInButton>
-                    <button className='signIn'>Log In</button>
-                  </SignInButton>
-                </div>
-              </div>
-            </div>
-            </Grid>
-          </Grid>
+              >
+              Login
+            </Button>
+          </SignInButton>
+          </Box>
         </Container>
       </Box>
 
+
       {/* Intern Connection Section */}
       <Box
+      ref={internConnectionRef} 
         sx={{
           pb: 4,
           minHeight: "40vh",
         }}
       >
-        <Container maxWidth="lg">
+        <Container maxWidth="xl">
           <Grid container spacing={6} alignItems="center" columns={12}>
             <Grid size={6}>
               <Typography
@@ -110,10 +157,11 @@ const HomePage = () => {
                 internship company, and interests, helping you find common
                 ground and initiate connections
               </Typography>
+              <SignInButton >
               <Button
                 variant="contained"
-                component={Link}
-                to="/intern-finder"
+                // component={Link}
+                // to="/intern-finder"
                 size="large"
                 sx={{
                   backgroundColor: "#2E5BFF",
@@ -127,6 +175,7 @@ const HomePage = () => {
               >
                 View Interns Near You
               </Button>
+              </SignInButton>
             </Grid>
             {/* Picture of Interns */}
 
@@ -155,7 +204,7 @@ const HomePage = () => {
           pb: 4,
         }}
       >
-        <Container maxWidth="lg">
+        <Container maxWidth="xl">
           <Grid container spacing={6} alignItems="center" columns={12}>
             {/* Picture of Map */}
             <Grid size={6} offset={{ md: "auto" }}>
@@ -200,10 +249,11 @@ const HomePage = () => {
                 routes, and the ability to find local attractions, restaurants,
                 and amenities.
               </Typography>
+              <SignInButton>
               <Button
                 variant="contained"
-                component={Link}
-                to="/neighborhoods"
+                // component={Link}
+                // to="/neighborhoods"
                 size="large"
                 sx={{
                   backgroundColor: "#2E5BFF",
@@ -217,6 +267,7 @@ const HomePage = () => {
               >
                 Try it now
               </Button>
+              </SignInButton>
             </Grid>
           </Grid>
         </Container>
@@ -229,7 +280,7 @@ const HomePage = () => {
           minHeight: "40vh",
         }}
       >
-        <Container maxWidth="lg">
+        <Container maxWidth="xl">
           <Grid container spacing={6} alignItems="center" columns={12}>
             <Grid size={6}>
               <Typography
@@ -258,10 +309,11 @@ const HomePage = () => {
                 location, and time, helping you plan your social calendar and
                 meet new people with shared interests.
               </Typography>
+              <SignInButton>
               <Button
                 variant="contained"
-                component={Link}
-                to="/events"
+                // component={Link}
+                // to="/events"
                 size="large"
                 sx={{
                   backgroundColor: "#2E5BFF",
@@ -275,6 +327,7 @@ const HomePage = () => {
               >
                 View Events Near You
               </Button>
+              </SignInButton>
             </Grid>
             {/* Picture of Interns */}
 
@@ -285,9 +338,9 @@ const HomePage = () => {
                 style={{
                   maxWidth: "100%",
                   height: "auto",
-                  width: "90%", // Make it 50% of the Grid item's width
+                  width: "90%", 
                   display: "block",
-                  marginLeft: "auto", // Use specific margin properties for 'auto' with 'style'
+                  marginLeft: "auto", 
                   marginRight: "auto",
                   borderRadius: "8px",
                 }}
