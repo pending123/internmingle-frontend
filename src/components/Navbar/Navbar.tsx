@@ -8,7 +8,17 @@ export default function Navbar()
 {
     return (
         <div className="navbar">
-           <Link to="/intern-finder"> <h1>InternMingle</h1></Link>
+           <Link to="/intern-finder">
+           <img
+            src="/assets/internmingle-white.png"
+            alt="InternMingle Logo"
+            style={{
+                height: "60px",        
+                width: "400px",  
+                    
+            }}
+          />
+           </Link>
             <div className="nav-links">
                 
                 <Link to="/intern-finder"><FontAwesomeIcon icon={faUsers} /> Intern Finder</Link>

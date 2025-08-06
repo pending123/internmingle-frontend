@@ -27,7 +27,31 @@ const HomePage = () => {
 
   return (
     <Box>
-      
+      <Box
+        sx={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          zIndex: 999,
+          m: 5,
+          ml: 10,
+          p: 0,   
+          lineHeight: 0,
+          display: 'inline-block',              
+        }}
+      >
+        <img
+          src="/assets/internmingle-blue.png"
+          alt="InternMingle Logo"
+          style={{
+            height: "60px",        
+            width: "400px",  
+                 
+          }}
+        />
+      </Box>
+
+
       <Box
         sx={{
           minHeight: "100vh", 
@@ -38,8 +62,7 @@ const HomePage = () => {
           alignItems: 'flex-start', 
         }}
       >
-        
-
+       
         
         <Container maxWidth="md" sx={{ textAlign: 'left',  ml: { xs: 0, sm: 8 } }}> 
           
@@ -78,7 +101,7 @@ const HomePage = () => {
               Find out More
             </Button>
 
-            <SignUpButton >
+            <SignUpButton>
               <Button
                 variant="contained" 
                 size="large"
@@ -349,6 +372,90 @@ const HomePage = () => {
           </Grid>
         </Container>
       </Box>
+      <Container sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: 4}}>
+        <h1 style={{ color: '#0073EA', fontSize: '3rem' }}>Meet the Team</h1>
+        <Grid container spacing={4}>
+          <Grid item xs={12} sm={4}>
+            <Box
+              sx={{
+                position: 'relative',
+                width: '100%',
+                overflow: 'hidden',
+                borderRadius: 2,
+              }}
+            >
+              <Box
+                component="img"
+                src="/assets/mamadou.jpg"
+                alt="Mamadou Ndom"
+                sx={{
+                  border: '1px solid',
+                  borderRadius: 4,
+                  width: '300px',
+                  height: '300px'
+                }}
+              />
+            </Box>
+            <Typography variant="h5" align="center" mt={1}>
+              Mamadou Ndom
+            </Typography>
+          </Grid>
+
+          <Grid item xs={12} sm={4}>
+            <Box
+              sx={{
+                position: 'relative',
+                width: '100%',
+                overflow: 'hidden',
+                borderRadius: 2,
+              }}
+            >
+              <Box
+                component="img"
+                src="/assets/brianna.jpg"
+                alt="Brianna Farinango"
+                sx={{
+                  border: '1px solid',
+                  borderRadius: 4,
+                  width: '300px',
+                  height: '300px',
+                  objectFit: 'cover'
+                }}
+              />
+            </Box>
+            <Typography variant="h5" align="center" mt={1}>
+                Brianna Farinango
+            </Typography>
+          </Grid>
+
+          <Grid item xs={12} sm={4}>
+            <Box
+              sx={{
+                position: 'relative',
+                width: '100%',
+                overflow: 'hidden',
+                borderRadius: 2,
+              }}
+            >
+              <Box
+                component="img"
+                src="/assets/divine.jpg"
+                alt="Divine Precious-Esue"
+                sx={{
+                  objectFit: 'cover',
+                  border: '1px solid',
+                  width: '300px',
+                  height: '300px',
+                  borderRadius: 4,
+                }}
+              />
+            </Box>
+            <Typography variant="h5" align="center" mt={1}>
+              Divine Precious-Esue
+            </Typography>
+          </Grid>
+        </Grid>
+      </Container>
     </Box>
   );
 };
