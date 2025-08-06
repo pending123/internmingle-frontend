@@ -323,6 +323,18 @@ export default function OnboardingPage() {
     updateFormData({ hobbies: newHobbies });
   };
 
+    // New function to fill demo data for step 3
+  const handleFillDemoData = () => {
+    updateFormData({
+      university: 'Salesforce University',
+      schoolMajor: 'Computer Science',
+      company: 'Salesforce',
+      workPosition: 'FTL Scholar',
+      gender: 'NB',
+      bio: 'Enthusiastic intern passionate about full-stack development and learning new technologies. Looking forward to connecting with fellow interns and exploring new opportunities.'
+    });
+  };
+
   const renderStep = () => {
     const firstName = user?.firstName || 'there';
 
@@ -509,6 +521,15 @@ export default function OnboardingPage() {
                 </div>
               </div>
             </div>
+            {/* Demo Data Button */}
+            <Button
+              variant="outlined"
+              onClick={handleFillDemoData}
+              className="demo-button"
+              style={{ marginTop: '20px' }} // Added some styling for spacing
+            >
+              Fill with Astro's Data
+            </Button>
           </div>
         );
 

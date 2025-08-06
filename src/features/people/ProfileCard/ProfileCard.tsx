@@ -39,6 +39,7 @@ export default function ProfileCard({ profile }: ProfileCardProps) {
     const tags = [...hobbyTags, ...traitTag];
 
     const defaultProfileImage = 'https://placehold.co/150x150/E0E0E0/333333?text=No+Photo';
+    
 
     return (
         <Paper
@@ -62,7 +63,7 @@ export default function ProfileCard({ profile }: ProfileCardProps) {
             {/* Profile Photo */}
             <Avatar
                 alt={`${profile.firstName || ''} ${profile.lastName || ''}`}
-                src={profile.imageUrl || defaultProfileImage} 
+                src={profile.imageUrl}// || defaultProfileImage} 
                 sx={{
                     width: 80, 
                     height: 80,
