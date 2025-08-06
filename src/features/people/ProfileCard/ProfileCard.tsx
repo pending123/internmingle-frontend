@@ -62,8 +62,8 @@ export default function ProfileCard({ profile }: ProfileCardProps) {
                 alt={`${profile.firstName || ''} ${profile.lastName || ''}`}
                 src={profile.imageUrl}// || defaultProfileImage} 
                 sx={{
-                    width: 80, 
-                    height: 80,
+                    width: 110, 
+                    height: 110,
                     mb: 1, 
                     boxShadow: 1, 
                 }}
