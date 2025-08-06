@@ -156,12 +156,6 @@ export default function EditProfileModal({ open, onClose, profile, onProfileUpda
   };
 
   const handleSubmit = async () => {
-    // Validate bio character limit-- IMPLEMENT THIS ONTO ONBOARDING FORM AS WELL
-    if (formData.bio.length > 2500) {
-      setError('Bio must be 2,500 characters or less');
-      return;
-    }
-
     // validates required fields -- SHOULD MAJOR BE REQUIRED??
     if (!formData.university || !formData.company ||
         !formData.workPosition || !formData.workCity || !formData.bio || !formData.gender) {
@@ -443,8 +437,6 @@ export default function EditProfileModal({ open, onClose, profile, onProfileUpda
             rows={3}
             fullWidth
             required
-            helperText={`${formData.bio.length}/150 characters`}
-            error={formData.bio.length > 150}
           />
 
           <Divider sx={{ my: 1 }} />
@@ -452,9 +444,6 @@ export default function EditProfileModal({ open, onClose, profile, onProfileUpda
           {/* CLAUDE SUGGESTED ---- Traits */}
           <Typography variant="h6" sx={{ color: '#0073EA', fontWeight: 600 }}>
             Traits (optional) 
-            <Typography component="span" sx={{ fontSize: '0.8rem', color: '#999', fontWeight: 400, ml: 1 }}>
-              - UI ready, backend implementation pending
-            </Typography>
           </Typography>
           
           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
@@ -480,9 +469,6 @@ export default function EditProfileModal({ open, onClose, profile, onProfileUpda
           {/* CLAUDE SUGGESTED----Hobbies */}
           <Typography variant="h6" sx={{ color: '#0073EA', fontWeight: 600, mt: 2 }}>
             Hobbies (optional)
-            <Typography component="span" sx={{ fontSize: '0.8rem', color: '#999', fontWeight: 400, ml: 1 }}>
-              - UI ready, backend implementation pending
-            </Typography>
           </Typography>
           
           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
