@@ -50,10 +50,13 @@ export default function InternFinder()
     const traits = ['Organized', 'Creative', 'Outgoing', 'Analytical', 'Empathetic', 'Adventurous', 'Detail-oriented', 'Team player', 'Independent', 'Optimistic'];
     const housingOptions = ['Yes', 'No']
 
-    const [companySearch, setCompanySearch] = useState<string>("");
-    const [selectedHobbies, setSelectedHobbies] = useState<string[]>([]);
-    const [selectedTraits, setSelectedTraits] = useState<string[]>([]);
-    const [selectedHousing, setSelectedHousing] = useState<string | null>("");
+
+    const initialFilters = loadFiltersFromStorage();
+
+    const [companySearch, setCompanySearch] = useState<string>(initialFilters.companySearch);
+    const [selectedHobbies, setSelectedHobbies] = useState<string[]>(initialFilters.selectedHobbies);
+    const [selectedTraits, setSelectedTraits] = useState<string[]>(initialFilters.selectedTraits);
+    const [selectedHousing, setSelectedHousing] = useState<string | null>(initialFilters.selectedHousing);
 
     const [profiles, setProfiles] = useState<any[]>([]);
 
@@ -122,9 +125,17 @@ export default function InternFinder()
         setSelectedHobbies([]);
         setSelectedTraits([]);
         setSelectedHousing("");
+        localStorage.removeItem(FILTER_STORAGE_KEY);
     }
 
     useEffect(() => {
+        const currentFilters: FilterState = {
+            companySearch,
+            selectedHobbies,
+            selectedTraits,
+            selectedHousing
+        };
+        saveFiltersToStorage(currentFilters);
         setPage(1);
         fetchProfiles(1, false);
     }, [companySearch, selectedHobbies, selectedTraits, selectedHousing])
