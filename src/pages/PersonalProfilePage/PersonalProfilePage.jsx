@@ -327,7 +327,6 @@ const PersonalProfilePage = () => {
           </Grid>
         </Grid>
         
-
          {/* Traits and Hobbies */}
          <Grid container spacing={10} >
             <Grid item size={6}>
