@@ -1,7 +1,5 @@
-import React from 'react';
 import { Link } from "react-router-dom";
 import {
-  Box,
   Typography,
   Button,
   Avatar,   
@@ -37,8 +35,6 @@ export default function ProfileCard({ profile }: ProfileCardProps) {
     const hobbyTags = profile.hobbies?.slice(0, 2) || [];
     const traitTag = profile.traits?.length > 0 ? [profile.traits[0]] : [];
     const tags = [...hobbyTags, ...traitTag];
-
-    const defaultProfileImage = 'https://placehold.co/150x150/E0E0E0/333333?text=No+Photo';
 
     return (
         <Paper
